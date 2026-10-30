@@ -9,6 +9,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { Analytics } from "@/components/Analytics";
+import Script from "next/script";
 import "../globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -64,6 +65,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} className={`${inter.variable} ${grotesk.variable} ${mono.variable} ${arabic.variable}`}>
       <body>
+        <div className="progress-bar fixed inset-x-0 top-0 z-[70] h-px bg-primary" aria-hidden />
         <NextIntlClientProvider>
           <Header />
           <main id="main">{children}</main>
@@ -71,6 +73,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <WhatsAppFloat />
         </NextIntlClientProvider>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <Script src="/fx.js" strategy="afterInteractive" />
         <Analytics />
       </body>
     </html>

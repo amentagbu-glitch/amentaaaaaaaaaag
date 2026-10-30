@@ -62,7 +62,9 @@
       "reel": "ريل · 15 ث",
       "maps": "خرائط Google",
       "ai": "ذكاء اصطناعي · رد تلقائي"
-    }
+    },
+    "titleA": "من الواقع",
+    "titleB": "إلى العالم الرقمي."
   },
   "problem": {
     "label": "الواقع",
@@ -462,5 +464,22 @@
   ],
   "hud": {
     "scroll": "مرّر"
+  },
+  "bento": {
+    "captions": [
+      "طاجين اليوم",
+      "صنع منزلي",
+      "الليلة 8 مساءً"
+    ],
+    "query": "restaurant agadir",
+    "optimized": "صفحة محسّنة",
+    "book": "حجز",
+    "incoming": "رسالة واردة",
+    "incomingText": "Salam, bghit nreservi l 4…",
+    "reply": "رد",
+    "reminder": "تذكير",
+    "quote": "عرض سعر",
+    "log1": "تم إرسال الرد",
+    "log2": "تمت برمجة التذكير"
   }
 }

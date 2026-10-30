@@ -62,7 +62,9 @@
       "reel": "Reel · 15 s",
       "maps": "Google Maps",
       "ai": "AI · Auto-reply"
-    }
+    },
+    "titleA": "Offline, online,",
+    "titleB": "in sync."
   },
   "problem": {
     "label": "The problem",
@@ -462,5 +464,22 @@
   ],
   "hud": {
     "scroll": "Scroll"
+  },
+  "bento": {
+    "captions": [
+      "Today's tagine",
+      "Homemade",
+      "Tonight 8pm"
+    ],
+    "query": "restaurant agadir",
+    "optimized": "Optimised profile",
+    "book": "Book",
+    "incoming": "Message received",
+    "incomingText": "Salam, bghit nreservi l 4…",
+    "reply": "Reply",
+    "reminder": "Reminder",
+    "quote": "Quote",
+    "log1": "reply sent",
+    "log2": "reminder scheduled"
   }
 }

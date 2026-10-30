@@ -62,7 +62,9 @@
       "reel": "Reel · 15 s",
       "maps": "Google Maps",
       "ai": "IA · Réponse auto"
-    }
+    },
+    "titleA": "Hors ligne, en ligne,",
+    "titleB": "en phase."
   },
   "problem": {
     "label": "Le constat",
@@ -462,5 +464,22 @@
   ],
   "hud": {
     "scroll": "Défiler"
+  },
+  "bento": {
+    "captions": [
+      "Le tajine du jour",
+      "Fait maison",
+      "Ce soir 20h"
+    ],
+    "query": "restaurant agadir",
+    "optimized": "Profil optimisé",
+    "book": "Réserver",
+    "incoming": "Message reçu",
+    "incomingText": "Salam, bghit nreservi l 4…",
+    "reply": "Réponse",
+    "reminder": "Rappel",
+    "quote": "Devis",
+    "log1": "réponse envoyée",
+    "log2": "rappel programmé"
   }
 }

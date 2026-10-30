@@ -37,7 +37,9 @@ Production check: `npm run build && npm start`.
 - `lib/site.ts`: contact details, socials, feature flags (logo files, testimonials)
 - `app/[locale]/…`: pages (home, services, work, about, contact)
 - `app/actions/audit.ts`: audit form (validation, honeypot + timing spam check, email + auto-reply)
-- `components/`: header, footer, hero mockups, chat mock, form, etc.
+- `components/`: header, footer, hero mockups, bento visuals, chat mock, form, etc.
+- `public/globe.js`: the dotted globe on the home page (map data from Natural Earth via world-atlas)
+- `public/fx.js`: small effects (Agadir clock, card spotlight, 3D tilt, scroll progress, timeline fill). All respect reduced-motion settings
 
 ## Placeholders to replace
 

@@ -1,11 +1,13 @@
 import { useTranslations } from "next-intl";
+import { Spot } from "./Spot";
 
 export type Case = { type: string; problem: string; solution: string; result: string };
 
 export function CaseCard({ c, index, detailed = false }: { c: Case; index: number; detailed?: boolean }) {
   const t = useTranslations("work");
   return (
-    <article className="glass hud lift flex h-full flex-col overflow-hidden">
+    <article data-spot className="glass hud lift flex h-full flex-col overflow-hidden">
+      <Spot />
       <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden border-b border-line bg-bg/50">
         <div className="grid-bg ![mask-image:none] opacity-60" />
         <span className="absolute inset-[18%] border border-dashed border-line" />
