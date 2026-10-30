@@ -1,0 +1,255 @@
+{
+  "meta": {
+    "siteName": "Sync Studio",
+    "home": { "title": "Sync Studio · Vidéo, sites web et IA pour les entreprises à Agadir", "description": "Studio digital à Agadir, Maroc. Nous faisons passer les entreprises du hors ligne au en ligne avec la vidéo, les sites web et l'automatisation par IA. Audit gratuit." },
+    "services": { "title": "Services · Contenu, digital et automatisation IA", "description": "Vidéo, photo, réseaux sociaux, Google Business, sites web, WhatsApp et automatisation par IA pour les entreprises au Maroc." },
+    "work": { "title": "Réalisations · Études de cas", "description": "Nos projets pour les restaurants, hôtels, producteurs et commerces à Agadir et au Maroc." },
+    "about": { "title": "À propos · Le studio", "description": "Sync Studio est un studio digital basé à Agadir. Notre histoire et nos valeurs." },
+    "contact": { "title": "Contact · Demander un audit gratuit", "description": "Demandez un audit gratuit de votre présence en ligne. Réponse rapide par WhatsApp ou e-mail. Agadir, Maroc." }
+  },
+  "nav": {
+    "services": "Services",
+    "work": "Réalisations",
+    "about": "À propos",
+    "contact": "Contact",
+    "cta": "Audit gratuit",
+    "ctaLong": "Demander un audit gratuit",
+    "menu": "Ouvrir le menu",
+    "close": "Fermer le menu",
+    "language": "Langue",
+    "skip": "Aller au contenu",
+    "home": "Accueil"
+  },
+  "logoPlaceholder": "Logo à remplacer",
+  "hero": {
+    "label": "Studio digital · Agadir",
+    "title": "Hors ligne, en ligne, en phase.",
+    "subtitle": "Vidéo, sites web et automatisation par IA pour les entreprises.",
+    "ctaPrimary": "Demander un audit gratuit",
+    "ctaSecondary": "Voir nos réalisations",
+    "note": "Audit gratuit, sans engagement.",
+    "mock": {
+      "reel": "Reel",
+      "reelCaption": "Le tajine du jour, en 15 secondes.",
+      "mapsName": "Votre entreprise",
+      "mapsType": "Restaurant · Agadir",
+      "mapsOpen": "Ouvert",
+      "mapsDirections": "Itinéraire",
+      "mapsCall": "Appeler",
+      "mapsWebsite": "Site web",
+      "mapsBook": "Réserver",
+      "waName": "Client",
+      "waMsg": "Vous êtes ouverts ce soir ?",
+      "waReply": "Oui, jusqu'à 23h. Je vous réserve une table ?"
+    }
+  },
+  "problem": {
+    "label": "Le constat",
+    "title": "Votre entreprise est excellente. Mais est-elle visible en ligne ?",
+    "subtitle": "Vos clients vous cherchent sur leur téléphone avant de venir.",
+    "items": [
+      { "title": "Google Maps sans photos", "text": "Une fiche vide ou ancienne. Le client passe à l'adresse suivante." },
+      { "title": "Des réseaux postés une fois par mois", "text": "Pas de régularité, pas de confiance. Votre travail reste invisible." },
+      { "title": "Des questions WhatsApp sans réponse", "text": "Prix, horaires, réservations. Une réponse tardive, c'est un client perdu." }
+    ]
+  },
+  "services": {
+    "label": "Services",
+    "title": "Trois piliers pour être vu, choisi et contacté.",
+    "subtitle": "On commence par ce qui compte le plus pour vous.",
+    "more": "Voir le détail",
+    "items": {
+      "content": { "title": "Contenu", "text": "Vidéo, photo, reels et réseaux sociaux.", "points": ["Tournage sur place", "Reels et stories", "Gestion des réseaux"] },
+      "digital": { "title": "Digital", "text": "Google Business, site web, WhatsApp, réservation en ligne.", "points": ["Fiche Google optimisée", "Site rapide et clair", "WhatsApp Business"] },
+      "ai": { "title": "Automatisation IA", "text": "Réponses automatiques, rappels, devis, assistant IA.", "points": ["Réponses 24h/24", "Rappels de rendez-vous", "Devis en quelques clics"] }
+    }
+  },
+  "ai": {
+    "label": "L'avantage IA",
+    "title": "Nous travaillons avec l'IA, pour de meilleurs résultats.",
+    "subtitle": "L'IA s'occupe des tâches répétitives. Vous gardez le contact humain.",
+    "points": [
+      { "title": "Réponses 24h/24", "text": "Vos clients ont une réponse, même la nuit." },
+      { "title": "Moins de tâches répétitives", "text": "Moins de copier-coller, plus de temps pour votre métier." },
+      { "title": "Un contenu plus régulier", "text": "Un calendrier clair, des publications qui ne s'arrêtent pas." },
+      { "title": "Des résultats suivis chaque mois", "text": "Un point mensuel simple : ce qui marche, ce qu'on ajuste." }
+    ],
+    "chat": {
+      "name": "Café Atlas",
+      "status": "en ligne",
+      "tag": "Réponse auto · IA",
+      "caption": "Exemple de réponse automatique WhatsApp, en darija."
+    }
+  },
+  "process": {
+    "label": "Méthode",
+    "title": "Simple, en quatre étapes.",
+    "steps": [
+      { "title": "Audit", "text": "On analyse votre présence en ligne. Gratuitement." },
+      { "title": "Plan", "text": "Un plan clair, avec des priorités et un budget." },
+      { "title": "Création", "text": "Tournage, site, automatisations. On s'occupe de tout." },
+      { "title": "Suivi", "text": "Chaque mois, on mesure et on améliore." }
+    ]
+  },
+  "work": {
+    "label": "Réalisations",
+    "title": "Des projets concrets, des résultats réels.",
+    "subtitle": "Exemples à remplacer par nos vrais projets.",
+    "placeholder": "Exemple",
+    "problemLabel": "Problème",
+    "solutionLabel": "Solution",
+    "resultLabel": "Résultat",
+    "doneLabel": "Ce que nous avons fait",
+    "typeLabel": "Type de client",
+    "visual": "Visuel à venir",
+    "cta": "Toutes les réalisations",
+    "cases": [
+      { "type": "Restaurant · Agadir", "problem": "Fiche Google sans photos, peu de réservations en semaine.", "solution": "Shooting photo, reels hebdomadaires, fiche Google optimisée, réservation WhatsApp.", "result": "[résultat réel]" },
+      { "type": "Riad · Taghazout", "problem": "Dépendance aux plateformes de réservation et à leurs commissions.", "solution": "Site rapide avec réservation directe, vidéo de présentation, réponses automatiques.", "result": "[résultat réel]" },
+      { "type": "Producteur d'huile d'argan · Souss", "problem": "Un produit excellent, mais aucune vente en ligne.", "solution": "Vidéo de l'histoire du produit, boutique simple, devis automatiques pour les professionnels.", "result": "[résultat réel]" }
+    ]
+  },
+  "offers": {
+    "label": "Offres",
+    "title": "Des offres claires, adaptées à votre étape.",
+    "subtitle": "On commence toujours par un audit gratuit.",
+    "popular": "Le plus choisi",
+    "from": "À partir de",
+    "note": "Prix indicatifs. Audit gratuit d'abord.",
+    "cta": "Commencer par l'audit",
+    "plans": [
+      { "name": "Starter", "price": "3 000 MAD", "period": "paiement unique", "desc": "Pour être enfin visible.", "features": ["Fiche Google Business complète", "Séance photo professionnelle", "Page web simple", "WhatsApp Business configuré"] },
+      { "name": "Growth", "price": "2 500 MAD", "period": "par mois", "desc": "Pour publier chaque mois, sans y penser.", "features": ["Reels et photos chaque mois", "Gestion des réseaux sociaux", "Mises à jour Google", "Rapport mensuel"] },
+      { "name": "Full Digital", "price": "8 000 MAD", "period": "mise en place, puis mensuel", "desc": "Pour tout connecter et automatiser.", "features": ["Site web avec réservation", "Contenu chaque mois", "Automatisations IA sur WhatsApp", "Suivi et améliorations"] }
+    ]
+  },
+  "testimonials": {
+    "label": "Témoignages",
+    "title": "Ils en parlent mieux que nous."
+  },
+  "finalCta": {
+    "label": "Audit gratuit",
+    "title": "Prêt à passer en ligne ?",
+    "subtitle": "Dites-nous où vous en êtes. On vous répond avec un audit clair, sous 48h.",
+    "whatsapp": "Écrire sur WhatsApp",
+    "or": "Vous préférez discuter ?"
+  },
+  "form": {
+    "name": "Nom complet",
+    "business": "Nom de l'entreprise",
+    "type": "Type d'entreprise",
+    "typeSelect": "Choisir…",
+    "types": { "restaurant": "Restaurant / café", "hotel": "Hôtel / riad", "producer": "Producteur", "shop": "Commerce", "other": "Autre" },
+    "whatsapp": "Numéro WhatsApp",
+    "email": "E-mail",
+    "needs": "De quoi avez-vous besoin ?",
+    "needsOptions": { "video": "Vidéo et photo", "website": "Site web", "social": "Réseaux sociaux", "ai": "Automatisation IA", "unsure": "Je ne sais pas encore" },
+    "link": "Lien Instagram ou Google Maps",
+    "optional": "facultatif",
+    "message": "Message court",
+    "messagePlaceholder": "Ce que vous voulez améliorer en priorité…",
+    "submit": "Demander mon audit gratuit",
+    "sending": "Envoi…",
+    "privacy": "Vos informations servent uniquement à vous répondre.",
+    "successTitle": "Merci, c'est bien reçu.",
+    "successText": "Nous revenons vers vous sous 48h avec votre audit. Un e-mail de confirmation vous a été envoyé.",
+    "successAgain": "Envoyer une autre demande",
+    "errorGeneric": "L'envoi a échoué. Réessayez ou écrivez-nous sur WhatsApp.",
+    "errors": {
+      "required": "Ce champ est requis.",
+      "email": "Adresse e-mail invalide.",
+      "phone": "Numéro invalide.",
+      "needs": "Choisissez au moins une option.",
+      "url": "Lien invalide."
+    },
+    "autoReply": {
+      "subject": "Nous avons bien reçu votre demande d'audit",
+      "body": "Bonjour {name},\n\nMerci pour votre demande. Nous analysons la présence en ligne de {business} et revenons vers vous sous 48h.\n\nÀ très vite,\nSync Studio · Agadir"
+    }
+  },
+  "footer": {
+    "tagline": "Hors ligne, en ligne, en phase.",
+    "location": "Agadir, Maroc",
+    "rights": "Tous droits réservés.",
+    "nav": "Navigation",
+    "contact": "Contact",
+    "follow": "Suivez-nous",
+    "beta": "Version bêta"
+  },
+  "whatsapp": {
+    "float": "Écrire sur WhatsApp",
+    "prefill": "Bonjour Sync Studio, je voudrais un audit gratuit."
+  },
+  "servicesPage": {
+    "label": "Services",
+    "title": "Tout ce qu'il faut pour exister en ligne.",
+    "subtitle": "Trois services qui fonctionnent ensemble. Prenez-en un, ou les trois.",
+    "included": "Ce qui est inclus",
+    "deliverables": "Livrables typiques",
+    "forWho": "Pour qui",
+    "cta": "Demander un audit gratuit",
+    "sections": {
+      "content": {
+        "title": "Contenu",
+        "lead": "Vidéo, photo, reels et réseaux sociaux. Montrer votre travail tel qu'il est : excellent.",
+        "included": ["Tournage et shooting sur place", "Montage court format (reels, stories, TikTok)", "Calendrier de publication", "Gestion des comptes Instagram, Facebook, TikTok"],
+        "deliverables": ["Reels montés et sous-titrés", "Photos retouchées", "Publications prêtes à poster"],
+        "forWho": "Restaurants, cafés, hôtels et marques qui veulent publier régulièrement, sans y passer leurs soirées."
+      },
+      "digital": {
+        "title": "Digital",
+        "lead": "Google Business, site web, WhatsApp et réservation en ligne. Être trouvé, puis contacté.",
+        "included": ["Création et optimisation de la fiche Google Business", "Site web rapide, en plusieurs langues", "WhatsApp Business : catalogue, messages, étiquettes", "Réservation ou prise de rendez-vous en ligne"],
+        "deliverables": ["Fiche Google complète", "Site web mobile", "Lien de réservation", "Formation courte à la prise en main"],
+        "forWho": "Toute entreprise que les clients ne trouvent pas facilement sur Google ou qui perd des demandes."
+      },
+      "ai": {
+        "title": "Automatisation IA",
+        "lead": "Réponses automatiques, rappels, devis et assistant IA. Gagner du temps chaque jour.",
+        "included": ["Réponses automatiques WhatsApp et Instagram", "Rappels de réservation et de rendez-vous", "Devis générés automatiquement", "Assistant IA formé sur vos informations"],
+        "deliverables": ["Scénarios de réponse validés avec vous", "Assistant en français, arabe et darija", "Tableau de suivi simple"],
+        "forWho": "Les équipes qui reçoivent beaucoup de questions répétitives ou de demandes de prix."
+      }
+    }
+  },
+  "workPage": {
+    "label": "Réalisations",
+    "title": "Nos études de cas.",
+    "subtitle": "Les projets ci-dessous sont des exemples. Ils seront remplacés par nos vrais projets et vrais résultats."
+  },
+  "aboutPage": {
+    "label": "À propos",
+    "title": "Le travail est excellent. La peur, c'est de commencer.",
+    "story": "Tout le monde autour de moi savait que je travaillais dans le digital et l'audiovisuel, mais je n'ai jamais eu le courage de me filmer. Beaucoup de bonnes entreprises ressentent la même chose : le travail est excellent, la peur, c'est de commencer.",
+    "storyMore": "Sync Studio est né à Agadir pour ça. Accompagner les entreprises locales, pas à pas, du hors ligne au en ligne. Avec des outils modernes, et sans jargon.",
+    "founderLabel": "Fondateur",
+    "founderName": "[nom]",
+    "founderRole": "Fondateur · Vidéo et digital",
+    "founderPhoto": "[photo]",
+    "valuesLabel": "Valeurs",
+    "valuesTitle": "Ce qui guide notre travail.",
+    "values": [
+      { "title": "Les résultats avant les heures", "text": "On mesure ce qu'on apporte, pas le temps passé." },
+      { "title": "La clarté avant le jargon", "text": "Des mots simples, des décisions faciles." },
+      { "title": "La qualité avant la quantité", "text": "Moins de contenu, mais du bon contenu." },
+      { "title": "Un partenariat sur le long terme", "text": "On grandit avec vous, mois après mois." }
+    ]
+  },
+  "contactPage": {
+    "label": "Contact",
+    "title": "Demandez votre audit gratuit.",
+    "subtitle": "Quelques questions, deux minutes. On vous répond sous 48h.",
+    "direct": "Contact direct",
+    "whatsapp": "WhatsApp",
+    "email": "E-mail",
+    "location": "Studio",
+    "locationValue": "Agadir, Maroc",
+    "what": "Ce que contient l'audit",
+    "whatItems": ["Votre fiche Google et vos avis", "Vos réseaux sociaux", "Votre site web et vos réponses WhatsApp", "Trois actions prioritaires, concrètes"]
+  },
+  "notFound": {
+    "title": "Page introuvable.",
+    "text": "Cette page n'existe pas, ou plus.",
+    "back": "Retour à l'accueil"
+  }
+}
