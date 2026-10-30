@@ -83,8 +83,7 @@ export function Header() {
         </button>
       </div>
 
-      {open && (
-        <div id="mobile-menu" className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line/70 bg-bg lg:hidden">
+      <div id="mobile-menu" hidden={!open} className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line/70 bg-bg lg:hidden">
           <nav aria-label="Mobile" className="container-x flex flex-col py-6">
             {links.map((l) => (
               <Link
@@ -103,8 +102,7 @@ export function Header() {
               <LanguageSwitcher className="self-start" />
             </div>
           </nav>
-        </div>
-      )}
+      </div>
     </header>
   );
 }
