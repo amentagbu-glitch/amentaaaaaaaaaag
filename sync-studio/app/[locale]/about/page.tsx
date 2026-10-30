@@ -52,7 +52,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {values.map((v, i) => (
               <Reveal key={i} delay={i * 0.05}>
-                <article className="glass h-full p-6">
+                <article className="glass hud lift h-full p-6">
                   <span className="font-mono text-xs text-accent">0{i + 1}</span>
                   <h3 className="mt-4 text-lg font-semibold">{v.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">{v.text}</p>

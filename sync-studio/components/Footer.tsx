@@ -15,7 +15,7 @@ export function Footer() {
     { href: site.socials.linkedin, label: "LinkedIn", Icon: IconLinkedIn },
   ];
   return (
-    <footer className="border-t border-line/70 pb-28 pt-16 sm:pb-16">
+    <footer className="relative overflow-hidden border-t border-line/70 pb-28 pt-16 sm:pb-16">
       <div className="container-x grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <Logo />
@@ -60,7 +60,10 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      <div className="container-x mt-14 flex flex-col gap-2 border-t border-line/60 pt-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+      <div className="container-x mt-16" aria-hidden>
+        <p className="outline-text select-none font-heading text-[13vw] font-medium leading-[0.95] tracking-[-0.05em] lg:text-[9.5rem]">{t("tagline")}</p>
+      </div>
+      <div className="container-x mt-10 flex flex-col gap-2 border-t border-line/60 pt-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
         <p>
           © {new Date().getFullYear()} Sync Studio. {t("rights")}
         </p>

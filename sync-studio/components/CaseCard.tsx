@@ -5,9 +5,11 @@ export type Case = { type: string; problem: string; solution: string; result: st
 export function CaseCard({ c, index, detailed = false }: { c: Case; index: number; detailed?: boolean }) {
   const t = useTranslations("work");
   return (
-    <article className="glass flex h-full flex-col overflow-hidden">
-      <div className="relative flex aspect-[16/10] items-center justify-center border-b border-dashed border-line bg-elevated/50">
-        <span className="label-mono">{t("visual")}</span>
+    <article className="glass hud lift flex h-full flex-col overflow-hidden">
+      <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden border-b border-line bg-bg/50">
+        <div className="grid-bg ![mask-image:none] opacity-60" />
+        <span className="absolute inset-[18%] border border-dashed border-line" />
+        <span className="relative label-mono">{t("visual")}</span>
         <span className="absolute start-3 top-3 rounded-full border border-dashed border-chrome/40 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-chrome">
           {t("placeholder")} 0{index + 1}
         </span>

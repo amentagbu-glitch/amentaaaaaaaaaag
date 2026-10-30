@@ -30,7 +30,7 @@ export default function ServicesPage({ params }: { params: Promise<{ locale: str
       <div className="container-x space-y-6 pb-24">
         {sections.map(({ k, Icon }, i) => (
           <Reveal key={k}>
-            <section id={k} className="glass scroll-mt-24 p-6 sm:p-10">
+            <section id={k} className="glass hud scroll-mt-24 p-6 sm:p-10">
               <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
                 <div>
                   <p className="label-mono">

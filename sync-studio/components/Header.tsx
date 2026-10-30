@@ -35,15 +35,19 @@ export function Header() {
   }, [open]);
 
   return (
-    <header
-      className={`sticky top-0 z-40 transition-colors duration-300 ${
-        scrolled || open ? "border-b border-line/70 bg-bg/80 backdrop-blur-xl" : "border-b border-transparent"
-      }`}
-    >
+    <header className="sticky top-0 z-40 pt-3">
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:start-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-white">
         {t("skip")}
       </a>
-      <div className="container-x flex h-16 items-center justify-between gap-4">
+      <div className="container-x">
+      <div
+        data-bar
+        className={`flex h-14 items-center justify-between gap-4 rounded-[14px] border ps-3 pe-2 transition-[background-color,border-color,box-shadow] duration-300 ${
+          scrolled || open
+            ? "border-line bg-surface/75 shadow-[0_12px_40px_-16px_rgba(0,0,0,0.8)] backdrop-blur-xl"
+            : "border-line/50 bg-surface/30 backdrop-blur-md"
+        }`}
+      >
         <Link href="/" aria-label={`Sync Studio · ${t("home")}`} className="shrink-0">
           <Logo />
         </Link>
@@ -56,9 +60,10 @@ export function Header() {
                 key={l.key}
                 href={l.href}
                 aria-current={active ? "page" : undefined}
-                className={`rounded-lg px-3 py-2 text-sm transition-colors ${active ? "text-text" : "text-muted hover:text-text"}`}
+                className={`relative rounded-lg px-3 py-2 text-sm transition-colors ${active ? "text-text" : "text-muted hover:text-text"}`}
               >
                 {t(l.key)}
+                {active && <span className="absolute inset-x-3 -bottom-px h-px bg-accent" />}
               </Link>
             );
           })}
@@ -73,7 +78,7 @@ export function Header() {
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-[10px] border border-line text-text lg:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-[10px] border border-line bg-bg/40 text-text lg:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? t("close") : t("menu")}
@@ -82,9 +87,11 @@ export function Header() {
           {open ? <IconClose className="h-5 w-5" /> : <IconMenu className="h-5 w-5" />}
         </button>
       </div>
+      </div>
 
-      <div id="mobile-menu" hidden={!open} className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line/70 bg-bg lg:hidden">
-          <nav aria-label="Mobile" className="container-x flex flex-col py-6">
+      <div id="mobile-menu" hidden={!open} className="container-x mt-2 lg:hidden">
+        <div className="glass max-h-[calc(100dvh-6rem)] overflow-y-auto !bg-surface/95">
+          <nav aria-label="Mobile" className="flex flex-col px-5 py-4">
             {links.map((l) => (
               <Link
                 key={l.key}
@@ -102,6 +109,7 @@ export function Header() {
               <LanguageSwitcher className="self-start" />
             </div>
           </nav>
+        </div>
       </div>
     </header>
   );

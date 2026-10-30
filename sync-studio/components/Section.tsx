@@ -3,9 +3,16 @@ import { Reveal } from "./Reveal";
 
 export function SectionLabel({ index, children }: { index?: string; children: ReactNode }) {
   return (
-    <p className="label-mono flex items-center gap-2">
-      {index && <span className="text-accent">{index}</span>}
+    <p className="label-mono flex items-center gap-2.5">
+      {index && (
+        <span className="text-chrome">
+          <span className="text-line">[</span>
+          <span className="text-accent">{index}</span>
+          <span className="text-line">]</span>
+        </span>
+      )}
       <span>{children}</span>
+      <span aria-hidden className="h-px w-10 bg-line" />
     </p>
   );
 }
@@ -14,7 +21,7 @@ export function SectionHeader({ index, label, title, subtitle, center = false }:
   return (
     <Reveal className={`max-w-2xl ${center ? "mx-auto text-center [&_p.label-mono]:justify-center" : ""}`}>
       <SectionLabel index={index}>{label}</SectionLabel>
-      <h2 className="mt-4 text-3xl font-semibold leading-[1.12] text-text sm:text-4xl md:text-[2.75rem]">{title}</h2>
+      <h2 className="mt-5 text-3xl font-medium leading-[1.1] tracking-[-0.03em] text-text sm:text-4xl md:text-[2.9rem]">{title}</h2>
       {subtitle && <p className="mt-4 text-base leading-relaxed text-muted sm:text-lg">{subtitle}</p>}
     </Reveal>
   );

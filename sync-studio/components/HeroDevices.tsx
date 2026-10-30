@@ -4,8 +4,19 @@ import { IconChat, IconHeart, IconPhone, IconPin, IconPlay, IconStar, IconWhatsA
 /** Placeholder device screens: a Google Maps profile (laptop), a reel (phone) and a WhatsApp chat (card). */
 export function HeroDevices() {
   const t = useTranslations("hero.mock");
+  const tag = useTranslations("hero.tags");
   return (
-    <div className="relative mx-auto aspect-[10/8.2] w-full max-w-[560px]" aria-hidden>
+    <div className="relative mx-auto w-full max-w-[580px] p-3 sm:p-5" aria-hidden>
+      {/* viewfinder frame */}
+      <span className="absolute start-0 top-0 h-5 w-5 border-s border-t border-chrome/50" />
+      <span className="absolute end-0 top-0 h-5 w-5 border-e border-t border-chrome/50" />
+      <span className="absolute bottom-0 start-0 h-5 w-5 border-b border-s border-chrome/50" />
+      <span className="absolute bottom-0 end-0 h-5 w-5 border-b border-e border-chrome/50" />
+      <span className="absolute -top-2.5 end-6 bg-bg px-2 font-mono text-[10px] uppercase tracking-[0.16em] text-muted" dir="ltr">
+        REC <span className="ms-1 inline-block h-1.5 w-1.5 rounded-full bg-[#ff4d5e] align-middle" />
+      </span>
+      <div className="[perspective:1400px]">
+    <div className="relative aspect-[10/8.2] w-full [transform:rotateX(6deg)_rotateY(-9deg)] [transform-style:preserve-3d] rtl:[transform:rotateX(6deg)_rotateY(9deg)]">
       {/* Laptop: Google Maps profile */}
       <div className="absolute inset-x-[2%] top-[16%] sm:inset-x-[4%]">
         <div className="rounded-t-[14px] border border-line bg-elevated p-[1.6%] pb-[2%]">
@@ -59,6 +70,8 @@ export function HeroDevices() {
         </div>
       </div>
 
+      <Tag className="bottom-[22%] start-[-1%] hidden sm:flex">{tag("maps")}</Tag>
+
       {/* Phone: reel */}
       <div className="absolute bottom-[1%] end-[1%] w-[33%] max-w-[180px] animate-float [animation-delay:-2s]">
         <div className="rounded-[26px] border border-line bg-elevated p-[5%] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)]">
@@ -84,6 +97,8 @@ export function HeroDevices() {
         </div>
       </div>
 
+      <Tag className="bottom-[4%] end-[36%]">{tag("reel")}</Tag>
+
       {/* WhatsApp card */}
       <div className="glass absolute start-0 top-0 w-[58%] max-w-[260px] animate-float p-2.5 sm:p-3">
         <div className="flex items-center gap-2">
@@ -97,8 +112,22 @@ export function HeroDevices() {
         <p className="ms-auto mt-1.5 w-fit max-w-[90%] rounded-[10px] rounded-se-[3px] border border-primary/30 bg-primary/15 px-2.5 py-1.5 text-[10px] text-text sm:text-[11px]">
           {t("waReply")}
         </p>
+        <span className="mt-2 flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.12em] text-accent">
+          <span className="h-1 w-1 rounded-full bg-accent" /> {tag("ai")}
+        </span>
       </div>
     </div>
+      </div>
+    </div>
+  );
+}
+
+function Tag({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <span className={`absolute z-10 flex items-center gap-1.5 rounded-md border border-line bg-bg/85 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-chrome backdrop-blur ${className}`}>
+      <span className="h-px w-3 bg-accent" />
+      {children}
+    </span>
   );
 }
 

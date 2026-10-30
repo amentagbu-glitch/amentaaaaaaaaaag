@@ -1,11 +1,26 @@
 {
   "meta": {
     "siteName": "Sync Studio",
-    "home": { "title": "Sync Studio · Video, websites and AI for businesses in Agadir", "description": "Digital studio in Agadir, Morocco. We take businesses from offline to online with video, websites and AI automation. Free audit." },
-    "services": { "title": "Services · Content, digital and AI automation", "description": "Video, photo, social media, Google Business, websites, WhatsApp and AI automation for businesses in Morocco." },
-    "work": { "title": "Work · Case studies", "description": "Our projects for restaurants, hotels, producers and shops in Agadir and across Morocco." },
-    "about": { "title": "About · The studio", "description": "Sync Studio is a digital studio based in Agadir. Our story and our values." },
-    "contact": { "title": "Contact · Get a free audit", "description": "Request a free audit of your online presence. Fast reply by WhatsApp or email. Agadir, Morocco." }
+    "home": {
+      "title": "Sync Studio · Video, websites and AI for businesses in Agadir",
+      "description": "Digital studio in Agadir, Morocco. We take businesses from offline to online with video, websites and AI automation. Free audit."
+    },
+    "services": {
+      "title": "Services · Content, digital and AI automation",
+      "description": "Video, photo, social media, Google Business, websites, WhatsApp and AI automation for businesses in Morocco."
+    },
+    "work": {
+      "title": "Work · Case studies",
+      "description": "Our projects for restaurants, hotels, producers and shops in Agadir and across Morocco."
+    },
+    "about": {
+      "title": "About · The studio",
+      "description": "Sync Studio is a digital studio based in Agadir. Our story and our values."
+    },
+    "contact": {
+      "title": "Contact · Get a free audit",
+      "description": "Request a free audit of your online presence. Fast reply by WhatsApp or email. Agadir, Morocco."
+    }
   },
   "nav": {
     "services": "Services",
@@ -41,6 +56,12 @@
       "waName": "Customer",
       "waMsg": "Are you open tonight?",
       "waReply": "Yes, until 11pm. Shall I book you a table?"
+    },
+    "status": "Studio online",
+    "tags": {
+      "reel": "Reel · 15 s",
+      "maps": "Google Maps",
+      "ai": "AI · Auto-reply"
     }
   },
   "problem": {
@@ -48,9 +69,18 @@
     "title": "Your business is great. But is it visible online?",
     "subtitle": "Customers look you up on their phone before they come.",
     "items": [
-      { "title": "Google Maps with no photos", "text": "An empty or outdated profile. The customer moves on to the next place." },
-      { "title": "Social media posted once a month", "text": "No rhythm, no trust. Your work stays invisible." },
-      { "title": "WhatsApp questions answered too late", "text": "Prices, hours, bookings. A late reply is a lost customer." }
+      {
+        "title": "Google Maps with no photos",
+        "text": "An empty or outdated profile. The customer moves on to the next place."
+      },
+      {
+        "title": "Social media posted once a month",
+        "text": "No rhythm, no trust. Your work stays invisible."
+      },
+      {
+        "title": "WhatsApp questions answered too late",
+        "text": "Prices, hours, bookings. A late reply is a lost customer."
+      }
     ]
   },
   "services": {
@@ -59,9 +89,33 @@
     "subtitle": "We start with what matters most to you.",
     "more": "See details",
     "items": {
-      "content": { "title": "Content", "text": "Video, photo, reels and social media.", "points": ["On-site shoots", "Reels and stories", "Social media management"] },
-      "digital": { "title": "Digital", "text": "Google Business, website, WhatsApp, online booking.", "points": ["Optimised Google profile", "Fast, clear website", "WhatsApp Business"] },
-      "ai": { "title": "AI automation", "text": "Auto-replies, reminders, quotes, AI assistant.", "points": ["Replies 24/7", "Appointment reminders", "Quotes in a few clicks"] }
+      "content": {
+        "title": "Content",
+        "text": "Video, photo, reels and social media.",
+        "points": [
+          "On-site shoots",
+          "Reels and stories",
+          "Social media management"
+        ]
+      },
+      "digital": {
+        "title": "Digital",
+        "text": "Google Business, website, WhatsApp, online booking.",
+        "points": [
+          "Optimised Google profile",
+          "Fast, clear website",
+          "WhatsApp Business"
+        ]
+      },
+      "ai": {
+        "title": "AI automation",
+        "text": "Auto-replies, reminders, quotes, AI assistant.",
+        "points": [
+          "Replies 24/7",
+          "Appointment reminders",
+          "Quotes in a few clicks"
+        ]
+      }
     }
   },
   "ai": {
@@ -69,26 +123,62 @@
     "title": "We work with AI, for better results.",
     "subtitle": "AI handles the repetitive work. You keep the human touch.",
     "points": [
-      { "title": "Replies 24/7", "text": "Your customers get an answer, even at night." },
-      { "title": "Fewer repetitive tasks", "text": "Less copy-paste, more time for your craft." },
-      { "title": "More consistent content", "text": "A clear calendar, posts that don't stop." },
-      { "title": "Results tracked monthly", "text": "A simple monthly review: what works, what we adjust." }
+      {
+        "title": "Replies 24/7",
+        "text": "Your customers get an answer, even at night."
+      },
+      {
+        "title": "Fewer repetitive tasks",
+        "text": "Less copy-paste, more time for your craft."
+      },
+      {
+        "title": "More consistent content",
+        "text": "A clear calendar, posts that don't stop."
+      },
+      {
+        "title": "Results tracked monthly",
+        "text": "A simple monthly review: what works, what we adjust."
+      }
     ],
     "chat": {
       "name": "Café Atlas",
       "status": "online",
       "tag": "Auto-reply · AI",
       "caption": "Example of an automatic WhatsApp reply, in Darija."
+    },
+    "agent": {
+      "title": "AI agent",
+      "live": "active",
+      "intent": "Intent",
+      "intentValue": "Booking",
+      "slot": "Slot",
+      "slotValue": "20:30 · 4 guests",
+      "reminder": "Reminder",
+      "reminderValue": "Scheduled · 19:30",
+      "handoff": "Team",
+      "handoffValue": "Notified if needed"
     }
   },
   "process": {
     "label": "How it works",
     "title": "Simple, in four steps.",
     "steps": [
-      { "title": "Audit", "text": "We review your online presence. For free." },
-      { "title": "Plan", "text": "A clear plan, with priorities and a budget." },
-      { "title": "Create", "text": "Shoots, website, automations. We handle it all." },
-      { "title": "Follow up", "text": "Every month, we measure and improve." }
+      {
+        "title": "Audit",
+        "text": "We review your online presence. For free."
+      },
+      {
+        "title": "Plan",
+        "text": "A clear plan, with priorities and a budget."
+      },
+      {
+        "title": "Create",
+        "text": "Shoots, website, automations. We handle it all."
+      },
+      {
+        "title": "Follow up",
+        "text": "Every month, we measure and improve."
+      }
     ]
   },
   "work": {
@@ -104,9 +194,24 @@
     "visual": "Visual coming soon",
     "cta": "All work",
     "cases": [
-      { "type": "Restaurant · Agadir", "problem": "Google profile with no photos, few weekday bookings.", "solution": "Photo shoot, weekly reels, optimised Google profile, WhatsApp booking.", "result": "[real result]" },
-      { "type": "Riad · Taghazout", "problem": "Reliance on booking platforms and their commissions.", "solution": "Fast website with direct booking, intro video, automatic replies.", "result": "[real result]" },
-      { "type": "Argan oil producer · Souss", "problem": "An excellent product, but no online sales.", "solution": "Product story video, simple shop, automatic quotes for trade buyers.", "result": "[real result]" }
+      {
+        "type": "Restaurant · Agadir",
+        "problem": "Google profile with no photos, few weekday bookings.",
+        "solution": "Photo shoot, weekly reels, optimised Google profile, WhatsApp booking.",
+        "result": "[real result]"
+      },
+      {
+        "type": "Riad · Taghazout",
+        "problem": "Reliance on booking platforms and their commissions.",
+        "solution": "Fast website with direct booking, intro video, automatic replies.",
+        "result": "[real result]"
+      },
+      {
+        "type": "Argan oil producer · Souss",
+        "problem": "An excellent product, but no online sales.",
+        "solution": "Product story video, simple shop, automatic quotes for trade buyers.",
+        "result": "[real result]"
+      }
     ]
   },
   "offers": {
@@ -118,9 +223,42 @@
     "note": "Prices are indicative. Free audit first.",
     "cta": "Start with the audit",
     "plans": [
-      { "name": "Starter", "price": "3,000 MAD", "period": "one-time", "desc": "To finally be visible.", "features": ["Complete Google Business profile", "Professional photo session", "Simple web page", "WhatsApp Business set up"] },
-      { "name": "Growth", "price": "2,500 MAD", "period": "per month", "desc": "To post every month, without thinking about it.", "features": ["Reels and photos every month", "Social media management", "Google profile updates", "Monthly report"] },
-      { "name": "Full Digital", "price": "8,000 MAD", "period": "setup, then monthly", "desc": "To connect and automate everything.", "features": ["Website with booking", "Content every month", "AI automations on WhatsApp", "Follow-up and improvements"] }
+      {
+        "name": "Starter",
+        "price": "3,000 MAD",
+        "period": "one-time",
+        "desc": "To finally be visible.",
+        "features": [
+          "Complete Google Business profile",
+          "Professional photo session",
+          "Simple web page",
+          "WhatsApp Business set up"
+        ]
+      },
+      {
+        "name": "Growth",
+        "price": "2,500 MAD",
+        "period": "per month",
+        "desc": "To post every month, without thinking about it.",
+        "features": [
+          "Reels and photos every month",
+          "Social media management",
+          "Google profile updates",
+          "Monthly report"
+        ]
+      },
+      {
+        "name": "Full Digital",
+        "price": "8,000 MAD",
+        "period": "setup, then monthly",
+        "desc": "To connect and automate everything.",
+        "features": [
+          "Website with booking",
+          "Content every month",
+          "AI automations on WhatsApp",
+          "Follow-up and improvements"
+        ]
+      }
     ]
   },
   "testimonials": {
@@ -139,11 +277,23 @@
     "business": "Business name",
     "type": "Business type",
     "typeSelect": "Choose…",
-    "types": { "restaurant": "Restaurant / café", "hotel": "Hotel / riad", "producer": "Producer", "shop": "Shop", "other": "Other" },
+    "types": {
+      "restaurant": "Restaurant / café",
+      "hotel": "Hotel / riad",
+      "producer": "Producer",
+      "shop": "Shop",
+      "other": "Other"
+    },
     "whatsapp": "WhatsApp number",
     "email": "Email",
     "needs": "What do you need?",
-    "needsOptions": { "video": "Video and photo", "website": "Website", "social": "Social media", "ai": "AI automation", "unsure": "Not sure yet" },
+    "needsOptions": {
+      "video": "Video and photo",
+      "website": "Website",
+      "social": "Social media",
+      "ai": "AI automation",
+      "unsure": "Not sure yet"
+    },
     "link": "Instagram or Google Maps link",
     "optional": "optional",
     "message": "Short message",
@@ -192,22 +342,50 @@
       "content": {
         "title": "Content",
         "lead": "Video, photo, reels and social media. Showing your work as it really is: excellent.",
-        "included": ["On-site filming and photo shoots", "Short-form editing (reels, stories, TikTok)", "Posting calendar", "Instagram, Facebook and TikTok management"],
-        "deliverables": ["Edited, subtitled reels", "Retouched photos", "Ready-to-post content"],
+        "included": [
+          "On-site filming and photo shoots",
+          "Short-form editing (reels, stories, TikTok)",
+          "Posting calendar",
+          "Instagram, Facebook and TikTok management"
+        ],
+        "deliverables": [
+          "Edited, subtitled reels",
+          "Retouched photos",
+          "Ready-to-post content"
+        ],
         "forWho": "Restaurants, cafés, hotels and brands that want to post regularly, without spending their evenings on it."
       },
       "digital": {
         "title": "Digital",
         "lead": "Google Business, website, WhatsApp and online booking. Get found, then contacted.",
-        "included": ["Google Business profile setup and optimisation", "Fast, multilingual website", "WhatsApp Business: catalogue, messages, labels", "Online booking or appointments"],
-        "deliverables": ["Complete Google profile", "Mobile website", "Booking link", "Short hands-on training"],
+        "included": [
+          "Google Business profile setup and optimisation",
+          "Fast, multilingual website",
+          "WhatsApp Business: catalogue, messages, labels",
+          "Online booking or appointments"
+        ],
+        "deliverables": [
+          "Complete Google profile",
+          "Mobile website",
+          "Booking link",
+          "Short hands-on training"
+        ],
         "forWho": "Any business customers can't easily find on Google, or that loses enquiries."
       },
       "ai": {
         "title": "AI automation",
         "lead": "Auto-replies, reminders, quotes and an AI assistant. Save time every day.",
-        "included": ["Automatic replies on WhatsApp and Instagram", "Booking and appointment reminders", "Automatically generated quotes", "AI assistant trained on your information"],
-        "deliverables": ["Reply flows approved with you", "Assistant in French, Arabic and Darija", "Simple tracking dashboard"],
+        "included": [
+          "Automatic replies on WhatsApp and Instagram",
+          "Booking and appointment reminders",
+          "Automatically generated quotes",
+          "AI assistant trained on your information"
+        ],
+        "deliverables": [
+          "Reply flows approved with you",
+          "Assistant in French, Arabic and Darija",
+          "Simple tracking dashboard"
+        ],
         "forWho": "Teams that get lots of repetitive questions or price requests."
       }
     }
@@ -229,10 +407,22 @@
     "valuesLabel": "Values",
     "valuesTitle": "What guides our work.",
     "values": [
-      { "title": "Results before hours", "text": "We measure what we bring, not the time spent." },
-      { "title": "Clarity before jargon", "text": "Simple words, easy decisions." },
-      { "title": "Quality before quantity", "text": "Less content, but good content." },
-      { "title": "Long-term partnership", "text": "We grow with you, month after month." }
+      {
+        "title": "Results before hours",
+        "text": "We measure what we bring, not the time spent."
+      },
+      {
+        "title": "Clarity before jargon",
+        "text": "Simple words, easy decisions."
+      },
+      {
+        "title": "Quality before quantity",
+        "text": "Less content, but good content."
+      },
+      {
+        "title": "Long-term partnership",
+        "text": "We grow with you, month after month."
+      }
     ]
   },
   "contactPage": {
@@ -245,11 +435,32 @@
     "location": "Studio",
     "locationValue": "Agadir, Morocco",
     "what": "What the audit covers",
-    "whatItems": ["Your Google profile and reviews", "Your social media", "Your website and WhatsApp replies", "Three concrete priority actions"]
+    "whatItems": [
+      "Your Google profile and reviews",
+      "Your social media",
+      "Your website and WhatsApp replies",
+      "Three concrete priority actions"
+    ]
   },
   "notFound": {
     "title": "Page not found.",
     "text": "This page doesn't exist, or no longer does.",
     "back": "Back to home"
+  },
+  "marquee": [
+    "Video",
+    "Reels",
+    "Photo",
+    "Google Business",
+    "Websites",
+    "WhatsApp Business",
+    "Online booking",
+    "Auto-replies",
+    "AI assistant",
+    "Reminders",
+    "Automatic quotes"
+  ],
+  "hud": {
+    "scroll": "Scroll"
   }
 }
