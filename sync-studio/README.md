@@ -19,8 +19,8 @@ Production check: `npm run build && npm start`.
 Netlify's free plan allows business sites. Settings come from `netlify.toml` at the repo root, so nothing needs typing in the build settings.
 
 1. Sign up at netlify.com with GitHub.
-2. **Add new project → Import an existing project → GitHub**, pick this repository.
-3. **Branch to deploy:** `sync-studio-beta` (or `main` once merged). Build settings fill in from `netlify.toml`.
+2. **Add new project → Import an existing project → GitHub**, pick `amentagbu-glitch/amentaaaaaaaaaag`.
+3. **Branch to deploy:** `main`. Build settings fill in from `netlify.toml`.
 4. Add the environment variables below (at least `NEXT_PUBLIC_WHATSAPP_NUMBER`), then **Deploy**.
 5. Optional: **Project configuration → Change project name** to get `syncstudio.netlify.app`.
 6. Once you own `syncstudio.ma`: **Domain management → Add a domain**, follow the DNS steps, then set `NEXT_PUBLIC_SITE_URL=https://syncstudio.ma` and redeploy. HTTPS is automatic.
