@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { clients } from "@/lib/clients";
 import { ReelPlayer } from "./ReelPlayer";
 import { Spot } from "./Spot";
-import { IconArrow, IconInstagram } from "./icons";
+import { IconGlobe, IconInstagram, IconTikTok } from "./icons";
 
 /** Real client case study: Mou's Doner Kabab (Rabat), with the launch reel. */
 export function FeaturedCase() {
@@ -48,9 +48,28 @@ export function FeaturedCase() {
               </div>
             ))}
           </dl>
-          <a href={c.instagram} target="_blank" rel="noopener noreferrer" className="btn btn-secondary mt-8">
-            <IconInstagram className="h-4 w-4" /> {t("instagram")} <IconArrow className="h-4 w-4 rtl:-scale-x-100" />
-          </a>
+          <div className="mt-8 border-t border-line pt-5">
+            <p className="label-mono">{t("linksLabel")}</p>
+            <ul className="mt-3 flex flex-wrap gap-2">
+              {[
+                { href: c.links.website, label: "mous.ma", Icon: IconGlobe },
+                { href: c.links.instagram, label: "Instagram", Icon: IconInstagram },
+                { href: c.links.tiktok, label: "TikTok", Icon: IconTikTok },
+              ].map(({ href, label, Icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${t("client")} · ${label}`}
+                    className="btn btn-secondary !min-h-10 !px-3.5 !text-sm"
+                  >
+                    <Icon className="h-4 w-4" /> <span dir="ltr">{label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </article>

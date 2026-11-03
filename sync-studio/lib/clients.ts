@@ -5,7 +5,11 @@ export const clients = [
     name: "Mou's Doner Kabab",
     logo: "/work/mous/mous-logo.png",
     logoSize: { width: 480, height: 363 },
-    instagram: "https://www.instagram.com/mousdonerkabab/",
+    links: {
+      website: "https://mous.ma",
+      instagram: "https://www.instagram.com/mousdonerkabab/",
+      tiktok: "https://www.tiktok.com/@mousdonerkabab",
+    },
     reel: { src: "/work/mous/launch-reel.mp4", poster: "/work/mous/launch-reel.jpg" },
   },
 ];
