@@ -1,5 +1,5 @@
 # Netlify settings for the Sync Studio website (the app lives in /sync-studio).
-# Netlify detects Next.js and adds its official adapter automatically.
+# Used when the project's Base directory is empty in Netlify.
 [build]
   base = "sync-studio"
   command = "npm run build"
@@ -8,3 +8,7 @@
 [build.environment]
   NODE_VERSION = "22"
   NEXT_TELEMETRY_DISABLED = "1"
+
+# Netlify's official Next.js adapter (turns the build into pages, functions and edge middleware)
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

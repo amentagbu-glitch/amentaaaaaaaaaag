@@ -1,0 +1,13 @@
+# Netlify settings when the project's Base directory is set to "sync-studio".
+# Keep in sync with /netlify.toml at the repository root.
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# Netlify's official Next.js adapter (turns the build into pages, functions and edge middleware)
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
