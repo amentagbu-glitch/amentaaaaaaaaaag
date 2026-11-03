@@ -4,10 +4,10 @@ import { IconPlay, IconVolume, IconVolumeOff } from "./icons";
  * Vertical video in a phone-style frame. /fx.js plays it muted while it is on screen
  * (never with sound on its own); the button turns the sound on and off.
  */
-export function ReelPlayer({ src, poster, label, soundOn, soundOff, play, className = "" }: { src: string; poster: string; label: string; soundOn: string; soundOff: string; play: string; className?: string }) {
+export function ReelPlayer({ src, poster, label, soundOn, soundOff, play, loop = true, className = "" }: { src: string; poster: string; label: string; soundOn: string; soundOff: string; play: string; loop?: boolean; className?: string }) {
   return (
     <div data-reel className={`relative aspect-[9/16] overflow-hidden rounded-[22px] bg-black ${className}`}>
-      <video src={src} poster={poster} muted loop playsInline preload="none" aria-label={label} className="h-full w-full object-cover" />
+      <video src={src} poster={poster} muted loop={loop} playsInline preload="none" aria-label={label} className="h-full w-full object-cover" />
       <button type="button" data-reel-play aria-label={play} className="reel-play absolute inset-0 items-center justify-center bg-black/25">
         <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-[#070B14] shadow-lg">
           <IconPlay className="h-6 w-6 translate-x-[2px]" />

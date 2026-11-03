@@ -387,6 +387,12 @@ html[data-ss-theme="light"] .ll-base path { stroke-opacity: 0.32; }
 [data-reel][data-playing] .reel-play { display: none; }
 [data-reel]:not([data-sound]) .reel-sound-icon, [data-reel][data-sound] .reel-muted-icon { display: none; }
 
+/* Reel slideshow */
+.reel-track { scrollbar-width: none; }
+.reel-track::-webkit-scrollbar { display: none; }
+.reel-caption:not([data-active]) { display: none; }
+.reel-dot[aria-current="true"] { width: 1.5rem; background: var(--color-primary); }
+
 /* Only elements below the fold at load are hidden, then faded in */
 .reveal[data-pending]:not([data-shown]) { opacity: 0; transform: translateY(18px); }
 .reveal { transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }

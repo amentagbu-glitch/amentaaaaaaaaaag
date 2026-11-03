@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useTranslations } from "next-intl";
 import { clients } from "@/lib/clients";
-import { ReelPlayer } from "./ReelPlayer";
+import { ReelCarousel } from "./ReelCarousel";
 import { Spot } from "./Spot";
 import { IconGlobe, IconInstagram, IconTikTok } from "./icons";
 
@@ -20,11 +20,12 @@ export function FeaturedCase() {
       <div className="relative grid lg:grid-cols-[0.85fr_1.15fr]">
         <div className="relative flex items-center justify-center border-b border-line bg-bg/40 px-6 py-10 lg:border-b-0 lg:border-e">
           <div className="grid-bg ![mask-image:none] opacity-40" />
-          <div className="relative w-full max-w-[290px] rounded-[30px] border border-line bg-elevated p-2 shadow-[0_30px_60px_-24px_rgba(0,0,0,0.7)]">
-            <ReelPlayer src={c.reel.src} poster={c.reel.poster} label={t("videoLabel")} soundOn={t("soundOn")} soundOff={t("soundOff")} play={t("play")} />
-          </div>
+          <ReelCarousel
+            slides={c.reels.map((r) => ({ src: r.src, poster: r.poster, title: t(`slides.${r.key}.title`), meta: t(`slides.${r.key}.meta`) }))}
+            labels={{ prev: t("prev"), next: t("next"), soundOn: t("soundOn"), soundOff: t("soundOff"), play: t("play"), slide: t("slide") }}
+          />
           <span className="absolute start-4 top-4 font-mono text-[10px] uppercase tracking-[0.16em] text-muted" dir="ltr">
-            Reel · 15 s · 9:16
+            {t("videosCount", { n: c.reels.length })}
           </span>
         </div>
         <div className="relative p-6 sm:p-10">

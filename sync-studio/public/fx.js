@@ -90,8 +90,8 @@
     es.forEach(function (e) {
       var v = e.target.querySelector("video");
       if (!v) return;
-      if (e.isIntersecting && !reduce) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
-      else if (!e.isIntersecting) v.pause();
+      if (e.intersectionRatio >= 0.35 && !reduce) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+      else if (e.intersectionRatio < 0.35) v.pause();
     });
   }, { threshold: 0.35 }) : null;
   function initReels() {
@@ -120,8 +120,56 @@
     if (t.hasAttribute("data-reel-play")) { setSound(el, true); return; }
     setSound(el, !el.hasAttribute("data-sound"));
   });
+  // Reel slideshows: one video at a time, next one when it ends, sound carries over
+  function initCarousels() {
+    document.querySelectorAll("[data-carousel]:not([data-carousel-ready])").forEach(function (car) {
+      car.setAttribute("data-carousel-ready", "");
+      var track = car.querySelector("[data-track]");
+      var slides = Array.prototype.slice.call(car.querySelectorAll("[data-slide]"));
+      if (!track || slides.length < 2) return;
+      var active = 0;
+      function mark(i) {
+        if (i === active) return;
+        var prevReel = slides[active].querySelector("[data-reel]"), nextReel = slides[i].querySelector("[data-reel]");
+        var soundOn = prevReel && prevReel.hasAttribute("data-sound");
+        active = i;
+        car.querySelectorAll("[data-caption]").forEach(function (c) { if (+c.getAttribute("data-caption") === i) c.setAttribute("data-active", ""); else c.removeAttribute("data-active"); });
+        car.querySelectorAll("[data-carousel-dot]").forEach(function (d) { if (+d.getAttribute("data-carousel-dot") === i) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current"); });
+        slides.forEach(function (s, k) {
+          var v = s.querySelector("video"), r = s.querySelector("[data-reel]");
+          if (k !== i && v) { if (r) setSound(r, false); v.pause(); }
+        });
+        var nv = slides[i].querySelector("video");
+        if (nv) { nv.currentTime = 0; if (soundOn && nextReel) setSound(nextReel, true); }
+      }
+      function go(i) {
+        i = (i + slides.length) % slides.length;
+        track.scrollTo({ left: slides[i].offsetLeft, behavior: reduce ? "auto" : "smooth" });
+        mark(i);
+      }
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (es) {
+          es.forEach(function (e) { if (e.intersectionRatio >= 0.6) mark(+e.target.getAttribute("data-slide")); });
+        }, { root: track, threshold: 0.6 });
+        slides.forEach(function (s) { io.observe(s); });
+      }
+      slides.forEach(function (s, k) {
+        var v = s.querySelector("video");
+        if (v) v.addEventListener("ended", function () { if (k === active) go(k + 1); });
+      });
+      car.addEventListener("click", function (e) {
+        var b = e.target.closest && e.target.closest("[data-carousel-prev], [data-carousel-next], [data-carousel-dot]");
+        if (!b) return;
+        if (b.hasAttribute("data-carousel-prev")) go(active - 1);
+        else if (b.hasAttribute("data-carousel-next")) go(active + 1);
+        else go(+b.getAttribute("data-carousel-dot"));
+      });
+    });
+  }
+
   initReels();
-  new MutationObserver(initReels).observe(document.body, { childList: true, subtree: true });
+  initCarousels();
+  new MutationObserver(function () { initReels(); initCarousels(); }).observe(document.body, { childList: true, subtree: true });
 
   // Scroll progress and timeline fill
   function onScroll() {

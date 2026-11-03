@@ -10,6 +10,10 @@ export const clients = [
       instagram: "https://www.instagram.com/mousdonerkabab/",
       tiktok: "https://www.tiktok.com/@mousdonerkabab",
     },
-    reel: { src: "/work/mous/launch-reel.mp4", poster: "/work/mous/launch-reel.jpg" },
+    // Slideshow order. "key" matches work.featured.slides.<key> in the message files.
+    reels: [
+      { key: "launch", src: "/work/mous/launch-reel.mp4", poster: "/work/mous/launch-reel.jpg" },
+      { key: "intro", src: "/work/mous/logo-intro.mp4", poster: "/work/mous/logo-intro.jpg" },
+    ],
   },
 ];

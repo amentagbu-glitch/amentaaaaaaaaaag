@@ -217,14 +217,28 @@
       "challengeLabel": "Le défi",
       "challenge": "Un nouveau restaurant de shawarma à Rabat, à faire connaître dès son lancement.",
       "doneLabel": "Ce que nous avons fait",
-      "done": "Tournage et montage du reel de lancement : la mascotte, la façade, les produits et le packaging, jusqu'au message « Rabat, we are here ».",
+      "done": "Tournage et montage du reel de lancement (la mascotte, la façade, les produits et le packaging, jusqu'au message « Rabat, we are here »), et animation du logo pour l'intro.",
       "deliverableLabel": "Livrable",
-      "deliverable": "Un reel vertical de 15 secondes, au format Instagram et TikTok.",
+      "deliverable": "Un reel vertical de 15 secondes et une intro animée du logo de 4 secondes, au format Instagram et TikTok.",
       "videoLabel": "Reel de lancement de Mou's Doner Kabab",
       "soundOn": "Activer le son",
       "soundOff": "Couper le son",
       "play": "Lire la vidéo",
-      "linksLabel": "Mou's en ligne"
+      "linksLabel": "Mou's en ligne",
+      "slides": {
+        "launch": {
+          "title": "Reel de lancement",
+          "meta": "15 s"
+        },
+        "intro": {
+          "title": "Animation du logo",
+          "meta": "4 s"
+        }
+      },
+      "prev": "Vidéo précédente",
+      "next": "Vidéo suivante",
+      "slide": "Vidéo",
+      "videosCount": "{n} vidéos · 9:16"
     }
   },
   "offers": {

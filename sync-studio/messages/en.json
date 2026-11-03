@@ -217,14 +217,28 @@
       "challengeLabel": "The challenge",
       "challenge": "A new shawarma restaurant in Rabat that needed to be known from day one.",
       "doneLabel": "What we did",
-      "done": "Filmed and edited the launch reel: the mascot, the storefront, the food and the packaging, ending on “Rabat, we are here”.",
+      "done": "Filmed and edited the launch reel (the mascot, the storefront, the food and the packaging, ending on “Rabat, we are here”), and animated the logo for the intro.",
       "deliverableLabel": "Deliverable",
-      "deliverable": "A 15-second vertical reel, in Instagram and TikTok format.",
+      "deliverable": "A 15-second vertical reel and a 4-second animated logo intro, in Instagram and TikTok format.",
       "videoLabel": "Mou's Doner Kabab launch reel",
       "soundOn": "Turn sound on",
       "soundOff": "Turn sound off",
       "play": "Play video",
-      "linksLabel": "Mou's online"
+      "linksLabel": "Mou's online",
+      "slides": {
+        "launch": {
+          "title": "Launch reel",
+          "meta": "15 s"
+        },
+        "intro": {
+          "title": "Logo animation",
+          "meta": "4 s"
+        }
+      },
+      "prev": "Previous video",
+      "next": "Next video",
+      "slide": "Video",
+      "videosCount": "{n} videos · 9:16"
     }
   },
   "offers": {
