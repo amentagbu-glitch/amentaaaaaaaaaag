@@ -14,6 +14,7 @@ import { Marquee } from "@/components/Marquee";
 import Script from "next/script";
 import { Spot } from "@/components/Spot";
 import { HeroGlobe } from "@/components/HeroGlobe";
+import { LogoLines } from "@/components/LogoLines";
 import { TimelineVisual, SearchVisual, FlowVisual } from "@/components/BentoVisuals";
 
 import { IconArrow, IconCheck, IconChart, IconChat, IconClock, IconGlobe, IconPin, IconRepeat, IconLayers, IconSpark, IconVideo, IconWhatsApp } from "@/components/icons";
@@ -64,6 +65,7 @@ function Hero() {
       <section data-tilt className="relative -mt-[4.25rem] overflow-hidden pb-[270px] pt-[6.5rem] sm:pb-[300px] sm:pt-32 lg:pb-[340px] lg:pt-32">
         <div className="grid-bg" />
         <HeroGlobe />
+        <LogoLines className="ll-parallax absolute inset-x-0 top-[118px] mx-auto w-[94%] sm:w-[70%] lg:inset-x-auto lg:start-[1%] lg:top-[64px] lg:mx-0 lg:w-[43%] xl:start-[4%] xl:w-[40%]" />
         <div className="container-x relative grid items-center gap-14 lg:grid-cols-[1.02fr_1fr] lg:gap-8">
           <div>
             <Reveal>
@@ -360,7 +362,8 @@ function FinalCta() {
       <div className="container-x relative">
         <Reveal>
           <div className="glass hud grid gap-10 p-6 sm:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
-            <div>
+            <div className="relative">
+              <LogoLines className="absolute bottom-0 start-0 hidden w-[78%] lg:block" />
               <SectionLabel index={site.showTestimonials ? "08" : "07"}>{t("label")}</SectionLabel>
               <h2 className="mt-4 text-3xl font-semibold leading-tight sm:text-4xl">{t("title")}</h2>
               <p className="mt-4 text-muted">{t("subtitle")}</p>

@@ -89,6 +89,7 @@
   function onScroll() {
     var max = root.scrollHeight - window.innerHeight;
     root.style.setProperty("--sp", max > 0 ? (window.scrollY / max).toFixed(4) : "0");
+    root.style.setProperty("--sy", String(Math.round(window.scrollY)));
     document.querySelectorAll("[data-fill]").forEach(function (el) {
       var r = el.getBoundingClientRect(), vh = window.innerHeight;
       var p = (vh * 0.75 - r.top) / Math.max(r.height, 1);
