@@ -28,7 +28,7 @@
       C = { dot: v("--globe-dot", "201,209,224"), line: v("--globe-line", "58,72,104"), accent: v("--globe-accent", "0,229,255"), text: v("--globe-text", "230,234,242"), muted: v("--globe-muted", "143,163,199") };
     }
     palette();
-    new MutationObserver(function () { palette(); frame(performance.now()); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    new MutationObserver(function () { palette(); frame(performance.now()); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-ss-theme"] });
 
     function build() {
       var r = canvas.getBoundingClientRect();

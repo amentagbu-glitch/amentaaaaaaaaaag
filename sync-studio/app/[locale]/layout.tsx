@@ -17,7 +17,7 @@ const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grot
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap", weight: ["400", "500"] });
 const arabic = IBM_Plex_Sans_Arabic({ subsets: ["arabic"], variable: "--font-plex-arabic", display: "swap", weight: ["400", "500", "600", "700"] });
 
-const THEME_INIT = `try{var s=null;try{s=localStorage.getItem("ss-theme")}catch(e){}var l=s?s==="light":window.matchMedia("(prefers-color-scheme: light)").matches;if(l)document.documentElement.setAttribute("data-theme","light")}catch(e){}`;
+const THEME_INIT = `try{var d=document.documentElement,s=null;try{s=localStorage.getItem("ss-theme")}catch(e){}var h=d.getAttribute("data-theme");var l=s?s==="light":(h==="light"||h==="dark")?h==="light":window.matchMedia("(prefers-color-scheme: light)").matches;if(l)d.setAttribute("data-ss-theme","light")}catch(e){}`;
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

@@ -84,8 +84,11 @@
   --globe-muted: 143, 163, 199;
 }
 
-/* Light mode: same brand, bright surfaces. Switched by data-theme="light" on <html>. */
-html[data-theme="light"] {
+/* Dark by default (":root" so it also beats a host page's own default) */
+:root { color-scheme: dark; }
+
+/* Light mode: same brand, bright surfaces. Switched by data-ss-theme="light" on <html>. */
+html[data-ss-theme="light"] {
   color-scheme: light;
   --color-bg: #f4f6fa;
   --color-surface: #ffffff;
@@ -107,15 +110,15 @@ html[data-theme="light"] {
   --globe-text: 10, 15, 28;
   --globe-muted: 85, 98, 125;
 }
-html[data-theme="light"] .glow { opacity: 0.1; }
-html[data-theme="light"] .grid-bg { opacity: 0.45; }
-html[data-theme="light"] body::after { opacity: 0.025; }
-html[data-theme="light"] [data-spot-on] .spot { opacity: 0.1; }
-html[data-theme="light"] .glass { box-shadow: 0 1px 2px rgb(16 24 40 / 0.04), 0 8px 24px -12px rgb(16 24 40 / 0.08); }
+html[data-ss-theme="light"] .glow { opacity: 0.1; }
+html[data-ss-theme="light"] .grid-bg { opacity: 0.45; }
+html[data-ss-theme="light"] body::after { opacity: 0.025; }
+html[data-ss-theme="light"] [data-spot-on] .spot { opacity: 0.1; }
+html[data-ss-theme="light"] .glass { box-shadow: 0 1px 2px rgb(16 24 40 / 0.04), 0 8px 24px -12px rgb(16 24 40 / 0.08); }
 
 /* Theme-dependent images and icons */
-html:not([data-theme="light"]) .only-light { display: none !important; }
-html[data-theme="light"] .only-dark { display: none !important; }
+html:not([data-ss-theme="light"]) .only-light { display: none !important; }
+html[data-ss-theme="light"] .only-dark { display: none !important; }
 
 /* Arabic uses IBM Plex Sans Arabic everywhere */
 html[lang="ar"] {

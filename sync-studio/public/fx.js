@@ -6,29 +6,35 @@
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   var fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-  // Light / dark mode: follows the phone/computer setting until the visitor picks one with the switch
+  // Light / dark mode. Order: the visitor's choice on the switch, then the theme of a page
+  // embedding the site (data-theme on <html>, e.g. a preview viewer), then the device setting.
   var mq = window.matchMedia ? matchMedia("(prefers-color-scheme: light)") : null;
   function saved() { try { return localStorage.getItem("ss-theme"); } catch (err) { return null; } }
+  function deviceLight() {
+    var h = root.getAttribute("data-theme");
+    if (h === "light" || h === "dark") return h === "light";
+    return mq ? mq.matches : false;
+  }
+  function wantLight() { var s = saved(); return s ? s === "light" : deviceLight(); }
   function setMeta(light) {
     document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.setAttribute("content", light ? "#F4F6FA" : "#070B14"); });
   }
   function apply(light) {
-    if (light) root.setAttribute("data-theme", "light"); else root.removeAttribute("data-theme");
+    if (light) root.setAttribute("data-ss-theme", "light"); else root.removeAttribute("data-ss-theme");
     setMeta(light);
   }
-  setMeta(root.getAttribute("data-theme") === "light");
-  if (mq) {
-    var onSystem = function (e) { if (!saved()) apply(e.matches); };
-    if (mq.addEventListener) mq.addEventListener("change", onSystem); else if (mq.addListener) mq.addListener(onSystem);
-  }
+  apply(wantLight());
+  function follow() { if (!saved()) apply(deviceLight()); }
+  if (mq) { if (mq.addEventListener) mq.addEventListener("change", follow); else if (mq.addListener) mq.addListener(follow); }
+  new MutationObserver(follow).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
   document.addEventListener("click", function (e) {
     var btn = e.target.closest && e.target.closest("[data-theme-toggle]");
     if (!btn) return;
-    var light = root.getAttribute("data-theme") !== "light";
+    var light = root.getAttribute("data-ss-theme") !== "light";
     apply(light);
     try {
-      // Picking the same mode as the device setting goes back to following the device
-      if (mq && light === mq.matches) localStorage.removeItem("ss-theme");
+      // Picking the same mode as the device goes back to following the device
+      if (light === deviceLight()) localStorage.removeItem("ss-theme");
       else localStorage.setItem("ss-theme", light ? "light" : "dark");
     } catch (err) {}
   });
