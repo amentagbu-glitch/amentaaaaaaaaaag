@@ -57,7 +57,7 @@ Note: until your domain is verified in Resend, the customer auto-reply can't be 
 - [ ] **WhatsApp number** → `NEXT_PUBLIC_WHATSAPP_NUMBER` (links currently go to a dummy number)
 - [ ] **Social links** → `site.socials` in `lib/site.ts` (all `#`)
 - [ ] **Case studies** → `work.cases` in the 3 message files (marked "Example", results are `[real result]`), plus visuals
-- [ ] **Founder** → `aboutPage.founderName` (`[name]`) and photo (`[photo]` box on About page)
+- [x] **Founder** → done (About page and hero; photo in `public/team/`)
 - [ ] **Testimonials** → section is built but hidden; add real video quotes and set `showTestimonials: true`
 - [x] **Favicon** → done
 - [ ] **Domain** → `NEXT_PUBLIC_SITE_URL`

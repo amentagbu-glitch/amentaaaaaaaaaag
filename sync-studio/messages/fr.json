@@ -64,7 +64,8 @@
       "ai": "IA · Réponse auto"
     },
     "titleA": "Hors ligne, en ligne,",
-    "titleB": "en phase."
+    "titleB": "en phase.",
+    "foundedBy": "Fondé par"
   },
   "problem": {
     "label": "Le constat",
@@ -403,9 +404,8 @@
     "story": "Tout le monde autour de moi savait que je travaillais dans le digital et l'audiovisuel, mais je n'ai jamais eu le courage de me filmer. Beaucoup de bonnes entreprises ressentent la même chose : le travail est excellent, la peur, c'est de commencer.",
     "storyMore": "Sync Studio est né à Agadir pour ça. Accompagner les entreprises locales, pas à pas, du hors ligne au en ligne. Avec des outils modernes, et sans jargon.",
     "founderLabel": "Fondateur",
-    "founderName": "[nom]",
-    "founderRole": "Fondateur · Vidéo et digital",
-    "founderPhoto": "[photo]",
+    "founderName": "Oussama Amentag",
+    "founderRole": "Vidéaste & designer visuel",
     "valuesLabel": "Valeurs",
     "valuesTitle": "Ce qui guide notre travail.",
     "values": [
@@ -425,7 +425,20 @@
         "title": "Un partenariat sur le long terme",
         "text": "On grandit avec vous, mois après mois."
       }
-    ]
+    ],
+    "founderBadge": "Fondateur",
+    "founderPhotoAlt": "Portrait d'Oussama Amentag, fondateur de Sync Studio",
+    "founderTitle": "Le fondateur",
+    "founderBio": "Vidéaste et monteur depuis 2017. Oussama a travaillé avec des marques, des productions d'événements et des projets culturels partout au Maroc : montage cinématographique, étalonnage, motion design, et mapping vidéo 2D et 3D.",
+    "highlightsTitle": "Parcours",
+    "highlights": [
+      "Cofondateur et directeur visuel, One Eye Production (2018–2021)",
+      "Formateur en montage vidéo, Medmar Media (2021–2022)",
+      "Responsable montage et graphisme, Soufiane Production (2022–2025)",
+      "Retouche photo pour des marques horlogères internationales, Montrichard Group (2025)",
+      "Mapping vidéo 2D et 3D, Lumazic (2026)"
+    ],
+    "toolsTitle": "Outils"
   },
   "contactPage": {
     "label": "Contact",

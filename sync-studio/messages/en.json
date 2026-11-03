@@ -64,7 +64,8 @@
       "ai": "AI · Auto-reply"
     },
     "titleA": "Offline, online,",
-    "titleB": "in sync."
+    "titleB": "in sync.",
+    "foundedBy": "Founded by"
   },
   "problem": {
     "label": "The problem",
@@ -403,9 +404,8 @@
     "story": "Everyone around me knew I worked in digital and audiovisual, but I never had the courage to film myself. Many good businesses feel the same: the work is great, the fear is in starting.",
     "storyMore": "Sync Studio was born in Agadir for exactly that. To guide local businesses, step by step, from offline to online. With modern tools, and without jargon.",
     "founderLabel": "Founder",
-    "founderName": "[name]",
-    "founderRole": "Founder · Video and digital",
-    "founderPhoto": "[photo]",
+    "founderName": "Oussama Amentag",
+    "founderRole": "Videographer & visual designer",
     "valuesLabel": "Values",
     "valuesTitle": "What guides our work.",
     "values": [
@@ -425,7 +425,20 @@
         "title": "Long-term partnership",
         "text": "We grow with you, month after month."
       }
-    ]
+    ],
+    "founderBadge": "Founder",
+    "founderPhotoAlt": "Portrait of Oussama Amentag, founder of Sync Studio",
+    "founderTitle": "The founder",
+    "founderBio": "Videographer and editor since 2017. Oussama has worked with brands, event productions and cultural projects across Morocco: cinematic editing, colour grading, motion design, and 2D and 3D video mapping.",
+    "highlightsTitle": "Background",
+    "highlights": [
+      "Co-founder and visuals director, One Eye Production (2018–2021)",
+      "Video editing trainer, Medmar Media (2021–2022)",
+      "Head of editing and graphics, Soufiane Production (2022–2025)",
+      "Photo editing for international watch brands, Montrichard Group (2025)",
+      "2D and 3D video mapping, Lumazic (2026)"
+    ],
+    "toolsTitle": "Tools"
   },
   "contactPage": {
     "label": "Contact",

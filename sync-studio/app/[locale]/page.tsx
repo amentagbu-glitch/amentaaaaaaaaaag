@@ -57,6 +57,27 @@ function Words({ text, start = 0 }: { text: string; start?: number }) {
   );
 }
 
+function FounderChip() {
+  const t = useTranslations("hero");
+  const a = useTranslations("aboutPage");
+  return (
+    <Link
+      href="/about#founder"
+      className="group mt-8 inline-flex items-center gap-3 rounded-full border border-line bg-surface/60 py-1.5 pe-4 ps-1.5 backdrop-blur transition-colors hover:border-line-strong"
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/team/oussama-amentag-avatar.jpg" alt="" width={192} height={192} className="h-10 w-10 rounded-full object-cover ring-2 ring-primary/50" />
+      <span className="flex flex-col leading-tight">
+        <span className="text-[11px] text-muted">{t("foundedBy")}</span>
+        <span className="text-sm font-semibold text-text" dir="ltr">{a("founderName")}</span>
+      </span>
+      <span className="rounded-full border border-primary/40 bg-primary/10 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-text">
+        {a("founderBadge")}
+      </span>
+    </Link>
+  );
+}
+
 function Hero() {
   const t = useTranslations("hero");
   const a = t("titleA");
@@ -103,6 +124,7 @@ function Hero() {
               <p className="mt-5 flex items-center gap-2 text-sm text-muted">
                 <IconCheck className="h-4 w-4 text-accent" /> {t("note")}
               </p>
+              <FounderChip />
             </Reveal>
           </div>
           <Reveal delay={0.2}>

@@ -66,6 +66,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     url: localePath(locale),
     email: site.email,
     logo: `${site.url}/brand/logo-official.png`,
+    founder: { "@type": "Person", name: "Oussama Amentag", jobTitle: "Founder, videographer & visual designer", image: `${site.url}/team/oussama-amentag.jpg` },
     image: `${site.url}/brand/logo-official.png`,
     ...(site.whatsapp ? { telephone: `+${site.whatsapp}` } : {}),
     address: { "@type": "PostalAddress", addressLocality: "Agadir", addressRegion: "Souss-Massa", addressCountry: "MA" },
