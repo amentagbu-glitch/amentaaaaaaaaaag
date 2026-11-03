@@ -56,7 +56,7 @@ Note: until your domain is verified in Resend, the customer auto-reply can't be 
 - [x] **Logo files** → done (`public/brand/`, originals in `brand/originals/`)
 - [x] **WhatsApp number** → done (+212 6 14 68 67 69, in `lib/site.ts`)
 - [ ] **Social links** → `site.socials` in `lib/site.ts` (all `#`)
-- [ ] **Case studies** → `work.cases` in the 3 message files (marked "Example", results are `[real result]`), plus visuals
+- [ ] **Case studies** → first real one done (Mou's Doner Kabab, `lib/clients.ts` + `work.featured`); the 2 remaining "Example" cards are in `work.cases`
 - [x] **Founder** → done (About page and hero; photo in `public/team/`)
 - [ ] **Testimonials** → section is built but hidden; add real video quotes and set `showTestimonials: true`
 - [x] **Favicon** → done

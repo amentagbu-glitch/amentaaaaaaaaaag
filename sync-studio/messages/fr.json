@@ -187,7 +187,7 @@
   "work": {
     "label": "Réalisations",
     "title": "Des projets concrets, des résultats réels.",
-    "subtitle": "Exemples à remplacer par nos vrais projets.",
+    "subtitle": "Notre premier projet client, et d'autres à venir.",
     "placeholder": "Exemple",
     "problemLabel": "Problème",
     "solutionLabel": "Solution",
@@ -197,12 +197,6 @@
     "visual": "Visuel à venir",
     "cta": "Toutes les réalisations",
     "cases": [
-      {
-        "type": "Restaurant · Agadir",
-        "problem": "Fiche Google sans photos, peu de réservations en semaine.",
-        "solution": "Shooting photo, reels hebdomadaires, fiche Google optimisée, réservation WhatsApp.",
-        "result": "[résultat réel]"
-      },
       {
         "type": "Riad · Taghazout",
         "problem": "Dépendance aux plateformes de réservation et à leurs commissions.",
@@ -215,7 +209,23 @@
         "solution": "Vidéo de l'histoire du produit, boutique simple, devis automatiques pour les professionnels.",
         "result": "[résultat réel]"
       }
-    ]
+    ],
+    "featured": {
+      "badge": "Projet client",
+      "client": "Mou's Doner Kabab",
+      "type": "Restaurant de shawarma · Rabat",
+      "challengeLabel": "Le défi",
+      "challenge": "Un nouveau restaurant de shawarma à Rabat, à faire connaître dès son lancement.",
+      "doneLabel": "Ce que nous avons fait",
+      "done": "Tournage et montage du reel de lancement : la mascotte, la façade, les produits et le packaging, jusqu'au message « Rabat, we are here ».",
+      "deliverableLabel": "Livrable",
+      "deliverable": "Un reel vertical de 15 secondes, au format Instagram et TikTok.",
+      "instagram": "Voir Mou's sur Instagram",
+      "videoLabel": "Reel de lancement de Mou's Doner Kabab",
+      "soundOn": "Activer le son",
+      "soundOff": "Couper le son",
+      "play": "Lire la vidéo"
+    }
   },
   "offers": {
     "label": "Offres",
@@ -396,7 +406,7 @@
   "workPage": {
     "label": "Réalisations",
     "title": "Nos études de cas.",
-    "subtitle": "Les projets ci-dessous sont des exemples. Ils seront remplacés par nos vrais projets et vrais résultats."
+    "subtitle": "Un vrai projet client en premier. Les projets marqués « Exemple » seront remplacés par nos prochains projets."
   },
   "aboutPage": {
     "label": "À propos",
@@ -494,5 +504,9 @@
     "quote": "Devis",
     "log1": "réponse envoyée",
     "log2": "rappel programmé"
+  },
+  "clients": {
+    "label": "Ils nous font confiance",
+    "yourLogo": "Votre logo ici ?"
   }
 }

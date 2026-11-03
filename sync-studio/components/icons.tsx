@@ -34,3 +34,5 @@ export const IconFacebook = (p: P) => (<svg {...base} {...p}><path d="M14.5 8H16
 export const IconLinkedIn = (p: P) => (<svg {...base} {...p}><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M7.5 10.5V17M7.5 7.2v.1M11 17v-3.7c0-1.6 1-2.6 2.3-2.6s2.2.9 2.2 2.6V17M11 10.5V17" /></svg>);
 export const IconSun = (p: P) => (<svg {...base} {...p}><circle cx="12" cy="12" r="4" /><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4" /></svg>);
 export const IconMoon = (p: P) => (<svg {...base} {...p}><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z" /></svg>);
+export const IconVolume = (p: P) => (<svg {...base} {...p}><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" /><path d="M15.5 9a4 4 0 010 6M18 6.5a7.5 7.5 0 010 11" /></svg>);
+export const IconVolumeOff = (p: P) => (<svg {...base} {...p}><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" /><path d="M16 10l4 4M20 10l-4 4" /></svg>);

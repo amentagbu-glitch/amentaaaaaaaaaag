@@ -1,0 +1,58 @@
+/* eslint-disable @next/next/no-img-element */
+import { useTranslations } from "next-intl";
+import { clients } from "@/lib/clients";
+import { ReelPlayer } from "./ReelPlayer";
+import { Spot } from "./Spot";
+import { IconArrow, IconInstagram } from "./icons";
+
+/** Real client case study: Mou's Doner Kabab (Rabat), with the launch reel. */
+export function FeaturedCase() {
+  const t = useTranslations("work.featured");
+  const c = clients[0];
+  const rows = [
+    { label: t("challengeLabel"), text: t("challenge") },
+    { label: t("doneLabel"), text: t("done") },
+    { label: t("deliverableLabel"), text: t("deliverable") },
+  ];
+  return (
+    <article id={c.id} data-spot className="glass hud scroll-mt-28 overflow-hidden">
+      <Spot />
+      <div className="relative grid lg:grid-cols-[0.85fr_1.15fr]">
+        <div className="relative flex items-center justify-center border-b border-line bg-bg/40 px-6 py-10 lg:border-b-0 lg:border-e">
+          <div className="grid-bg ![mask-image:none] opacity-40" />
+          <div className="relative w-full max-w-[290px] rounded-[30px] border border-line bg-elevated p-2 shadow-[0_30px_60px_-24px_rgba(0,0,0,0.7)]">
+            <ReelPlayer src={c.reel.src} poster={c.reel.poster} label={t("videoLabel")} soundOn={t("soundOn")} soundOff={t("soundOff")} play={t("play")} />
+          </div>
+          <span className="absolute start-4 top-4 font-mono text-[10px] uppercase tracking-[0.16em] text-muted" dir="ltr">
+            Reel · 15 s · 9:16
+          </span>
+        </div>
+        <div className="relative p-6 sm:p-10">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-text">
+              <span className="live-dot !h-1.5 !w-1.5" /> {t("badge")}
+            </span>
+            <span className="rounded-[12px] bg-white p-2 shadow-sm ring-1 ring-black/5">
+              <img src={c.logo} alt={c.name} width={c.logoSize.width} height={c.logoSize.height} loading="lazy" className="h-12 w-auto" />
+            </span>
+          </div>
+          <h3 className="mt-6 text-3xl font-medium tracking-[-0.03em] sm:text-4xl">
+            <span dir="ltr">{t("client")}</span>
+          </h3>
+          <p className="mt-1 text-muted">{t("type")}</p>
+          <dl className="mt-8 space-y-5">
+            {rows.map((r) => (
+              <div key={r.label} className="border-t border-line pt-4">
+                <dt className="label-mono">{r.label}</dt>
+                <dd className="mt-1.5 leading-relaxed text-chrome">{r.text}</dd>
+              </div>
+            ))}
+          </dl>
+          <a href={c.instagram} target="_blank" rel="noopener noreferrer" className="btn btn-secondary mt-8">
+            <IconInstagram className="h-4 w-4" /> {t("instagram")} <IconArrow className="h-4 w-4 rtl:-scale-x-100" />
+          </a>
+        </div>
+      </div>
+    </article>
+  );
+}

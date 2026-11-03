@@ -85,6 +85,44 @@
     }, { passive: true });
   }
 
+  // Reels: play muted while on screen (not with reduced motion); buttons for sound and play
+  var reelIO = "IntersectionObserver" in window ? new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      var v = e.target.querySelector("video");
+      if (!v) return;
+      if (e.isIntersecting && !reduce) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+      else if (!e.isIntersecting) v.pause();
+    });
+  }, { threshold: 0.35 }) : null;
+  function initReels() {
+    document.querySelectorAll("[data-reel]:not([data-reel-ready])").forEach(function (el) {
+      el.setAttribute("data-reel-ready", "");
+      var v = el.querySelector("video");
+      if (!v) return;
+      v.addEventListener("play", function () { el.setAttribute("data-playing", ""); });
+      v.addEventListener("pause", function () { el.removeAttribute("data-playing"); });
+      if (reelIO) reelIO.observe(el);
+    });
+  }
+  function setSound(el, on) {
+    var v = el.querySelector("video"), b = el.querySelector("[data-reel-sound]");
+    if (!v) return;
+    v.muted = !on;
+    if (on) { el.setAttribute("data-sound", ""); var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+    else el.removeAttribute("data-sound");
+    if (b) b.setAttribute("aria-label", on ? b.getAttribute("data-label-off") : b.getAttribute("data-label-on"));
+  }
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest && e.target.closest("[data-reel-sound], [data-reel-play]");
+    if (!t) return;
+    var el = t.closest("[data-reel]");
+    if (!el) return;
+    if (t.hasAttribute("data-reel-play")) { setSound(el, true); return; }
+    setSound(el, !el.hasAttribute("data-sound"));
+  });
+  initReels();
+  new MutationObserver(initReels).observe(document.body, { childList: true, subtree: true });
+
   // Scroll progress and timeline fill
   function onScroll() {
     var max = root.scrollHeight - window.innerHeight;

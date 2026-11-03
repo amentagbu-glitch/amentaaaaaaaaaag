@@ -7,6 +7,7 @@ import { alternates } from "@/lib/site";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { CaseCard, type Case } from "@/components/CaseCard";
+import { FeaturedCase } from "@/components/FeaturedCase";
 import { IconArrow } from "@/components/icons";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -26,7 +27,10 @@ export default function WorkPage({ params }: { params: Promise<{ locale: string 
     <>
       <PageHero label={t("label")} title={t("title")} subtitle={t("subtitle")} />
       <div className="container-x pb-24">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <Reveal>
+          <FeaturedCase />
+        </Reveal>
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
           {cases.map((c, i) => (
             <Reveal key={i} delay={i * 0.05}>
               <CaseCard c={c} index={i} detailed />

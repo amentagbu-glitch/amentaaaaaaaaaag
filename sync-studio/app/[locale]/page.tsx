@@ -11,6 +11,8 @@ import { Reveal } from "@/components/Reveal";
 import { Section, SectionHeader, SectionLabel } from "@/components/Section";
 import { CaseCard } from "@/components/CaseCard";
 import { Marquee } from "@/components/Marquee";
+import { Clients } from "@/components/Clients";
+import { FeaturedCase } from "@/components/FeaturedCase";
 import Script from "next/script";
 import { Spot } from "@/components/Spot";
 import { HeroGlobe } from "@/components/HeroGlobe";
@@ -31,6 +33,7 @@ export default function Home({ params }: { params: Promise<{ locale: string }> }
   return (
     <>
       <Hero />
+      <Clients />
       <Problem />
       <Services />
       <AiAdvantage />
@@ -304,7 +307,10 @@ function Work() {
           </Link>
         </Reveal>
       </div>
-      <div className="mt-12 grid gap-4 md:grid-cols-3">
+      <Reveal className="mt-12">
+        <FeaturedCase />
+      </Reveal>
+      <div className="mt-4 grid gap-4 md:grid-cols-2">
         {cases.map((c, i) => (
           <Reveal key={i} delay={i * 0.06}>
             <CaseCard c={c} index={i} />

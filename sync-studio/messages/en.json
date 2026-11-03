@@ -187,7 +187,7 @@
   "work": {
     "label": "Work",
     "title": "Concrete projects, real results.",
-    "subtitle": "Examples, to be replaced with our real projects.",
+    "subtitle": "Our first client project, with more on the way.",
     "placeholder": "Example",
     "problemLabel": "Problem",
     "solutionLabel": "Solution",
@@ -197,12 +197,6 @@
     "visual": "Visual coming soon",
     "cta": "All work",
     "cases": [
-      {
-        "type": "Restaurant · Agadir",
-        "problem": "Google profile with no photos, few weekday bookings.",
-        "solution": "Photo shoot, weekly reels, optimised Google profile, WhatsApp booking.",
-        "result": "[real result]"
-      },
       {
         "type": "Riad · Taghazout",
         "problem": "Reliance on booking platforms and their commissions.",
@@ -215,7 +209,23 @@
         "solution": "Product story video, simple shop, automatic quotes for trade buyers.",
         "result": "[real result]"
       }
-    ]
+    ],
+    "featured": {
+      "badge": "Client project",
+      "client": "Mou's Doner Kabab",
+      "type": "Shawarma restaurant · Rabat",
+      "challengeLabel": "The challenge",
+      "challenge": "A new shawarma restaurant in Rabat that needed to be known from day one.",
+      "doneLabel": "What we did",
+      "done": "Filmed and edited the launch reel: the mascot, the storefront, the food and the packaging, ending on “Rabat, we are here”.",
+      "deliverableLabel": "Deliverable",
+      "deliverable": "A 15-second vertical reel, in Instagram and TikTok format.",
+      "instagram": "See Mou's on Instagram",
+      "videoLabel": "Mou's Doner Kabab launch reel",
+      "soundOn": "Turn sound on",
+      "soundOff": "Turn sound off",
+      "play": "Play video"
+    }
   },
   "offers": {
     "label": "Offers",
@@ -396,7 +406,7 @@
   "workPage": {
     "label": "Work",
     "title": "Our case studies.",
-    "subtitle": "The projects below are examples. They will be replaced with our real projects and real results."
+    "subtitle": "A real client project first. Projects marked “Example” will be replaced by our next ones."
   },
   "aboutPage": {
     "label": "About",
@@ -494,5 +504,9 @@
     "quote": "Quote",
     "log1": "reply sent",
     "log2": "reminder scheduled"
+  },
+  "clients": {
+    "label": "They trust us",
+    "yourLogo": "Your logo here?"
   }
 }
