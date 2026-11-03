@@ -21,7 +21,7 @@ Netlify's free plan allows business sites. Settings come from `netlify.toml` at 
 1. Sign up at netlify.com with GitHub.
 2. **Add new project → Import an existing project → GitHub**, pick `amentagbu-glitch/amentaaaaaaaaaag`.
 3. **Branch to deploy:** `main`. Build settings fill in from `netlify.toml`.
-4. Add the environment variables below (at least `NEXT_PUBLIC_WHATSAPP_NUMBER`), then **Deploy**.
+4. Add the environment variables below (the email ones, for the audit form), then **Deploy**.
 5. Optional: **Project configuration → Change project name** to get `syncstudio.netlify.app`.
 6. Once you own `syncstudio.ma`: **Domain management → Add a domain**, follow the DNS steps, then set `NEXT_PUBLIC_SITE_URL=https://syncstudio.ma` and redeploy. HTTPS is automatic.
 
@@ -31,7 +31,7 @@ Changing an environment variable needs a new deploy (**Deploys → Trigger deplo
 
 | Name | Needed | What it does |
 |---|---|---|
-| `NEXT_PUBLIC_WHATSAPP_NUMBER` | yes | Digits only, e.g. `2126XXXXXXXX` (floating button, CTAs). Without it, WhatsApp links go to a dummy number |
+| `NEXT_PUBLIC_WHATSAPP_NUMBER` | optional | Digits only. Default is the studio number `212614686769` (set in `lib/site.ts`) |
 | `RESEND_API_KEY` | yes for email | From resend.com. Without it, form requests are only written to the function logs |
 | `CONTACT_TO_EMAIL` | yes for email | Where requests go. Before the domain is verified in Resend, use the email you signed up to Resend with |
 | `CONTACT_FROM_EMAIL` | yes for email | Sender. Before the domain is verified: `Sync Studio <onboarding@resend.dev>`. After: `Sync Studio <hello@syncstudio.ma>` |
@@ -54,7 +54,7 @@ Note: until your domain is verified in Resend, the customer auto-reply can't be 
 ## Placeholders to replace
 
 - [x] **Logo files** → done (`public/brand/`, originals in `brand/originals/`)
-- [ ] **WhatsApp number** → `NEXT_PUBLIC_WHATSAPP_NUMBER` (links currently go to a dummy number)
+- [x] **WhatsApp number** → done (+212 6 14 68 67 69, in `lib/site.ts`)
 - [ ] **Social links** → `site.socials` in `lib/site.ts` (all `#`)
 - [ ] **Case studies** → `work.cases` in the 3 message files (marked "Example", results are `[real result]`), plus visuals
 - [x] **Founder** → done (About page and hero; photo in `public/team/`)

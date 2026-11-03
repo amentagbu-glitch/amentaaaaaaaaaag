@@ -6,8 +6,8 @@ export const site = {
   email: "hello@syncstudio.ma",
   city: "Agadir",
   country: "Morocco",
-  // TODO: real WhatsApp number, digits only, international format (e.g. 2126XXXXXXXX)
-  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "",
+  // WhatsApp, international format, digits only. NEXT_PUBLIC_WHATSAPP_NUMBER overrides it.
+  whatsapp: (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "212614686769").replace(/\D/g, ""),
   // TODO: real social links
   socials: {
     instagram: "#",
@@ -19,10 +19,16 @@ export const site = {
   showTestimonials: false,
 };
 
+/** "212614686769" -> "+212 6 14 68 67 69" (Moroccan numbers), otherwise "+<digits>" */
+export function whatsappDisplay() {
+  const d = site.whatsapp;
+  const m = d.match(/^212(\d)(\d{2})(\d{2})(\d{2})(\d{2})$/);
+  return m ? `+212 ${m[1]} ${m[2]} ${m[3]} ${m[4]} ${m[5]}` : `+${d}`;
+}
+
 export function whatsappLink(text?: string) {
-  const number = site.whatsapp || "212000000000"; // placeholder until NEXT_PUBLIC_WHATSAPP_NUMBER is set
   const q = text ? `?text=${encodeURIComponent(text)}` : "";
-  return `https://wa.me/${number}${q}`;
+  return `https://wa.me/${site.whatsapp}${q}`;
 }
 
 export function localePath(locale: string, path = "") {

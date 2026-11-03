@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { use } from "react";
 import { useTranslations } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { alternates, site, whatsappLink } from "@/lib/site";
+import { alternates, site, whatsappDisplay, whatsappLink } from "@/lib/site";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { AuditForm } from "@/components/AuditForm";
@@ -38,7 +38,7 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
                     <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-line text-wa"><IconWhatsApp className="h-5 w-5" /></span>
                     <span>
                       <span className="block text-xs text-muted">{t("whatsapp")}</span>
-                      <span dir="ltr">{site.whatsapp ? `+${site.whatsapp}` : "wa.me/[number]"}</span>
+                      <span dir="ltr">{whatsappDisplay()}</span>
                     </span>
                   </a>
                 </li>
