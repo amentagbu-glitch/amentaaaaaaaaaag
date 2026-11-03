@@ -6,6 +6,21 @@
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   var fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
 
+  // Light / dark mode switch (any element with data-theme-toggle). Dark is the default.
+  function setMeta(light) {
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute("content", light ? "#F4F6FA" : "#070B14");
+  }
+  setMeta(root.getAttribute("data-theme") === "light");
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest && e.target.closest("[data-theme-toggle]");
+    if (!btn) return;
+    var light = root.getAttribute("data-theme") !== "light";
+    if (light) root.setAttribute("data-theme", "light"); else root.removeAttribute("data-theme");
+    try { localStorage.setItem("ss-theme", light ? "light" : "dark"); } catch (err) {}
+    setMeta(light);
+  });
+
   // Live Agadir clock: <span data-clock> shows attr(data-time) through CSS
   var fmt = null, off = "";
   try {

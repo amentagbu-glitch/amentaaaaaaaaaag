@@ -21,6 +21,14 @@
     var ctx = canvas.getContext("2d");
     var W = 0, H = 0, dpr = 1, R = 0, cx = 0, cy = 0, pts = null, n = 0, visible = true, raf = 0, px = 0, tpx = 0;
     var mono = (getComputedStyle(document.documentElement).getPropertyValue("--font-jetbrains") || "monospace").trim();
+    var C = {};
+    function palette() {
+      var cs = getComputedStyle(document.documentElement);
+      function v(name, d) { return (cs.getPropertyValue(name) || "").trim() || d; }
+      C = { dot: v("--globe-dot", "201,209,224"), line: v("--globe-line", "58,72,104"), accent: v("--globe-accent", "0,229,255"), text: v("--globe-text", "230,234,242"), muted: v("--globe-muted", "143,163,199") };
+    }
+    palette();
+    new MutationObserver(function () { palette(); frame(performance.now()); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
     function build() {
       var r = canvas.getBoundingClientRect();
@@ -61,7 +69,7 @@
           var my = cy + Math.sin((a0 + a1) / 2) * rr, f = fade(my);
           if (f <= 0) continue;
           ctx.beginPath(); ctx.arc(cx, cy, rr, a0, a1);
-          ctx.strokeStyle = a ? "rgba(47,107,255," + 0.35 * f + ")" : "rgba(58,72,104," + 0.9 * f + ")";
+          ctx.strokeStyle = a ? "rgba(47,107,255," + 0.35 * f + ")" : "rgba(" + C.line + "," + 0.9 * f + ")";
           ctx.lineWidth = 1; ctx.stroke();
         }
       }
@@ -78,7 +86,7 @@
         var bi = Math.min(B - 1, Math.floor(v * B));
         paths[bi].rect(sx - 0.8, sy - 0.8, 1.6, 1.6);
       }
-      for (b = 0; b < B; b++) { ctx.fillStyle = "rgba(201,209,224," + ((b + 1) / B) * 0.75 + ")"; ctx.fill(paths[b]); }
+      for (b = 0; b < B; b++) { ctx.fillStyle = "rgba(" + C.dot + "," + ((b + 1) / B) * 0.75 + ")"; ctx.fill(paths[b]); }
 
       // Agadir + links
       var A = xyz(AGADIR[0], AGADIR[1]), pa = proj(A[0], A[1], A[2]);
@@ -89,25 +97,25 @@
           var qx = (pa[0] + pb[0]) / 2, qy = (pa[1] + pb[1]) / 2 - dist * 0.55 - 6;
           ctx.beginPath(); ctx.moveTo(pa[0], pa[1]); ctx.quadraticCurveTo(qx, qy, pb[0], pb[1]);
           ctx.strokeStyle = "rgba(47,107,255,0.55)"; ctx.lineWidth = 1; ctx.stroke();
-          ctx.fillStyle = "rgba(201,209,224,0.9)"; ctx.fillRect(pb[0] - 1.2, pb[1] - 1.2, 2.4, 2.4);
+          ctx.fillStyle = "rgba(" + C.dot + ",0.9)"; ctx.fillRect(pb[0] - 1.2, pb[1] - 1.2, 2.4, 2.4);
           if (!reduce) {
             var u = ((t / 2600 + k / LINKS.length) % 1), iu = 1 - u;
             var ex = iu * iu * pa[0] + 2 * iu * u * qx + u * u * pb[0], ey = iu * iu * pa[1] + 2 * iu * u * qy + u * u * pb[1];
-            ctx.fillStyle = "rgba(0,229,255," + Math.sin(u * Math.PI) + ")";
+            ctx.fillStyle = "rgba(" + C.accent + "," + Math.sin(u * Math.PI) + ")";
             ctx.beginPath(); ctx.arc(ex, ey, 1.6, 0, Math.PI * 2); ctx.fill();
           }
         }
         var ph = reduce ? 0.5 : (t % 2400) / 2400;
         ctx.beginPath(); ctx.arc(pa[0], pa[1], 3 + ph * 20, 0, Math.PI * 2);
-        ctx.strokeStyle = "rgba(0,229,255," + (1 - ph) * 0.8 + ")"; ctx.lineWidth = 1; ctx.stroke();
-        ctx.beginPath(); ctx.arc(pa[0], pa[1], 3, 0, Math.PI * 2); ctx.fillStyle = "#00E5FF"; ctx.fill();
+        ctx.strokeStyle = "rgba(" + C.accent + "," + (1 - ph) * 0.8 + ")"; ctx.lineWidth = 1; ctx.stroke();
+        ctx.beginPath(); ctx.arc(pa[0], pa[1], 3, 0, Math.PI * 2); ctx.fillStyle = "rgb(" + C.accent + ")"; ctx.fill();
         // label
         var lx = pa[0] - 18, ly = pa[1] - 40;
         ctx.beginPath(); ctx.moveTo(pa[0] - 3, pa[1] - 3); ctx.lineTo(lx, ly + 6); ctx.lineTo(lx - 22, ly + 6);
-        ctx.strokeStyle = "rgba(143,163,199,0.7)"; ctx.stroke();
-        ctx.font = "500 10px " + mono; ctx.textAlign = "right"; ctx.fillStyle = "rgba(230,234,242,0.95)";
+        ctx.strokeStyle = "rgba(" + C.muted + ",0.7)"; ctx.stroke();
+        ctx.font = "500 10px " + mono; ctx.textAlign = "right"; ctx.fillStyle = "rgba(" + C.text + ",0.95)";
         ctx.fillText("AGADIR", lx - 26, ly + 4);
-        ctx.fillStyle = "rgba(143,163,199,0.9)"; ctx.fillText("30.42°N 9.60°W", lx - 26, ly + 17);
+        ctx.fillStyle = "rgba(" + C.muted + ",0.9)"; ctx.fillText("30.42°N 9.60°W", lx - 26, ly + 17);
       }
     }
 

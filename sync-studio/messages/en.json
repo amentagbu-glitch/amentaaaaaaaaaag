@@ -33,7 +33,8 @@
     "close": "Close menu",
     "language": "Language",
     "skip": "Skip to content",
-    "home": "Home"
+    "home": "Home",
+    "theme": "Switch theme (light / dark)"
   },
   "hero": {
     "label": "Digital studio · Agadir",

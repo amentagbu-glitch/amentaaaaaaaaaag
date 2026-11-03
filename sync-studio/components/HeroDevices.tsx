@@ -134,20 +134,20 @@ function Tag({ children, className = "" }: { children: React.ReactNode; classNam
 function MapArt() {
   return (
     <svg className="absolute inset-0 h-full w-full" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice">
-      <rect width="320" height="200" fill="#0F1626" />
-      <path d="M0 150 C 80 130, 120 170, 200 140 S 300 120, 320 128 L320 200 L0 200z" fill="#0c1a2e" />
-      <g stroke="#2A3550" strokeWidth="1" fill="none">
+      <rect width="320" height="200"  style={{ fill: "var(--color-surface)" }}/>
+      <path d="M0 150 C 80 130, 120 170, 200 140 S 300 120, 320 128 L320 200 L0 200z"  style={{ fill: "var(--color-sea)" }}/>
+      <g strokeWidth="1" fill="none" style={{ stroke: "var(--color-line)" }}>
         <path d="M-10 40 L330 70" />
         <path d="M-10 110 L330 90" />
         <path d="M60 -10 L90 210" />
         <path d="M170 -10 L150 210" />
         <path d="M250 -10 L280 210" />
       </g>
-      <g stroke="#1A2236" strokeWidth="6" fill="none" strokeLinecap="round">
+      <g strokeWidth="6" fill="none" strokeLinecap="round" style={{ stroke: "var(--color-elevated)" }}>
         <path d="M-10 75 C 100 60, 200 100, 330 60" />
         <path d="M120 -10 C 130 80, 110 140, 130 210" />
       </g>
-      <g fill="#1A2236">
+      <g style={{ fill: "var(--color-elevated)" }}>
         <rect x="20" y="10" width="30" height="20" rx="3" />
         <rect x="200" y="15" width="38" height="26" rx="3" />
         <rect x="270" y="95" width="34" height="22" rx="3" />
@@ -160,13 +160,13 @@ function MapArt() {
 function ReelArt() {
   return (
     <svg className="absolute inset-0 h-full w-full" viewBox="0 0 90 185" preserveAspectRatio="xMidYMid slice">
-      <rect width="90" height="185" fill="#0F1626" />
-      <rect y="110" width="90" height="75" fill="#121c30" />
-      <ellipse cx="45" cy="118" rx="34" ry="8" fill="#1A2236" />
-      <path d="M22 116 Q45 60 68 116z" fill="#1A2236" stroke="#2A3550" />
-      <path d="M45 70 v-6" stroke="#C9D1E0" strokeWidth="2" strokeLinecap="round" />
-      <circle cx="45" cy="62" r="2.5" fill="#C9D1E0" />
-      <path d="M30 104 Q45 98 60 104" stroke="#2A3550" fill="none" />
+      <rect width="90" height="185"  style={{ fill: "var(--color-surface)" }}/>
+      <rect y="110" width="90" height="75"  style={{ fill: "var(--color-surface-2)" }}/>
+      <ellipse cx="45" cy="118" rx="34" ry="8"  style={{ fill: "var(--color-elevated)" }}/>
+      <path d="M22 116 Q45 60 68 116z"  style={{ fill: "var(--color-elevated)", stroke: "var(--color-line)" }}/>
+      <path d="M45 70 v-6" strokeWidth="2" strokeLinecap="round"  style={{ stroke: "var(--color-chrome)" }}/>
+      <circle cx="45" cy="62" r="2.5"  style={{ fill: "var(--color-chrome)" }}/>
+      <path d="M30 104 Q45 98 60 104" fill="none"  style={{ stroke: "var(--color-line)" }}/>
     </svg>
   );
 }

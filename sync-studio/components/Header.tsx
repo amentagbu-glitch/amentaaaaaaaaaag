@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Logo } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { ThemeToggle } from "./ThemeToggle";
 import { IconClose, IconMenu } from "./icons";
 
 const links = [
@@ -70,15 +71,18 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
+          <ThemeToggle />
           <LanguageSwitcher />
           <Link href="/contact" className="btn btn-primary !min-h-10 !text-sm">
             {t("ctaLong")}
           </Link>
         </div>
 
+        <div className="flex items-center gap-2 lg:hidden">
+        <ThemeToggle />
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-[10px] border border-line bg-bg/40 text-text lg:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-[10px] border border-line bg-bg/40 text-text"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? t("close") : t("menu")}
@@ -86,6 +90,7 @@ export function Header() {
         >
           {open ? <IconClose className="h-5 w-5" /> : <IconMenu className="h-5 w-5" />}
         </button>
+        </div>
       </div>
       </div>
 

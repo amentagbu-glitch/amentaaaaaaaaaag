@@ -132,8 +132,8 @@ function Problem() {
                   <span className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-line bg-elevated text-chrome">
                     <Icon className="h-5 w-5" />
                   </span>
-                  <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[#ff8a9b]">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#ff6b81]" /> 0{i + 1}
+                  <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-danger">
+                    <span className="h-1.5 w-1.5 rounded-full bg-danger" /> 0{i + 1}
                   </span>
                 </div>
                 <h3 className="mt-7 text-xl font-medium tracking-[-0.02em]">{it.title}</h3>

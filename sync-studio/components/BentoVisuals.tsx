@@ -11,11 +11,11 @@ export function TimelineVisual() {
     <div className="absolute inset-0 flex gap-4 p-5" aria-hidden>
       <div className="relative hidden w-[92px] shrink-0 overflow-hidden rounded-[12px] border border-line bg-surface sm:block">
         <svg viewBox="0 0 90 160" className="absolute inset-0 h-full w-full" preserveAspectRatio="xMidYMid slice">
-          <rect width="90" height="160" fill="#0F1626" />
-          <rect y="96" width="90" height="64" fill="#121c30" />
-          <ellipse cx="45" cy="104" rx="30" ry="7" fill="#1A2236" />
-          <path d="M24 102 Q45 52 66 102z" fill="#1A2236" stroke="#2A3550" />
-          <circle cx="45" cy="56" r="2.5" fill="#C9D1E0" />
+          <rect width="90" height="160"  style={{ fill: "var(--color-surface)" }}/>
+          <rect y="96" width="90" height="64"  style={{ fill: "var(--color-surface-2)" }}/>
+          <ellipse cx="45" cy="104" rx="30" ry="7"  style={{ fill: "var(--color-elevated)" }}/>
+          <path d="M24 102 Q45 52 66 102z"  style={{ fill: "var(--color-elevated)", stroke: "var(--color-line)" }}/>
+          <circle cx="45" cy="56" r="2.5"  style={{ fill: "var(--color-chrome)" }}/>
         </svg>
         <span className="absolute start-2 top-2 flex items-center gap-1 font-mono text-[8px] text-chrome" dir="ltr">
           <span className="h-1.5 w-1.5 rounded-full bg-[#ff4d5e]" /> 9:16
@@ -92,7 +92,7 @@ export function SearchVisual() {
           </span>
           <div className="flex gap-3">
             <div className="relative h-14 w-16 shrink-0 overflow-hidden rounded-[8px] border border-line bg-bg">
-              <svg viewBox="0 0 64 56" className="absolute inset-0 h-full w-full"><path d="M-2 20 L66 30 M-2 42 L66 36 M20 -2 L26 58 M44 -2 L40 58" stroke="#2A3550" /><path d="M-2 28 C 20 22, 40 40, 66 26" stroke="#1A2236" strokeWidth="4" fill="none" /></svg>
+              <svg viewBox="0 0 64 56" className="absolute inset-0 h-full w-full"><path d="M-2 20 L66 30 M-2 42 L66 36 M20 -2 L26 58 M44 -2 L40 58"  style={{ stroke: "var(--color-line)" }}/><path d="M-2 28 C 20 22, 40 40, 66 26" strokeWidth="4" fill="none"  style={{ stroke: "var(--color-elevated)" }}/></svg>
               <IconPin className="absolute start-1/2 top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 fill-primary/30 text-primary rtl:translate-x-1/2" />
             </div>
             <div className="min-w-0">
@@ -145,10 +145,10 @@ export function FlowVisual() {
   return (
     <div className="absolute inset-0" aria-hidden>
       <svg className="flow absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none">
-        <path d="M50 22 L50 40" stroke="#2F6BFF" strokeWidth="1.2" vectorEffect="non-scaling-stroke" />
-        <path d="M50 56 C50 64, 17 62, 17 70" stroke="#2F6BFF" strokeWidth="1.2" vectorEffect="non-scaling-stroke" />
-        <path d="M50 56 L50 70" stroke="#2F6BFF" strokeWidth="1.2" vectorEffect="non-scaling-stroke" />
-        <path d="M50 56 C50 64, 83 62, 83 70" stroke="#2F6BFF" strokeWidth="1.2" vectorEffect="non-scaling-stroke" />
+        <path d="M50 22 L50 40" strokeWidth="1.2" vectorEffect="non-scaling-stroke"  style={{ stroke: "var(--color-primary)" }}/>
+        <path d="M50 56 C50 64, 17 62, 17 70" strokeWidth="1.2" vectorEffect="non-scaling-stroke"  style={{ stroke: "var(--color-primary)" }}/>
+        <path d="M50 56 L50 70" strokeWidth="1.2" vectorEffect="non-scaling-stroke"  style={{ stroke: "var(--color-primary)" }}/>
+        <path d="M50 56 C50 64, 83 62, 83 70" strokeWidth="1.2" vectorEffect="non-scaling-stroke"  style={{ stroke: "var(--color-primary)" }}/>
       </svg>
       <div className="absolute inset-x-5 top-[5%] flex justify-center">
         <div className="flex max-w-full items-center gap-2 rounded-[12px] border border-line bg-surface px-3 py-2">

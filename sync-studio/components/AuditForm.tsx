@@ -47,7 +47,7 @@ function AuditFormInner({ idPrefix, onReset }: { idPrefix: string; onReset: () =
   const id = (name: string) => `${idPrefix}-${name}`;
   const errMsg = (name: string) =>
     err[name] ? (
-      <p id={id(`${name}-err`)} className="mt-1.5 text-sm text-[#ff8a9b]">
+      <p id={id(`${name}-err`)} className="mt-1.5 text-sm text-danger">
         {t(`errors.${err[name]}`)}
       </p>
     ) : null;
@@ -122,7 +122,7 @@ function AuditFormInner({ idPrefix, onReset }: { idPrefix: string; onReset: () =
       </Field>
 
       {state.status === "error" && !state.errors && (
-        <p role="alert" className="rounded-[10px] border border-[#ff6b81]/40 bg-[#ff6b81]/10 px-3 py-2 text-sm text-[#ffb3be]">
+        <p role="alert" className="rounded-[10px] border border-danger/40 bg-danger/10 px-3 py-2 text-sm text-danger">
           {t("errorGeneric")}
         </p>
       )}

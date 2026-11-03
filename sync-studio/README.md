@@ -48,7 +48,8 @@ Note: until your domain is verified in Resend, the customer auto-reply can't be 
 - `app/actions/audit.ts`: audit form (validation, honeypot + timing spam check, email + auto-reply)
 - `components/`: header, footer, hero mockups, bento visuals, chat mock, form, etc.
 - `public/globe.js`: the dotted globe on the home page (map data from Natural Earth via world-atlas)
-- `public/fx.js`: small effects (Agadir clock, card spotlight, 3D tilt, scroll progress, timeline fill). All respect reduced-motion settings
+- Light / dark mode: colours in `app/globals.css` (`html[data-theme="light"]`), switch button in `components/ThemeToggle.tsx`. Dark is the default; each visitor's choice is remembered
+- `public/fx.js`: small effects (also handles the light/dark switch) (Agadir clock, card spotlight, 3D tilt, scroll progress, timeline fill). All respect reduced-motion settings
 
 ## Placeholders to replace
 
