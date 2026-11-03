@@ -6,19 +6,31 @@
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   var fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-  // Light / dark mode switch (any element with data-theme-toggle). Dark is the default.
+  // Light / dark mode: follows the phone/computer setting until the visitor picks one with the switch
+  var mq = window.matchMedia ? matchMedia("(prefers-color-scheme: light)") : null;
+  function saved() { try { return localStorage.getItem("ss-theme"); } catch (err) { return null; } }
   function setMeta(light) {
-    var m = document.querySelector('meta[name="theme-color"]');
-    if (m) m.setAttribute("content", light ? "#F4F6FA" : "#070B14");
+    document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) { m.setAttribute("content", light ? "#F4F6FA" : "#070B14"); });
+  }
+  function apply(light) {
+    if (light) root.setAttribute("data-theme", "light"); else root.removeAttribute("data-theme");
+    setMeta(light);
   }
   setMeta(root.getAttribute("data-theme") === "light");
+  if (mq) {
+    var onSystem = function (e) { if (!saved()) apply(e.matches); };
+    if (mq.addEventListener) mq.addEventListener("change", onSystem); else if (mq.addListener) mq.addListener(onSystem);
+  }
   document.addEventListener("click", function (e) {
     var btn = e.target.closest && e.target.closest("[data-theme-toggle]");
     if (!btn) return;
     var light = root.getAttribute("data-theme") !== "light";
-    if (light) root.setAttribute("data-theme", "light"); else root.removeAttribute("data-theme");
-    try { localStorage.setItem("ss-theme", light ? "light" : "dark"); } catch (err) {}
-    setMeta(light);
+    apply(light);
+    try {
+      // Picking the same mode as the device setting goes back to following the device
+      if (mq && light === mq.matches) localStorage.removeItem("ss-theme");
+      else localStorage.setItem("ss-theme", light ? "light" : "dark");
+    } catch (err) {}
   });
 
   // Live Agadir clock: <span data-clock> shows attr(data-time) through CSS

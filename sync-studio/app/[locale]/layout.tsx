@@ -17,7 +17,7 @@ const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grot
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap", weight: ["400", "500"] });
 const arabic = IBM_Plex_Sans_Arabic({ subsets: ["arabic"], variable: "--font-plex-arabic", display: "swap", weight: ["400", "500", "600", "700"] });
 
-const THEME_INIT = `try{if(localStorage.getItem("ss-theme")==="light"){document.documentElement.setAttribute("data-theme","light");var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content","#F4F6FA")}}catch(e){}`;
+const THEME_INIT = `try{var s=null;try{s=localStorage.getItem("ss-theme")}catch(e){}var l=s?s==="light":window.matchMedia("(prefers-color-scheme: light)").matches;if(l)document.documentElement.setAttribute("data-theme","light")}catch(e){}`;
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -77,7 +77,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   return (
     <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} className={`${inter.variable} ${grotesk.variable} ${mono.variable} ${arabic.variable}`} suppressHydrationWarning>
       <head>
-        {/* Apply the saved light/dark choice before the page paints (dark is the default) */}
+        {/* Before the page paints: the saved choice if any, otherwise the device setting */}
         <script id="theme-init" dangerouslySetInnerHTML={{ __html: THEME_INIT }} />
       </head>
       <body>
