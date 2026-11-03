@@ -12,6 +12,7 @@ export const clients = [
     },
     // Slideshow order. "key" matches work.featured.slides.<key> in the message files.
     reels: [
+      { key: "teaser", src: "/work/mous/teaser.mp4", poster: "/work/mous/teaser.jpg" },
       { key: "launch", src: "/work/mous/launch-reel.mp4", poster: "/work/mous/launch-reel.jpg" },
       { key: "intro", src: "/work/mous/logo-intro.mp4", poster: "/work/mous/logo-intro.jpg" },
     ],

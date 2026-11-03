@@ -26,8 +26,9 @@ export function ReelCarousel({ slides, labels }: { slides: Slide[]; labels: { pr
           </button>
           <div className="min-w-0 flex-1 text-center">
             {slides.map((s, i) => (
-              <p key={s.src} data-caption={i} data-active={i === 0 ? "" : undefined} className="reel-caption truncate text-sm">
-                <span className="font-medium text-text" dir="auto">{s.title}</span> <span className="font-mono text-xs text-muted">· {s.meta}</span>
+              <p key={s.src} data-caption={i} data-active={i === 0 ? "" : undefined} className="reel-caption text-sm leading-tight">
+                <span className="block truncate font-medium text-text" dir="auto">{s.title}</span>
+                <span className="mt-0.5 block font-mono text-[11px] text-muted">{s.meta}</span>
               </p>
             ))}
             <div className="mt-2 flex justify-center gap-1.5">
