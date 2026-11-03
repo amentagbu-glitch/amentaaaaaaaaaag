@@ -14,22 +14,31 @@ npm run dev                  # http://localhost:3000
 
 Production check: `npm run build && npm start`.
 
-## Deploy (Vercel)
+## Deploy (Netlify)
 
-1. Import the repo on vercel.com and set **Root Directory** to `sync-studio`.
-2. Add the environment variables below in Project Settings → Environment Variables.
-3. Deploy, then point `syncstudio.ma` to the project (Settings → Domains).
+Netlify's free plan allows business sites. Settings come from `netlify.toml` at the repo root, so nothing needs typing in the build settings.
+
+1. Sign up at netlify.com with GitHub.
+2. **Add new project → Import an existing project → GitHub**, pick this repository.
+3. **Branch to deploy:** `sync-studio-beta` (or `main` once merged). Build settings fill in from `netlify.toml`.
+4. Add the environment variables below (at least `NEXT_PUBLIC_WHATSAPP_NUMBER`), then **Deploy**.
+5. Optional: **Project configuration → Change project name** to get `syncstudio.netlify.app`.
+6. Once you own `syncstudio.ma`: **Domain management → Add a domain**, follow the DNS steps, then set `NEXT_PUBLIC_SITE_URL=https://syncstudio.ma` and redeploy. HTTPS is automatic.
+
+Changing an environment variable needs a new deploy (**Deploys → Trigger deploy**) to take effect.
 
 ## Environment variables
 
 | Name | Needed | What it does |
 |---|---|---|
-| `NEXT_PUBLIC_SITE_URL` | yes | Final domain, e.g. `https://syncstudio.ma` (SEO, sitemap, OG) |
-| `NEXT_PUBLIC_WHATSAPP_NUMBER` | yes | Digits only, e.g. `2126XXXXXXXX` (floating button, CTAs) |
-| `RESEND_API_KEY` | yes for email | From resend.com. Without it, form submissions are only logged |
-| `CONTACT_TO_EMAIL` | optional | Where requests go. Default `hello@syncstudio.ma` |
-| `CONTACT_FROM_EMAIL` | optional | Sender, must be a domain verified in Resend |
+| `NEXT_PUBLIC_WHATSAPP_NUMBER` | yes | Digits only, e.g. `2126XXXXXXXX` (floating button, CTAs). Without it, WhatsApp links go to a dummy number |
+| `RESEND_API_KEY` | yes for email | From resend.com. Without it, form requests are only written to the function logs |
+| `CONTACT_TO_EMAIL` | yes for email | Where requests go. Before the domain is verified in Resend, use the email you signed up to Resend with |
+| `CONTACT_FROM_EMAIL` | yes for email | Sender. Before the domain is verified: `Sync Studio <onboarding@resend.dev>`. After: `Sync Studio <hello@syncstudio.ma>` |
+| `NEXT_PUBLIC_SITE_URL` | after domain | Final domain, e.g. `https://syncstudio.ma`. Empty = Netlify address |
 | `NEXT_PUBLIC_ANALYTICS_SRC` / `_DOMAIN` | optional | Privacy-friendly analytics script (e.g. Plausible). Off when empty |
+
+Note: until your domain is verified in Resend, the customer auto-reply can't be delivered (Resend's test sender only reaches your own address). You still receive every request.
 
 ## Where things live
 

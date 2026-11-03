@@ -1,7 +1,8 @@
 // Central place for business details. Replace the placeholders marked TODO.
 export const site = {
   name: "Sync Studio",
-  url: (process.env.NEXT_PUBLIC_SITE_URL || "https://syncstudio.ma").replace(/\/$/, ""),
+  // Final domain if set, otherwise the address Netlify gives the site (URL is set by Netlify at build time)
+  url: (process.env.NEXT_PUBLIC_SITE_URL || process.env.URL || "https://syncstudio.ma").replace(/\/$/, ""),
   email: "hello@syncstudio.ma",
   city: "Agadir",
   country: "Morocco",
