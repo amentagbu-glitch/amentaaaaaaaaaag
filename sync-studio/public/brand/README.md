@@ -1,10 +1,16 @@
-# Brand files (to add)
+# Brand files
 
-Put the final logo files here, unchanged:
+Web-sized copies of the official logo exports (resized only, colours untouched).
+Full-resolution originals are in `/brand/originals/`.
 
-- `logo-stacked.svg`        stacked logo (dark background)
-- `logo-horizontal.svg`     horizontal logo (dark background), used in header and footer
-- `icon-circle.svg`         circle icon, used as favicon
-- `logo-horizontal-light.svg` / `logo-stacked-light.svg`  light-background versions
+| File | Use |
+|---|---|
+| `logo-horizontal.png` | Header (dark version, background #070B14) |
+| `logo-horizontal-light.png` | Horizontal logo on light background |
+| `logo-stacked.png` | Footer, share image (transparent, for dark backgrounds) |
+| `logo-stacked-light.png` | Stacked logo for light backgrounds |
+| `logo-official.png` | Official square logo (structured data for Google) |
+| `icon-circle.png` / `icon-circle-light.png` | Circle icon (dark / light) |
+| `favicon-bright-*.png` / `favicon-dark-*.png` | Browser tab icon for dark / light browser themes |
 
-Then set `hasLogoFiles: true` in `lib/site.ts`. Until then the site shows a clearly marked text placeholder.
+`/favicon.ico` and `/apple-touch-icon.png` (home-screen icon) are made from the dark circle icon.

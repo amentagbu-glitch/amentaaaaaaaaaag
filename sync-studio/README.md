@@ -52,13 +52,13 @@ Note: until your domain is verified in Resend, the customer auto-reply can't be 
 
 ## Placeholders to replace
 
-- [ ] **Logo files** → `public/brand/` (see `public/brand/README.md`), then `hasLogoFiles: true` in `lib/site.ts`. Until then a dashed "Sync Studio" text placeholder shows.
+- [x] **Logo files** → done (`public/brand/`, originals in `brand/originals/`)
 - [ ] **WhatsApp number** → `NEXT_PUBLIC_WHATSAPP_NUMBER` (links currently go to a dummy number)
 - [ ] **Social links** → `site.socials` in `lib/site.ts` (all `#`)
 - [ ] **Case studies** → `work.cases` in the 3 message files (marked "Example", results are `[real result]`), plus visuals
 - [ ] **Founder** → `aboutPage.founderName` (`[name]`) and photo (`[photo]` box on About page)
 - [ ] **Testimonials** → section is built but hidden; add real video quotes and set `showTestimonials: true`
-- [ ] **Favicon** → comes from `public/brand/icon-circle.svg` once logo files are added
+- [x] **Favicon** → done
 - [ ] **Domain** → `NEXT_PUBLIC_SITE_URL`
 - [ ] **Resend** account + verified sending domain → `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`
 - [ ] **Arabic copy** → have a native speaker review `messages/ar.json`; the Darija chat example is in `components/ChatMock.tsx`

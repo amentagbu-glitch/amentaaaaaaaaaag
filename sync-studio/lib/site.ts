@@ -15,8 +15,6 @@ export const site = {
     facebook: "#",
     linkedin: "#",
   },
-  // Set to true once the logo files are in /public/brand/ (see public/brand/README.md)
-  hasLogoFiles: false,
   // Set to true once real video testimonials exist
   showTestimonials: false,
 };

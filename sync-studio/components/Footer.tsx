@@ -18,7 +18,7 @@ export function Footer() {
     <footer className="relative overflow-hidden border-t border-line/70 pb-28 pt-16 sm:pb-16">
       <div className="container-x grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <Logo />
+          <Logo variant="footer" />
           <p className="mt-4 max-w-xs text-muted">{t("tagline")}</p>
           <LanguageSwitcher className="mt-6" />
         </div>
