@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { Inter, Space_Grotesk, JetBrains_Mono, IBM_Plex_Sans_Arabic } from "next/font/google";
+import localFont from "next/font/local";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
@@ -12,10 +12,20 @@ import { Analytics } from "@/components/Analytics";
 import Script from "next/script";
 import "../globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space-grotesk", display: "swap", weight: ["400", "500", "600", "700"] });
-const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap", weight: ["400", "500"] });
-const arabic = IBM_Plex_Sans_Arabic({ subsets: ["arabic"], variable: "--font-plex-arabic", display: "swap", weight: ["400", "500", "600", "700"] });
+// Fonts are bundled in app/fonts (OFL-1.1), so builds never depend on downloading from Google Fonts
+const inter = localFont({ src: "../fonts/inter-latin.woff2", weight: "100 900", variable: "--font-inter", display: "swap" });
+const grotesk = localFont({ src: "../fonts/space-grotesk-latin.woff2", weight: "300 700", variable: "--font-space-grotesk", display: "swap" });
+const mono = localFont({ src: "../fonts/jetbrains-mono-latin.woff2", weight: "100 800", variable: "--font-jetbrains", display: "swap" });
+const arabic = localFont({
+  src: [
+    { path: "../fonts/ibm-plex-sans-arabic-400.woff2", weight: "400" },
+    { path: "../fonts/ibm-plex-sans-arabic-500.woff2", weight: "500" },
+    { path: "../fonts/ibm-plex-sans-arabic-600.woff2", weight: "600" },
+    { path: "../fonts/ibm-plex-sans-arabic-700.woff2", weight: "700" },
+  ],
+  variable: "--font-plex-arabic",
+  display: "swap",
+});
 
 const THEME_INIT = `try{var d=document.documentElement,s=null;try{s=localStorage.getItem("ss-theme")}catch(e){}var h=d.getAttribute("data-theme");var l=s?s==="light":(h==="light"||h==="dark")?h==="light":window.matchMedia("(prefers-color-scheme: light)").matches;if(l)d.setAttribute("data-ss-theme","light")}catch(e){}`;
 
