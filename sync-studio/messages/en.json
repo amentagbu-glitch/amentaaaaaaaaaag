@@ -526,5 +526,243 @@
   "clients": {
     "label": "They trust us",
     "yourLogo": "Your logo here?"
+  },
+  "v2": {
+    "hero": {
+      "kicker": "Digital studio · Agadir",
+      "title1": "Offline, online,",
+      "title2": "in sync.",
+      "subtitle": "Video, websites and AI automation for businesses that deserve to be seen.",
+      "commandLabel": "What do you want to improve?",
+      "commandPrefix": "I want",
+      "suggestions": [
+        "more customers from Google Maps",
+        "reels every week",
+        "to answer WhatsApp 24/7",
+        "a fast website",
+        "a clear offer for my budget"
+      ],
+      "actions": {
+        "score": "Get my score",
+        "ai": "Try the AI assistant",
+        "builder": "Build my offer"
+      },
+      "scroll": "Scroll"
+    },
+    "sections": {
+      "score": {
+        "label": "Diagnosis",
+        "title": "Is your business visible online?",
+        "subtitle": "6 questions, 30 seconds. Get your visibility score and what to fix first."
+      },
+      "services": {
+        "label": "Services",
+        "title": "Three pillars. One studio.",
+        "subtitle": "Get seen, get chosen, get contacted. We handle all three."
+      },
+      "ai": {
+        "label": "AI in action",
+        "title": "Message it like a customer.",
+        "subtitle": "Try an automatic WhatsApp assistant: ask a question in French, English, Darija or Arabic."
+      },
+      "work": {
+        "label": "Work",
+        "title": "Real work, filmed on location."
+      },
+      "process": {
+        "label": "How it works"
+      },
+      "builder": {
+        "label": "Your offer",
+        "title": "Build your offer in 3 clicks.",
+        "subtitle": "Pick what you need. We show the matching offer and its starting price."
+      },
+      "cta": {
+        "label": "Free audit"
+      }
+    },
+    "quiz": {
+      "start": "Start the diagnosis",
+      "question": "Question",
+      "of": "of",
+      "back": "Back",
+      "restart": "Start again",
+      "answers": {
+        "yes": "Yes",
+        "partly": "Partly",
+        "no": "No"
+      },
+      "questions": [
+        {
+          "area": "google",
+          "q": "Does your Google Maps profile have recent photos and up-to-date hours?"
+        },
+        {
+          "area": "social",
+          "q": "Do you post on Instagram or TikTok at least once a week?"
+        },
+        {
+          "area": "whatsapp",
+          "q": "Do you reply to WhatsApp messages within an hour?"
+        },
+        {
+          "area": "website",
+          "q": "Do you have a fast website that reads well on a phone?"
+        },
+        {
+          "area": "booking",
+          "q": "Can customers book or order online?"
+        },
+        {
+          "area": "video",
+          "q": "Do you have recent videos of your place or products?"
+        }
+      ],
+      "resultLabel": "Your visibility score",
+      "levels": {
+        "low": "Almost invisible online",
+        "mid": "Visible, but not yet chosen",
+        "high": "Well in sync"
+      },
+      "levelText": {
+        "low": "Customers look for you but can’t find you yet. Getting the basics right will make a big difference.",
+        "mid": "The basics are there. A few targeted actions can make you stand out.",
+        "high": "A strong base. Content and automation can take you further."
+      },
+      "tipsTitle": "Your priorities",
+      "tips": {
+        "google": "Complete and keep your Google Maps profile alive (photos, hours, reviews).",
+        "social": "Post regular reels with a simple calendar.",
+        "whatsapp": "Automate WhatsApp replies to answer 24/7.",
+        "website": "A fast, clear website built for phones.",
+        "booking": "Add online booking or ordering.",
+        "video": "Film recent videos of your place and products."
+      },
+      "allGood": "Nothing urgent: we’ll help you reach the next level.",
+      "ctaAudit": "Get my free audit",
+      "ctaWhatsapp": "Send my score on WhatsApp",
+      "note": "Indicative score, based on your answers.",
+      "waMessage": "Hello Sync Studio, my visibility score is {score}/100. My priorities: {tips}.",
+      "contactMessage": "Visibility score: {score}/100. Priorities: {tips}."
+    },
+    "ai": {
+      "business": "Café Atlas",
+      "status": "online",
+      "tag": "Auto-reply · AI",
+      "demoBadge": "Demo · fictional business",
+      "placeholder": "Type a message…",
+      "send": "Send",
+      "reset": "Clear the conversation",
+      "suggestions": [
+        "Are you open tonight?",
+        "How much is the menu?",
+        "Table for 4 at 8pm please",
+        "Salam, wach katwslo?"
+      ],
+      "panelTitle": "What the AI understands",
+      "labels": {
+        "intent": "Intent",
+        "lang": "Language",
+        "details": "Details",
+        "action": "Action",
+        "time": "Response time"
+      },
+      "intents": {
+        "greet": "Greeting",
+        "hours": "Opening hours",
+        "location": "Address",
+        "menu": "Menu",
+        "book": "Booking",
+        "delivery": "Delivery",
+        "thanks": "Thanks",
+        "fallback": "Open question"
+      },
+      "langs": {
+        "fr": "French",
+        "en": "English",
+        "darija": "Darija",
+        "ar": "Arabic"
+      },
+      "actions": {
+        "reply": "Reply sent",
+        "ask": "Follow-up question",
+        "booked": "Booking + reminder scheduled",
+        "handoff": "Passed to the team",
+        "menu": "Menu sent",
+        "location": "Location sent"
+      },
+      "waiting": "Waiting for a message…",
+      "disclaimer": "Simplified demo. Your real automations are set up with your details, prices and tone.",
+      "cta": "I want this for my business"
+    },
+    "builder": {
+      "needsTitle": "What do you need?",
+      "needs": {
+        "google": "Google Maps profile",
+        "photo": "Professional photos",
+        "whatsapp": "WhatsApp Business",
+        "website": "Website",
+        "reels": "Monthly reels",
+        "social": "Social media management",
+        "booking": "Online booking",
+        "ai": "AI automation"
+      },
+      "empty": "Select at least one need to see your offer.",
+      "recommended": "Recommended offer",
+      "from": "From",
+      "included": "Included",
+      "onQuote": "Optional, on quote",
+      "sendWhatsapp": "Send my selection on WhatsApp",
+      "requestAudit": "Start with the free audit",
+      "note": "Indicative prices. The final quote follows the free audit.",
+      "waMessage": "Hello Sync Studio, I’m interested in the {plan} offer. My needs: {needs}.",
+      "contactMessage": "{plan} offer. Needs: {needs}.",
+      "packagesTitle": "All offers"
+    },
+    "cmdk": {
+      "trigger": "Search",
+      "placeholder": "Search a page, an action…",
+      "empty": "No results.",
+      "groups": {
+        "actions": "Actions",
+        "pages": "Pages",
+        "services": "Services",
+        "work": "Work",
+        "settings": "Preferences"
+      },
+      "items": {
+        "score": "Get my visibility score",
+        "ai": "Try the WhatsApp AI assistant",
+        "builder": "Build my offer",
+        "audit": "Get a free audit",
+        "whatsapp": "Message us on WhatsApp",
+        "email": "Copy the email address",
+        "copied": "Address copied",
+        "home": "Home",
+        "services": "Services",
+        "work": "Work",
+        "about": "About",
+        "contact": "Contact",
+        "content": "Content · video and social",
+        "digital": "Digital · Google, website, WhatsApp",
+        "aiService": "AI automation",
+        "mous": "Mou's Doner Kabab · Rabat",
+        "founder": "The founder",
+        "theme": "Light / dark mode",
+        "fr": "Français",
+        "en": "English",
+        "ar": "العربية"
+      },
+      "hints": {
+        "navigate": "navigate",
+        "open": "open",
+        "close": "close"
+      }
+    },
+    "footer2": {
+      "cta": "Got a project? Let’s talk.",
+      "audit": "Free audit",
+      "madeIn": "Designed and filmed in Agadir."
+    }
   }
 }

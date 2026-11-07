@@ -6,6 +6,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { Logo } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
+import { CommandTrigger } from "./v2/CommandTrigger";
 import { IconClose, IconMenu } from "./icons";
 
 const links = [
@@ -60,8 +61,9 @@ export function Header() {
               <Link
                 key={l.key}
                 href={l.href}
+                data-nav={l.key}
                 aria-current={active ? "page" : undefined}
-                className={`relative rounded-lg px-3 py-2 text-sm transition-colors ${active ? "text-text" : "text-muted hover:text-text"}`}
+                className={`relative whitespace-nowrap rounded-lg px-2.5 py-2 text-sm transition-colors xl:px-3 ${active ? "text-text" : "text-muted hover:text-text"}`}
               >
                 {t(l.key)}
                 {active && <span className="absolute inset-x-3 -bottom-px h-px bg-accent" />}
@@ -70,15 +72,18 @@ export function Header() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-2 lg:flex xl:gap-3">
+          <CommandTrigger full className="hidden xl:inline-flex" />
+          <CommandTrigger className="xl:hidden" />
           <ThemeToggle />
           <LanguageSwitcher />
           <Link href="/contact" className="btn btn-primary !min-h-10 !text-sm">
-            {t("ctaLong")}
+            {t("cta")}
           </Link>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
+        <CommandTrigger />
         <ThemeToggle />
         <button
           type="button"

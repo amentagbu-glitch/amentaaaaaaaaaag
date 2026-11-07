@@ -7,6 +7,7 @@ export function WhatsAppFloat() {
   return (
     <a
       href={whatsappLink(t("prefill"))}
+      data-wa
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t("float")}

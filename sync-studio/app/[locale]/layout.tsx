@@ -9,6 +9,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { Analytics } from "@/components/Analytics";
+import { CommandMenu } from "@/components/v2/CommandMenu";
 import Script from "next/script";
 import "../globals.css";
 
@@ -98,9 +99,12 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <main id="main">{children}</main>
           <Footer />
           <WhatsAppFloat />
+          <CommandMenu />
         </NextIntlClientProvider>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <Script src="/fx.js" strategy="afterInteractive" />
+        <Script src="/vendor/lenis.min.js" strategy="afterInteractive" />
+        <Script src="/features.js" strategy="lazyOnload" />
         <Analytics />
       </body>
     </html>

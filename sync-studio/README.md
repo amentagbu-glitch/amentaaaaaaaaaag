@@ -40,6 +40,18 @@ Changing an environment variable needs a new deploy (**Deploys → Trigger deplo
 
 Note: until your domain is verified in Resend, the customer auto-reply can't be delivered (Resend's test sender only reaches your own address). You still receive every request.
 
+## v2 features
+
+All interactive features are plain JavaScript in `public/features.js` (no framework), fed by
+`<script type="application/json">` blocks from the server components, so they also work in static copies.
+
+- **Command menu** (Ctrl/Cmd + K, or the search buttons): `components/v2/CommandMenu.tsx`
+- **Visibility score quiz** (6 questions → score, priorities, audit link that pre-fills the contact form): `components/v2/ScoreQuiz.tsx`
+- **AI WhatsApp demo** (fictional café, FR / EN / Darija / Arabic, booking flow): `components/v2/AiDemo.tsx`, bot knowledge in `lib/aiDemo.ts`
+- **Package builder** (needs → recommended offer at the real prices in `offers.plans`): `components/v2/PackageBuilder.tsx`
+- **Motion**: smooth scroll (`public/vendor/lenis.min.js`, MIT), magnetic buttons, pinned horizontal services, page transitions (`app/[locale]/template.tsx`). All disabled with reduced motion.
+- Copy for all of the above: the `v2` key in `messages/*.json`.
+
 ## Where things live
 
 - `messages/fr.json`, `en.json`, `ar.json`: all copy

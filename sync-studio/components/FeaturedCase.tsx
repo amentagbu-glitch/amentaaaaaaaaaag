@@ -24,8 +24,8 @@ export function FeaturedCase() {
             slides={c.reels.map((r) => ({ src: r.src, poster: r.poster, title: t(`slides.${r.key}.title`), meta: t(`slides.${r.key}.meta`) }))}
             labels={{ prev: t("prev"), next: t("next"), soundOn: t("soundOn"), soundOff: t("soundOff"), play: t("play"), slide: t("slide") }}
           />
-          <span className="absolute start-4 top-4 font-mono text-[10px] uppercase tracking-[0.16em] text-muted" dir="ltr">
-            {t("videosCount", { n: c.reels.length })}
+          <span className="absolute start-4 top-4 font-mono text-[10px] uppercase tracking-[0.16em] text-muted">
+            <bdi>{t("videosCount", { n: c.reels.length })}</bdi>
           </span>
         </div>
         <div className="relative p-6 sm:p-10">

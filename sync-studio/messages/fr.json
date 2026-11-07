@@ -526,5 +526,243 @@
   "clients": {
     "label": "Ils nous font confiance",
     "yourLogo": "Votre logo ici ?"
+  },
+  "v2": {
+    "hero": {
+      "kicker": "Studio digital · Agadir",
+      "title1": "Hors ligne, en ligne,",
+      "title2": "en phase.",
+      "subtitle": "Vidéo, sites web et automatisation par IA pour les entreprises qui méritent d'être vues.",
+      "commandLabel": "Que voulez-vous améliorer ?",
+      "commandPrefix": "Je veux",
+      "suggestions": [
+        "plus de clients sur Google Maps",
+        "des reels chaque semaine",
+        "répondre à WhatsApp 24h/24",
+        "un site web rapide",
+        "une offre claire pour mon budget"
+      ],
+      "actions": {
+        "score": "Calculer mon score",
+        "ai": "Tester l'assistant IA",
+        "builder": "Composer mon offre"
+      },
+      "scroll": "Défiler"
+    },
+    "sections": {
+      "score": {
+        "label": "Diagnostic",
+        "title": "Votre entreprise est-elle visible en ligne ?",
+        "subtitle": "6 questions, 30 secondes. Recevez votre score de visibilité et les priorités à corriger."
+      },
+      "services": {
+        "label": "Services",
+        "title": "Trois piliers. Un seul studio.",
+        "subtitle": "Être vu, être choisi, être contacté. On s’occupe des trois."
+      },
+      "ai": {
+        "label": "IA en action",
+        "title": "Écrivez-lui comme un client.",
+        "subtitle": "Testez un assistant WhatsApp automatique : posez une question en français, anglais, darija ou arabe."
+      },
+      "work": {
+        "label": "Réalisations",
+        "title": "Du concret, filmé sur le terrain."
+      },
+      "process": {
+        "label": "Méthode"
+      },
+      "builder": {
+        "label": "Votre offre",
+        "title": "Composez votre offre en 3 clics.",
+        "subtitle": "Choisissez ce dont vous avez besoin. On vous indique l'offre adaptée et son prix de départ."
+      },
+      "cta": {
+        "label": "Audit gratuit"
+      }
+    },
+    "quiz": {
+      "start": "Commencer le diagnostic",
+      "question": "Question",
+      "of": "sur",
+      "back": "Retour",
+      "restart": "Recommencer",
+      "answers": {
+        "yes": "Oui",
+        "partly": "En partie",
+        "no": "Non"
+      },
+      "questions": [
+        {
+          "area": "google",
+          "q": "Votre fiche Google Maps a-t-elle des photos récentes et des horaires à jour ?"
+        },
+        {
+          "area": "social",
+          "q": "Publiez-vous sur Instagram ou TikTok au moins une fois par semaine ?"
+        },
+        {
+          "area": "whatsapp",
+          "q": "Répondez-vous aux messages WhatsApp en moins d’une heure ?"
+        },
+        {
+          "area": "website",
+          "q": "Avez-vous un site web rapide et lisible sur téléphone ?"
+        },
+        {
+          "area": "booking",
+          "q": "Vos clients peuvent-ils réserver ou commander en ligne ?"
+        },
+        {
+          "area": "video",
+          "q": "Avez-vous des vidéos récentes de votre lieu ou de vos produits ?"
+        }
+      ],
+      "resultLabel": "Votre score de visibilité",
+      "levels": {
+        "low": "Presque invisible en ligne",
+        "mid": "Visible, mais pas encore choisi",
+        "high": "Bien en phase"
+      },
+      "levelText": {
+        "low": "Vos clients vous cherchent, mais ne vous trouvent pas encore. Les bases feront une grande différence.",
+        "mid": "Les bases sont là. Quelques actions ciblées peuvent vous démarquer.",
+        "high": "Très bonne base. On peut aller plus loin avec du contenu et de l’automatisation."
+      },
+      "tipsTitle": "Vos priorités",
+      "tips": {
+        "google": "Compléter et animer votre fiche Google Maps (photos, horaires, avis).",
+        "social": "Publier des reels réguliers avec un calendrier simple.",
+        "whatsapp": "Automatiser les réponses WhatsApp pour répondre 24h/24.",
+        "website": "Un site rapide, clair et pensé pour le téléphone.",
+        "booking": "Ajouter la réservation ou la commande en ligne.",
+        "video": "Tourner des vidéos récentes de votre lieu et de vos produits."
+      },
+      "allGood": "Rien d’urgent : on vous aide à passer au niveau supérieur.",
+      "ctaAudit": "Recevoir mon audit gratuit",
+      "ctaWhatsapp": "Envoyer mon score sur WhatsApp",
+      "note": "Score indicatif, calculé à partir de vos réponses.",
+      "waMessage": "Bonjour Sync Studio, mon score de visibilité est {score}/100. Mes priorités : {tips}.",
+      "contactMessage": "Score de visibilité : {score}/100. Priorités : {tips}."
+    },
+    "ai": {
+      "business": "Café Atlas",
+      "status": "en ligne",
+      "tag": "Réponse auto · IA",
+      "demoBadge": "Démo · entreprise fictive",
+      "placeholder": "Écrivez un message…",
+      "send": "Envoyer",
+      "reset": "Effacer la conversation",
+      "suggestions": [
+        "Vous êtes ouverts ce soir ?",
+        "C'est combien le menu ?",
+        "Je veux réserver pour 4 à 20h",
+        "Salam, wach katwslo ?"
+      ],
+      "panelTitle": "Ce que l’IA comprend",
+      "labels": {
+        "intent": "Intention",
+        "lang": "Langue",
+        "details": "Détails",
+        "action": "Action",
+        "time": "Temps de réponse"
+      },
+      "intents": {
+        "greet": "Salutation",
+        "hours": "Horaires",
+        "location": "Adresse",
+        "menu": "Menu",
+        "book": "Réservation",
+        "delivery": "Livraison",
+        "thanks": "Remerciement",
+        "fallback": "Question libre"
+      },
+      "langs": {
+        "fr": "Français",
+        "en": "Anglais",
+        "darija": "Darija",
+        "ar": "Arabe"
+      },
+      "actions": {
+        "reply": "Réponse envoyée",
+        "ask": "Question de précision",
+        "booked": "Réservation + rappel programmé",
+        "handoff": "Transmis à l’équipe",
+        "menu": "Menu envoyé",
+        "location": "Localisation envoyée"
+      },
+      "waiting": "En attente d’un message…",
+      "disclaimer": "Démo simplifiée. Vos vraies automatisations sont configurées avec vos infos, vos prix et votre ton.",
+      "cta": "Je veux ça pour mon entreprise"
+    },
+    "builder": {
+      "needsTitle": "De quoi avez-vous besoin ?",
+      "needs": {
+        "google": "Fiche Google Maps",
+        "photo": "Photos professionnelles",
+        "whatsapp": "WhatsApp Business",
+        "website": "Site web",
+        "reels": "Reels chaque mois",
+        "social": "Gestion des réseaux",
+        "booking": "Réservation en ligne",
+        "ai": "Automatisation IA"
+      },
+      "empty": "Sélectionnez au moins un besoin pour voir votre offre.",
+      "recommended": "Offre recommandée",
+      "from": "À partir de",
+      "included": "Inclus",
+      "onQuote": "En option, sur devis",
+      "sendWhatsapp": "Envoyer ma sélection sur WhatsApp",
+      "requestAudit": "Commencer par l’audit gratuit",
+      "note": "Prix indicatifs. Le devis final suit l’audit gratuit.",
+      "waMessage": "Bonjour Sync Studio, je suis intéressé par l’offre {plan}. Mes besoins : {needs}.",
+      "contactMessage": "Offre {plan}. Besoins : {needs}.",
+      "packagesTitle": "Toutes les offres"
+    },
+    "cmdk": {
+      "trigger": "Rechercher",
+      "placeholder": "Rechercher une page, une action…",
+      "empty": "Aucun résultat.",
+      "groups": {
+        "actions": "Actions",
+        "pages": "Pages",
+        "services": "Services",
+        "work": "Réalisations",
+        "settings": "Préférences"
+      },
+      "items": {
+        "score": "Calculer mon score de visibilité",
+        "ai": "Tester l'assistant IA WhatsApp",
+        "builder": "Composer mon offre",
+        "audit": "Demander un audit gratuit",
+        "whatsapp": "Écrire sur WhatsApp",
+        "email": "Copier l'adresse e-mail",
+        "copied": "Adresse copiée",
+        "home": "Accueil",
+        "services": "Services",
+        "work": "Réalisations",
+        "about": "À propos",
+        "contact": "Contact",
+        "content": "Contenu · vidéo et réseaux",
+        "digital": "Digital · Google, site, WhatsApp",
+        "aiService": "Automatisation IA",
+        "mous": "Mou's Doner Kabab · Rabat",
+        "founder": "Le fondateur",
+        "theme": "Mode clair / sombre",
+        "fr": "Français",
+        "en": "English",
+        "ar": "العربية"
+      },
+      "hints": {
+        "navigate": "naviguer",
+        "open": "ouvrir",
+        "close": "fermer"
+      }
+    },
+    "footer2": {
+      "cta": "Un projet ? Parlons-en.",
+      "audit": "Audit gratuit",
+      "madeIn": "Conçu et filmé à Agadir."
+    }
   }
 }
