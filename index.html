@@ -95,6 +95,17 @@
   @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
   body.reveal #book{animation:bookIn 1s cubic-bezier(.2,.8,.2,1) both}
   @keyframes bookIn{from{opacity:0;transform:translateY(24px) scale(.94)}to{opacity:1;transform:none}}
+  /* ---- Intro video ---- */
+  #intro{position:fixed;inset:0;z-index:90;background:#000;display:none;align-items:center;justify-content:center;transition:opacity .8s ease}
+  #intro.on{display:flex}
+  #intro.out{opacity:0;pointer-events:none}
+  #introVid{width:100%;height:100%;object-fit:contain;background:#000}
+  .iv-btn{position:absolute;z-index:2;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.45);color:#fff;
+    font:600 14px Montserrat,sans-serif;padding:10px 18px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+  .iv-btn:hover{background:#7cc242;color:#0f3d1c;border-color:#7cc242}
+  #ivSkip{right:18px;bottom:calc(22px + env(safe-area-inset-bottom))}
+  #ivSnd{left:18px;bottom:calc(22px + env(safe-area-inset-bottom));padding:10px 14px}
+  #ivBar{position:absolute;left:0;bottom:0;height:3px;width:0;background:#7cc242;z-index:2}
 </style>
 </head>
 <body>
@@ -103,6 +114,12 @@
   <div class="lg-box"><img id="loaderLogo" src="logo.png" alt="Unique Group Holding"><span class="lg-leaf"></span></div>
   <div class="lg-track"><div class="lg-bar" id="lgBar"></div></div>
   <div class="lg-pct" id="lgPct">0%</div>
+</div>
+<div id="intro" aria-label="Intro video">
+  <video id="introVid" playsinline muted preload="auto"></video>
+  <button class="iv-btn" id="ivSnd" aria-label="Turn sound on">🔇 Sound</button>
+  <button class="iv-btn" id="ivSkip">Skip ›</button>
+  <div id="ivBar"></div>
 </div>
 <header style="justify-content:flex-start">
   <h1>Unique Group <span>Holding</span></h1>
@@ -245,28 +262,65 @@ function rebuildOn(el, cur){
   // falling avocados (20% opacity layer)
   const HALF = '<svg viewBox="0 0 60 80"><path d="M30 2C18 2 12 16 9 30 4 50 6 78 30 78s26-28 21-48C48 16 42 2 30 2z" fill="#1c6a2f"/><path d="M30 9c-9 0-14 11-16 23-4 17-2 39 16 39s20-22 16-39C44 20 39 9 30 9z" fill="#c8e27a"/><circle cx="30" cy="50" r="12" fill="#8a5a2b"/><circle cx="26" cy="46" r="3.5" fill="#b07a45"/></svg>';
   const WHOLE = '<svg viewBox="0 0 60 80"><path d="M30 2C18 2 12 16 9 30 4 50 6 78 30 78s26-28 21-48C48 16 42 2 30 2z" fill="#1f5e2c"/><path d="M22 18c-4 8-6 18-6 28" stroke="#3f8a3a" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M30 2c1-3 4-4 6-3" stroke="#5a3a1c" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>';
+  const BLUE = '<svg viewBox="0 0 60 60"><circle cx="30" cy="32" r="24" fill="#3b4f9a"/><circle cx="22" cy="24" r="7" fill="#7f93d6" opacity=".55"/><path d="M30 10l3 5 6-1-4 5 4 4-6 0-3 5-3-5-6 0 4-4-4-5 6 1z" fill="#24346e"/></svg>';
+  const STRAW = '<svg viewBox="0 0 60 72"><path d="M30 70C14 60 4 44 6 30 8 20 18 16 30 18s22-2 24 12c2 14-8 30-24 40z" fill="#e0303a"/><g fill="#ffd56b"><circle cx="20" cy="32" r="1.6"/><circle cx="32" cy="30" r="1.6"/><circle cx="42" cy="34" r="1.6"/><circle cx="25" cy="44" r="1.6"/><circle cx="37" cy="45" r="1.6"/><circle cx="30" cy="56" r="1.6"/><circle cx="16" cy="42" r="1.4"/><circle cx="45" cy="46" r="1.4"/></g><path d="M30 20c-8-1-14-6-16-10 6 0 11 2 13 5-1-5 1-10 3-13 2 3 4 8 3 13 2-3 7-5 13-5-2 4-8 9-16 10z" fill="#2f8a3a"/></svg>';
+  const RASP = '<svg viewBox="0 0 60 66"><g fill="#c2185b"><circle cx="22" cy="26" r="8"/><circle cx="38" cy="26" r="8"/><circle cx="30" cy="22" r="8"/><circle cx="18" cy="38" r="8"/><circle cx="30" cy="36" r="8"/><circle cx="42" cy="38" r="8"/><circle cx="24" cy="50" r="8"/><circle cx="36" cy="50" r="8"/><circle cx="30" cy="60" r="6"/></g><g fill="#ec5f8f"><circle cx="20" cy="24" r="2.5"/><circle cx="28" cy="34" r="2.5"/><circle cx="16" cy="36" r="2.5"/><circle cx="22" cy="48" r="2.5"/></g><path d="M30 16c-6-1-10-5-12-8 5 0 9 1 11 3 0-4 1-7 1-10 1 3 2 6 1 10 2-2 6-3 11-3-2 3-6 7-12 8z" fill="#2f8a3a"/></svg>';
+  const FRUITS = [[HALF,3],[WHOLE,2],[BLUE,2],[STRAW,2],[RASP,1]];
+  const pick = () => { const t = FRUITS.reduce((a,f)=>a+f[1],0); let r = Math.random()*t; for (const f of FRUITS) { if ((r -= f[1]) < 0) return f[0]; } return HALF; };
   const layer = document.getElementById('avoLayer');
-  const count = window.innerWidth < 700 ? 14 : 24;
+  const count = window.innerWidth < 700 ? 18 : 30;
   for (let i = 0; i < count; i++) {
     const a = document.createElement('div'); a.className = 'avo';
-    const size = 26 + Math.random() * 42, dur = 4.5 + Math.random() * 4.5;
+    const svg = pick(), small = svg === BLUE || svg === RASP;
+    const size = small ? 18 + Math.random() * 22 : 26 + Math.random() * 40, dur = 4.5 + Math.random() * 4.5;
     a.style.left = (Math.random() * 100) + '%';
     a.style.width = size + 'px';
     a.style.animationDuration = dur + 's';
     a.style.animationDelay = (-Math.random() * dur) + 's';
-    a.innerHTML = Math.random() < .55 ? HALF : WHOLE;
+    a.innerHTML = svg;
     const sv = a.firstChild, r0 = (Math.random() * 80 - 40);
     sv.style.setProperty('--r0', r0 + 'deg'); sv.style.setProperty('--r1', (r0 + (Math.random() * 120 - 60)) + 'deg');
     sv.style.animationDuration = (1.6 + Math.random() * 2) + 's';
     layer.appendChild(a);
   }
 
+  // intro video (ugh/intro.mp4). If it is missing or fails, the brochure opens directly.
+  const vid = document.getElementById('introVid'), intro = document.getElementById('intro');
+  let videoOK = false, videoSettled = false;
+  vid.addEventListener('canplay', () => { videoOK = true; videoSettled = true; }, { once: true });
+  vid.addEventListener('error', () => { videoSettled = true; }, { once: true });
+  vid.src = 'intro.mp4';
+  vid.load();
+  function endIntro(){
+    if (intro.classList.contains('out')) return;
+    intro.classList.add('out');
+    document.body.classList.add('reveal');
+    // re-run the book entrance animation now that it is visible
+    const bk = document.getElementById('book'); if (bk) { bk.style.animation = 'none'; bk.offsetHeight; bk.style.animation = ''; }
+    setTimeout(() => { try { vid.pause(); } catch(e){} intro.remove(); }, 850);
+  }
+  function playIntro(){
+    intro.classList.add('on');
+    vid.muted = true;
+    const p = vid.play(); if (p && p.catch) p.catch(() => endIntro());
+    vid.addEventListener('ended', endIntro);
+    vid.addEventListener('timeupdate', () => {
+      if (vid.duration) document.getElementById('ivBar').style.width = (vid.currentTime / vid.duration * 100) + '%';
+    });
+  }
+  document.getElementById('ivSkip').onclick = endIntro;
+  document.getElementById('ivSnd').onclick = () => {
+    vid.muted = !vid.muted;
+    if (!vid.muted) { vid.volume = 1; vid.play().catch(()=>{}); }
+    document.getElementById('ivSnd').textContent = vid.muted ? '🔇 Sound' : '🔊 Sound';
+  };
+
   // progress: real loading, shown as a smooth 0 → 100 count
-  const PRE = 6, t0 = Date.now(), MIN = 3000, MAX = 9000;
+  const PRE = 6, t0 = Date.now(), MIN = 3000, MAX = 12000;
   let loaded = 0, shown = 0, finished = false;
   const bar = document.getElementById('lgBar'), pct = document.getElementById('lgPct');
   function tick(){
-    const real = finished ? 1 : loaded / PRE;
+    const real = finished ? 1 : (loaded / PRE) * (videoSettled ? 1 : 0.9);
     const timeCap = Math.min(1, (Date.now() - t0) / MIN);        // never faster than MIN
     const target = Math.min(real, timeCap) * 100;
     shown += Math.max(0, target - shown) * 0.12 + (shown < target ? 0.25 : 0);
@@ -280,7 +334,8 @@ function rebuildOn(el, cur){
     if (revealed) return; revealed = true;
     setTimeout(() => {
       build();
-      document.body.classList.add('reveal');
+      if (videoOK) { playIntro(); }
+      else { document.body.classList.add('reveal'); }
       document.getElementById('loader').classList.add('done');
       setTimeout(() => document.getElementById('loader').remove(), 1300);
     }, 300);
