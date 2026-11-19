@@ -20,8 +20,9 @@
   .back:hover{background:var(--acc);color:var(--g1);opacity:1}
   header h1{font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
   header h1 span{color:var(--acc)}
-  .stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:6px 14px;position:relative}
-  #book{margin:0 auto}
+  .stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:6px 14px;position:relative;overflow:hidden;z-index:1}
+  #book{margin:0 auto;flex:none;filter:drop-shadow(0 22px 34px rgba(0,0,0,.45))}
+  .bar,.thumbs,footer,header{position:relative;z-index:3}
   .page{background:#fff;overflow:hidden}
   .page img{width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none}
   .side{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;
@@ -42,15 +43,26 @@
   footer a{text-decoration:none}footer a:hover b{text-decoration:underline}
   #zoom{position:fixed;inset:0;background:rgba(5,20,9,.96);z-index:50;display:none;overflow:auto;-webkit-overflow-scrolling:touch}
   #zoom.open{display:block}
-  #zoom img{display:block;width:min(1400px,180vw);max-width:none;margin:0 auto}
+  #zoom img{display:block;width:min(1600px,94vw);max-width:none;margin:12px auto}
+  @media (max-width:700px){#zoom img{width:180vw;margin:0 auto}}
   #zclose{position:fixed;top:calc(12px + env(safe-area-inset-top));right:14px;z-index:51;background:var(--acc);color:var(--g1);border:0;
     font:700 14px Montserrat,sans-serif;padding:9px 15px;border-radius:999px;cursor:pointer;display:none}
   #zoom.open + #zclose{display:block}
   #loading{position:absolute;font-size:13px;opacity:.7}
   body.focus header, body.focus .thumbs, body.focus footer{display:none}
-  body.focus{background:#06180b}
-  body.focus .stage{padding:4px}
-  body.focus .bar{padding:6px 8px calc(8px + env(safe-area-inset-bottom))}
+  body.focus{background:
+      radial-gradient(60% 55% at 50% 46%, rgba(124,194,66,.22) 0%, rgba(124,194,66,0) 70%),
+      radial-gradient(120% 70% at 50% 115%, #1f7a36 0%, rgba(31,122,54,0) 60%),
+      radial-gradient(90% 60% at 50% -15%, #134a23 0%, rgba(19,74,35,0) 65%),
+      linear-gradient(180deg,#0a2412 0%,#061a0c 55%,#041208 100%)}
+  body.focus::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background-image:radial-gradient(rgba(255,255,255,.07) 1px, transparent 1.2px);background-size:22px 22px;
+    -webkit-mask-image:radial-gradient(70% 65% at 50% 50%, transparent 35%, #000 100%);mask-image:radial-gradient(70% 65% at 50% 50%, transparent 35%, #000 100%)}
+  body.focus::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;box-shadow:inset 0 0 180px rgba(0,0,0,.65)}
+  body.focus #book{filter:drop-shadow(0 30px 50px rgba(0,0,0,.6)) drop-shadow(0 0 60px rgba(124,194,66,.12))}
+  body.focus .stage{padding:18px 14px 6px}
+  body.focus .bar{padding:6px 8px calc(12px + env(safe-area-inset-bottom))}
+  body.focus .bar button{background:rgba(255,255,255,.06);backdrop-filter:blur(6px)}
   @media (max-width:520px){header>span{display:none}}
   @media (max-width:700px){.side{display:none}header h1{font-size:13px}.thumbs img{height:44px;width:44px}}
 </style>
@@ -106,20 +118,24 @@ for (let i = 1; i <= N; i++) {
 
 function dims() {
   const st = document.getElementById('stage');
-  const w = st.clientWidth - 24, h = st.clientHeight - 12;
-  const portrait = window.innerWidth < 700 || w < h * 1.1;
-  const side = portrait ? Math.min(w, h) : Math.min(w / 2, h);
-  return Math.max(200, Math.floor(side));
+  const cs = getComputedStyle(st);
+  const arrows = getComputedStyle(document.getElementById('prev')).display !== 'none';
+  const w = st.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - (arrows ? 130 : 0) - 4;
+  const h = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - 4;
+  const landscape = window.innerWidth >= 700 && w >= h * 1.15;
+  const side = Math.max(160, Math.floor(landscape ? Math.min(w / 2, h) : Math.min(w, h)));
+  return { s: side, landscape };
 }
+function sizeBook(el, d){ el.style.width = (d.landscape ? d.s * 2 : d.s) + 'px'; el.style.height = d.s + 'px'; }
 
 let flip;
 function build(start = 0) {
-  const s = dims();
+  const d = dims(), s = d.s; sizeBook(book, d);
   flip = new St.PageFlip(book, {
     width: s, height: s, size: 'fixed',
     showCover: true, usePortrait: true, mobileScrollSupport: true,
     maxShadowOpacity: 0.45, flippingTime: 800, drawShadow: true, startPage: start,
-    autoSize: true
+    autoSize: false
   });
   flip.loadFromHTML(book.querySelectorAll('.page'));
   flip.on('flip', update);
@@ -193,7 +209,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.b
 
 function rebuild(force){
   if (!flip) return;
-  if (!force && Math.abs(window.innerWidth - lastW) < 40 && Math.abs(window.innerHeight - lastH) < 120) return;
+  if (!force && Math.abs(window.innerWidth - lastW) < 2 && Math.abs(window.innerHeight - lastH) < (window.innerWidth < 700 ? 120 : 2)) return;
   lastW = window.innerWidth; lastH = window.innerHeight;
   const cur = flip.getCurrentPageIndex();
   try { flip.destroy(); } catch (e) {}
@@ -211,8 +227,8 @@ let rt, lastW = window.innerWidth, lastH = window.innerHeight;
 window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => rebuild(false), 250); });
 window.addEventListener('orientationchange', () => setTimeout(() => rebuild(true), 400));
 function rebuildOn(el, cur){
-  const s = dims();
-  flip = new St.PageFlip(el, { width:s, height:s, size:'fixed', showCover:true, usePortrait:true,
+  const d = dims(), s = d.s; sizeBook(el, d);
+  flip = new St.PageFlip(el, { width:s, height:s, size:'fixed', showCover:true, usePortrait:true, autoSize:false,
     mobileScrollSupport:true, maxShadowOpacity:.45, flippingTime:800, startPage:cur });
   flip.loadFromHTML(el.querySelectorAll('.page'));
   flip.on('flip', update); flip.on('changeOrientation', update); update();
