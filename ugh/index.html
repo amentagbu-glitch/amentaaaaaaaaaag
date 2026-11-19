@@ -77,10 +77,17 @@
     animation:wipe 1.1s cubic-bezier(.65,0,.25,1) .2s forwards, breathe 3.2s ease-in-out 1.6s infinite}
   .lg-leaf{position:absolute;left:20%;top:-12%;width:12%;aspect-ratio:1;border-radius:50%;
     background:radial-gradient(circle,rgba(124,194,66,.55),transparent 70%);opacity:0;animation:spark 1.2s ease 1.1s forwards}
-  .lg-track{position:relative;width:min(220px,50vw);height:3px;border-radius:3px;background:rgba(15,61,28,.12);overflow:hidden;
+  .lg-track{position:relative;width:min(240px,56vw);height:4px;border-radius:3px;background:rgba(15,61,28,.12);overflow:hidden;
     opacity:0;animation:fadeUp .6s ease .9s forwards}
-  .lg-bar{position:absolute;inset:0;width:0;background:linear-gradient(90deg,#1c6a2f,#7cc242);border-radius:3px;transition:width .45s ease}
-  .lg-pct{font-size:11px;font-weight:700;letter-spacing:.28em;color:#1c6a2f;margin-top:-22px;opacity:0;animation:fadeUp .6s ease 1s forwards}
+  .lg-bar{position:absolute;inset:0;width:0;background:linear-gradient(90deg,#1c6a2f,#7cc242);border-radius:3px}
+  .lg-pct{position:relative;font-size:15px;font-weight:700;letter-spacing:.12em;color:#1c6a2f;margin-top:-20px;opacity:0;animation:fadeUp .6s ease 1s forwards}
+  .avo-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;opacity:.2}
+  .avo{position:absolute;top:-14%;will-change:transform;animation:fall linear infinite}
+  .avo svg{display:block;width:100%;height:auto;animation:spin ease-in-out infinite alternate}
+  @keyframes fall{to{transform:translateY(130vh)}}
+  @keyframes spin{from{transform:rotate(var(--r0))}to{transform:rotate(var(--r1))}}
+  .lg-box,.lg-track,.lg-pct{z-index:1}
+  .lg-pct{font-variant-numeric:tabular-nums}
   @keyframes wipe{to{clip-path:inset(0 0 0 0)}}
   @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
   @keyframes spark{0%{opacity:0;transform:scale(.3)}50%{opacity:1;transform:scale(1.6)}100%{opacity:0;transform:scale(2.4)}}
@@ -92,6 +99,7 @@
 </head>
 <body>
 <div id="loader" role="status" aria-label="Loading brochure">
+  <div class="avo-layer" id="avoLayer"></div>
   <div class="lg-box"><img id="loaderLogo" src="logo.png" alt="Unique Group Holding"><span class="lg-leaf"></span></div>
   <div class="lg-track"><div class="lg-bar" id="lgBar"></div></div>
   <div class="lg-pct" id="lgPct">0%</div>
@@ -234,25 +242,56 @@ function rebuildOn(el, cur){
 
 // ---- Loader logic ----
 (function(){
-  const PRE = 6, t0 = Date.now(), MIN = 2600, MAX = 9000;
-  let done = 0, finished = false;
+  // falling avocados (20% opacity layer)
+  const HALF = '<svg viewBox="0 0 60 80"><path d="M30 2C18 2 12 16 9 30 4 50 6 78 30 78s26-28 21-48C48 16 42 2 30 2z" fill="#1c6a2f"/><path d="M30 9c-9 0-14 11-16 23-4 17-2 39 16 39s20-22 16-39C44 20 39 9 30 9z" fill="#c8e27a"/><circle cx="30" cy="50" r="12" fill="#8a5a2b"/><circle cx="26" cy="46" r="3.5" fill="#b07a45"/></svg>';
+  const WHOLE = '<svg viewBox="0 0 60 80"><path d="M30 2C18 2 12 16 9 30 4 50 6 78 30 78s26-28 21-48C48 16 42 2 30 2z" fill="#1f5e2c"/><path d="M22 18c-4 8-6 18-6 28" stroke="#3f8a3a" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M30 2c1-3 4-4 6-3" stroke="#5a3a1c" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>';
+  const layer = document.getElementById('avoLayer');
+  const count = window.innerWidth < 700 ? 14 : 24;
+  for (let i = 0; i < count; i++) {
+    const a = document.createElement('div'); a.className = 'avo';
+    const size = 26 + Math.random() * 42, dur = 4.5 + Math.random() * 4.5;
+    a.style.left = (Math.random() * 100) + '%';
+    a.style.width = size + 'px';
+    a.style.animationDuration = dur + 's';
+    a.style.animationDelay = (-Math.random() * dur) + 's';
+    a.innerHTML = Math.random() < .55 ? HALF : WHOLE;
+    const sv = a.firstChild, r0 = (Math.random() * 80 - 40);
+    sv.style.setProperty('--r0', r0 + 'deg'); sv.style.setProperty('--r1', (r0 + (Math.random() * 120 - 60)) + 'deg');
+    sv.style.animationDuration = (1.6 + Math.random() * 2) + 's';
+    layer.appendChild(a);
+  }
+
+  // progress: real loading, shown as a smooth 0 → 100 count
+  const PRE = 6, t0 = Date.now(), MIN = 3000, MAX = 9000;
+  let loaded = 0, shown = 0, finished = false;
   const bar = document.getElementById('lgBar'), pct = document.getElementById('lgPct');
-  const set = v => { bar.style.width = (v * 100) + '%'; pct.textContent = Math.round(v * 100) + '%'; };
-  function finish(){
-    if (finished) return; finished = true; set(1);
+  function tick(){
+    const real = finished ? 1 : loaded / PRE;
+    const timeCap = Math.min(1, (Date.now() - t0) / MIN);        // never faster than MIN
+    const target = Math.min(real, timeCap) * 100;
+    shown += Math.max(0, target - shown) * 0.12 + (shown < target ? 0.25 : 0);
+    if (shown > target) shown = target;
+    bar.style.width = shown + '%'; pct.textContent = Math.floor(shown) + '%';
+    if (shown >= 99.9 && real >= 1) { pct.textContent = '100%'; return reveal(); }
+    requestAnimationFrame(tick);
+  }
+  let revealed = false;
+  function reveal(){
+    if (revealed) return; revealed = true;
     setTimeout(() => {
       build();
       document.body.classList.add('reveal');
       document.getElementById('loader').classList.add('done');
       setTimeout(() => document.getElementById('loader').remove(), 1300);
-    }, Math.max(350, MIN - (Date.now() - t0)));
+    }, 300);
   }
   for (let i = 1; i <= PRE; i++) {
     const im = new Image();
-    im.onload = im.onerror = () => { done++; set(done / PRE * 0.95); if (done === PRE) finish(); };
+    im.onload = im.onerror = () => { loaded++; };
     im.src = src(i);
   }
-  setTimeout(finish, MAX);
+  setTimeout(() => { finished = true; }, MAX);
+  requestAnimationFrame(tick);
 })();
 </script>
 </body>
