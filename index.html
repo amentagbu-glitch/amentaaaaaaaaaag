@@ -34,15 +34,14 @@
 <header>
   <div class="eyebrow">Digital library</div>
   <h1>Brochures</h1>
-  <p>Browse our clients' brochures as interactive flipbooks.</p>
+  <p>Interactive flipbooks by Taskalart. If you received a link to a brochure, open it directly.</p>
 </header>
 <main><div class="grid" id="grid"></div></main>
 <footer>© <span id="y"></span> · Powered by <a href="https://taskalart.ma" target="_blank" rel="noopener">Taskalart</a></footer>
 <script>
   // To add a brochure: put its folder next to /ugh and add one line here.
-  const BOOKS = [
-    { slug: "ugh", title: "Unique Group Holding", sub: "Company brochure · 32 pages" },
-  ];
+  // Kept private: each client only gets their own link.
+  const BOOKS = [];
   const g = document.getElementById('grid');
   BOOKS.forEach(b => {
     g.insertAdjacentHTML('beforeend',
