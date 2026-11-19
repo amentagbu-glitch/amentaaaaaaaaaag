@@ -47,6 +47,10 @@
     font:700 14px Montserrat,sans-serif;padding:9px 15px;border-radius:999px;cursor:pointer;display:none}
   #zoom.open + #zclose{display:block}
   #loading{position:absolute;font-size:13px;opacity:.7}
+  body.focus header, body.focus .thumbs, body.focus footer{display:none}
+  body.focus{background:#06180b}
+  body.focus .stage{padding:4px}
+  body.focus .bar{padding:6px 8px calc(8px + env(safe-area-inset-bottom))}
   @media (max-width:520px){header>span{display:none}}
   @media (max-width:700px){.side{display:none}header h1{font-size:13px}.thumbs img{height:44px;width:44px}}
 </style>
@@ -160,31 +164,52 @@ document.getElementById('zbtn').onclick = () => {
 function closeZoom(){ zoom.classList.remove('open'); }
 document.getElementById('zclose').onclick = closeZoom;
 
-document.getElementById('fs').onclick = async () => {
-  try {
-    if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
-    else await document.exitFullscreen();
-  } catch (e) { document.getElementById('fs').textContent = 'Full screen unavailable'; }
+// ---- Full screen: native where supported, "focus mode" fallback (iPhone) ----
+const fsBtn = document.getElementById('fs');
+const de = document.documentElement;
+const nativeFS = !!(de.requestFullscreen || de.webkitRequestFullscreen) &&
+  !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
+const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
+function setFocus(on){
+  document.body.classList.toggle('focus', on);
+  fsBtn.textContent = on ? '✕ Exit full screen' : '⛶ Full screen';
+  setTimeout(() => rebuild(true), 350);
+}
+fsBtn.onclick = async () => {
+  const on = document.body.classList.contains('focus');
+  if (on) {
+    if (fsEl()) { try { await (document.exitFullscreen ? document.exitFullscreen() : document.webkitExitFullscreen()); } catch(e){} }
+    setFocus(false); return;
+  }
+  if (nativeFS) {
+    try { await (de.requestFullscreen ? de.requestFullscreen() : de.webkitRequestFullscreen()); } catch(e){}
+  }
+  setFocus(true);
 };
+['fullscreenchange','webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => {
+  if (!fsEl() && document.body.classList.contains('focus')) setFocus(false);
+}));
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('focus') && !fsEl()) setFocus(false); });
 
+function rebuild(force){
+  if (!flip) return;
+  if (!force && Math.abs(window.innerWidth - lastW) < 40 && Math.abs(window.innerHeight - lastH) < 120) return;
+  lastW = window.innerWidth; lastH = window.innerHeight;
+  const cur = flip.getCurrentPageIndex();
+  try { flip.destroy(); } catch (e) {}
+  const old = document.getElementById('book'); if (old) old.remove();
+  const b = document.createElement('div'); b.id = 'book';
+  document.getElementById('stage').insertBefore(b, document.getElementById('next'));
+  for (let i = 1; i <= N; i++) {
+    const d = document.createElement('div'); d.className = 'page';
+    d.dataset.density = (i === 1 || i === N) ? 'hard' : 'soft';
+    d.innerHTML = `<img src="${src(i)}" alt="Page ${i}">`; b.appendChild(d);
+  }
+  rebuildOn(b, cur);
+}
 let rt, lastW = window.innerWidth, lastH = window.innerHeight;
-window.addEventListener('resize', () => {
-  clearTimeout(rt);
-  rt = setTimeout(() => {
-    if (Math.abs(window.innerWidth - lastW) < 40 && Math.abs(window.innerHeight - lastH) < 120) return;
-    lastW = window.innerWidth; lastH = window.innerHeight;
-    const cur = flip ? flip.getCurrentPageIndex() : 0;
-    try { flip.destroy(); } catch (e) {}
-    const b = document.createElement('div'); b.id = 'book';
-    document.getElementById('stage').insertBefore(b, document.getElementById('next'));
-    for (let i = 1; i <= N; i++) {
-      const d = document.createElement('div'); d.className = 'page';
-      d.dataset.density = (i === 1 || i === N) ? 'hard' : 'soft';
-      d.innerHTML = `<img src="${src(i)}" alt="Page ${i}">`; b.appendChild(d);
-    }
-    rebuildOn(b, cur);
-  }, 250);
-});
+window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => rebuild(false), 250); });
+window.addEventListener('orientationchange', () => setTimeout(() => rebuild(true), 400));
 function rebuildOn(el, cur){
   const s = dims();
   flip = new St.PageFlip(el, { width:s, height:s, size:'fixed', showCover:true, usePortrait:true,
