@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Unique Group Holding — Brochure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="page-flip.browser.js"></script>
+<style>
+  :root{--g1:#0f3d1c;--g2:#1c6a2f;--acc:#7cc242;--txt:#eaf5e4}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:Montserrat,system-ui,sans-serif;color:var(--txt);
+    background:radial-gradient(ellipse at 50% 35%,#256b36 0%,var(--g1) 60%,#08240f 100%);
+    display:flex;flex-direction:column;overflow:hidden;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+  header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;gap:12px}
+  .back{color:var(--txt);text-decoration:none;font-size:12px;font-weight:600;opacity:.8;padding:6px 10px;border:1px solid rgba(255,255,255,.2);border-radius:999px;white-space:nowrap}
+  .back:hover{background:var(--acc);color:var(--g1);opacity:1}
+  header h1{font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+  header h1 span{color:var(--acc)}
+  .stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:6px 14px;position:relative}
+  #book{margin:0 auto}
+  .page{background:#fff;overflow:hidden}
+  .page img{width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none}
+  .side{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;
+    border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.25);color:#fff;font-size:22px;cursor:pointer;z-index:5;
+    display:flex;align-items:center;justify-content:center;transition:background .2s}
+  .side:hover{background:var(--acc);color:var(--g1)}
+  #prev{left:12px}#next{right:12px}
+  .bar{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 12px 4px;flex-wrap:wrap}
+  .bar button{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:var(--txt);
+    font:600 13px Montserrat,sans-serif;padding:8px 13px;border-radius:999px;cursor:pointer;transition:background .2s}
+  .bar button:hover{background:var(--acc);color:var(--g1)}
+  #count{font-size:13px;font-weight:600;min-width:92px;text-align:center;opacity:.9}
+  .thumbs{display:flex;gap:6px;overflow-x:auto;padding:8px 14px;scrollbar-width:thin}
+  .thumbs img{height:52px;width:52px;object-fit:cover;border-radius:3px;cursor:pointer;opacity:.55;border:2px solid transparent;flex:none;transition:.2s}
+  .thumbs img.on{opacity:1;border-color:var(--acc)}
+  footer{text-align:center;font-size:11.5px;padding:6px 10px 12px;opacity:.85;letter-spacing:.03em}
+  footer b{color:var(--acc);font-weight:700}
+  footer a{text-decoration:none}footer a:hover b{text-decoration:underline}
+  #zoom{position:fixed;inset:0;background:rgba(5,20,9,.96);z-index:50;display:none;overflow:auto;-webkit-overflow-scrolling:touch}
+  #zoom.open{display:block}
+  #zoom img{display:block;width:min(1400px,180vw);max-width:none;margin:0 auto}
+  #zclose{position:fixed;top:calc(12px + env(safe-area-inset-top));right:14px;z-index:51;background:var(--acc);color:var(--g1);border:0;
+    font:700 14px Montserrat,sans-serif;padding:9px 15px;border-radius:999px;cursor:pointer;display:none}
+  #zoom.open + #zclose{display:block}
+  #loading{position:absolute;font-size:13px;opacity:.7}
+  @media (max-width:520px){header>span{display:none}}
+  @media (max-width:700px){.side{display:none}header h1{font-size:13px}.thumbs img{height:44px;width:44px}}
+</style>
+</head>
+<body>
+<header style="justify-content:flex-start">
+  <a href="/" class="back">← All brochures</a>
+  <h1>Unique Group <span>Holding</span></h1>
+  <span style="font-size:12px;opacity:.75;margin-left:auto">From Moroccan Soil to Global Markets</span>
+</header>
+
+<div class="stage" id="stage">
+  <div id="loading">Loading brochure…</div>
+  <button class="side" id="prev" aria-label="Previous page">‹</button>
+  <div id="book"></div>
+  <button class="side" id="next" aria-label="Next page">›</button>
+</div>
+
+<div class="bar">
+  <button id="first" aria-label="First page">⏮</button>
+  <button id="bprev" aria-label="Previous">◀</button>
+  <span id="count">1 / 32</span>
+  <button id="bnext" aria-label="Next">▶</button>
+  <button id="last" aria-label="Last page">⏭</button>
+  <button id="zbtn">🔍 Zoom</button>
+  <button id="fs">⛶ Full screen</button>
+</div>
+
+<div class="thumbs" id="thumbs"></div>
+
+<footer>© 2026 Unique Group Holding · Powered by <a href="https://taskalart.ma" target="_blank" rel="noopener"><b>Taskalart</b></a></footer>
+
+<div id="zoom"></div>
+<button id="zclose">✕ Close</button>
+
+<script>
+const N = 32;
+const src = i => `p/pg-${String(i).padStart(2,'0')}.jpg`;
+const book = document.getElementById('book');
+for (let i = 1; i <= N; i++) {
+  const d = document.createElement('div');
+  d.className = 'page';
+  d.dataset.density = (i === 1 || i === N) ? 'hard' : 'soft';
+  d.innerHTML = `<img src="${src(i)}" alt="Page ${i}" ${i>4?'loading="lazy"':''}>`;
+  book.appendChild(d);
+}
+const thumbs = document.getElementById('thumbs');
+for (let i = 1; i <= N; i++) {
+  const t = document.createElement('img');
+  t.src = src(i); t.loading = 'lazy'; t.alt = 'Page ' + i;
+  t.onclick = () => flip.flip(i - 1);
+  thumbs.appendChild(t);
+}
+
+function dims() {
+  const st = document.getElementById('stage');
+  const w = st.clientWidth - 24, h = st.clientHeight - 12;
+  const portrait = window.innerWidth < 700 || w < h * 1.1;
+  const side = portrait ? Math.min(w, h) : Math.min(w / 2, h);
+  return Math.max(200, Math.floor(side));
+}
+
+let flip;
+function build(start = 0) {
+  const s = dims();
+  flip = new St.PageFlip(book, {
+    width: s, height: s, size: 'fixed',
+    showCover: true, usePortrait: true, mobileScrollSupport: true,
+    maxShadowOpacity: 0.45, flippingTime: 800, drawShadow: true, startPage: start,
+    autoSize: true
+  });
+  flip.loadFromHTML(book.querySelectorAll('.page'));
+  flip.on('flip', update);
+  flip.on('changeOrientation', update);
+  update();
+  document.getElementById('loading').style.display = 'none';
+}
+
+function update() {
+  const i = flip.getCurrentPageIndex();
+  const portrait = flip.getOrientation() === 'portrait';
+  let label;
+  if (portrait || i === 0 || i === N - 1) label = `${i + 1} / ${N}`;
+  else { const a = i % 2 ? i : i - 1; label = `${a + 1}–${Math.min(a + 2, N)} / ${N}`; }
+  document.getElementById('count').textContent = label;
+  [...thumbs.children].forEach((t, k) => t.classList.toggle('on', k === i || (!portrait && i>0 && i<N-1 && k === (i % 2 ? i + 1 : i - 1))));
+  const on = thumbs.children[i]; if (on) on.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+}
+
+const go = f => () => f();
+document.getElementById('prev').onclick = go(() => flip.flipPrev());
+document.getElementById('next').onclick = go(() => flip.flipNext());
+document.getElementById('bprev').onclick = go(() => flip.flipPrev());
+document.getElementById('bnext').onclick = go(() => flip.flipNext());
+document.getElementById('first').onclick = go(() => flip.flip(0));
+document.getElementById('last').onclick = go(() => flip.flip(N - 1));
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') flip.flipNext();
+  if (e.key === 'ArrowLeft') flip.flipPrev();
+  if (e.key === 'Escape') closeZoom();
+});
+
+const zoom = document.getElementById('zoom');
+document.getElementById('zbtn').onclick = () => {
+  const i = flip.getCurrentPageIndex();
+  const portrait = flip.getOrientation() === 'portrait';
+  let pages = [i];
+  if (!portrait && i > 0 && i < N - 1) { const a = i % 2 ? i : i - 1; pages = [a, a + 1].filter(p => p < N); }
+  zoom.innerHTML = pages.map(p => `<img src="${src(p + 1)}" alt="Page ${p + 1}">`).join('');
+  zoom.classList.add('open'); zoom.scrollTop = 0;
+};
+function closeZoom(){ zoom.classList.remove('open'); }
+document.getElementById('zclose').onclick = closeZoom;
+
+document.getElementById('fs').onclick = async () => {
+  try {
+    if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+    else await document.exitFullscreen();
+  } catch (e) { document.getElementById('fs').textContent = 'Full screen unavailable'; }
+};
+
+let rt, lastW = window.innerWidth, lastH = window.innerHeight;
+window.addEventListener('resize', () => {
+  clearTimeout(rt);
+  rt = setTimeout(() => {
+    if (Math.abs(window.innerWidth - lastW) < 40 && Math.abs(window.innerHeight - lastH) < 120) return;
+    lastW = window.innerWidth; lastH = window.innerHeight;
+    const cur = flip ? flip.getCurrentPageIndex() : 0;
+    try { flip.destroy(); } catch (e) {}
+    const b = document.createElement('div'); b.id = 'book';
+    document.getElementById('stage').insertBefore(b, document.getElementById('next'));
+    for (let i = 1; i <= N; i++) {
+      const d = document.createElement('div'); d.className = 'page';
+      d.dataset.density = (i === 1 || i === N) ? 'hard' : 'soft';
+      d.innerHTML = `<img src="${src(i)}" alt="Page ${i}">`; b.appendChild(d);
+    }
+    rebuildOn(b, cur);
+  }, 250);
+});
+function rebuildOn(el, cur){
+  const s = dims();
+  flip = new St.PageFlip(el, { width:s, height:s, size:'fixed', showCover:true, usePortrait:true,
+    mobileScrollSupport:true, maxShadowOpacity:.45, flippingTime:800, startPage:cur });
+  flip.loadFromHTML(el.querySelectorAll('.page'));
+  flip.on('flip', update); flip.on('changeOrientation', update); update();
+}
+
+if (document.readyState === 'complete') build(); else window.addEventListener('load', () => build());
+</script>
+</body>
+</html>
