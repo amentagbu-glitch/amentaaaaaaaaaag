@@ -65,16 +65,43 @@
   body.focus .bar button{background:rgba(255,255,255,.06);backdrop-filter:blur(6px)}
   @media (max-width:520px){header>span{display:none}}
   @media (max-width:700px){.side{display:none}header h1{font-size:13px}.thumbs img{height:44px;width:44px}}
+  /* ---- Loader ---- */
+  #loader{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;
+    background:radial-gradient(70% 60% at 50% 45%,#ffffff 0%,#f4f8ee 55%,#e6efdc 100%);
+    transition:clip-path 1s cubic-bezier(.75,0,.2,1), opacity .4s ease .7s;clip-path:inset(0 0 0 0)}
+  #loader.done{clip-path:inset(0 0 100% 0);opacity:0;pointer-events:none}
+  #loader::before{content:"";position:absolute;width:520px;height:520px;max-width:120vw;max-height:120vw;border-radius:50%;
+    background:radial-gradient(circle,rgba(124,194,66,.18),transparent 65%);animation:pulse 3s ease-in-out infinite}
+  .lg-box{position:relative;width:min(380px,74vw)}
+  #loaderLogo{display:block;width:100%;height:auto;clip-path:inset(0 100% 0 0);
+    animation:wipe 1.1s cubic-bezier(.65,0,.25,1) .2s forwards, breathe 3.2s ease-in-out 1.6s infinite}
+  .lg-leaf{position:absolute;left:20%;top:-12%;width:12%;aspect-ratio:1;border-radius:50%;
+    background:radial-gradient(circle,rgba(124,194,66,.55),transparent 70%);opacity:0;animation:spark 1.2s ease 1.1s forwards}
+  .lg-track{position:relative;width:min(220px,50vw);height:3px;border-radius:3px;background:rgba(15,61,28,.12);overflow:hidden;
+    opacity:0;animation:fadeUp .6s ease .9s forwards}
+  .lg-bar{position:absolute;inset:0;width:0;background:linear-gradient(90deg,#1c6a2f,#7cc242);border-radius:3px;transition:width .45s ease}
+  .lg-pct{font-size:11px;font-weight:700;letter-spacing:.28em;color:#1c6a2f;margin-top:-22px;opacity:0;animation:fadeUp .6s ease 1s forwards}
+  @keyframes wipe{to{clip-path:inset(0 0 0 0)}}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+  @keyframes spark{0%{opacity:0;transform:scale(.3)}50%{opacity:1;transform:scale(1.6)}100%{opacity:0;transform:scale(2.4)}}
+  @keyframes pulse{0%,100%{transform:scale(.9);opacity:.7}50%{transform:scale(1.08);opacity:1}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  body.reveal #book{animation:bookIn 1s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes bookIn{from{opacity:0;transform:translateY(24px) scale(.94)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
+<div id="loader" role="status" aria-label="Loading brochure">
+  <div class="lg-box"><img id="loaderLogo" src="logo.png" alt="Unique Group Holding"><span class="lg-leaf"></span></div>
+  <div class="lg-track"><div class="lg-bar" id="lgBar"></div></div>
+  <div class="lg-pct" id="lgPct">0%</div>
+</div>
 <header style="justify-content:flex-start">
   <h1>Unique Group <span>Holding</span></h1>
   <span style="font-size:12px;opacity:.75;margin-left:auto">From Moroccan Soil to Global Markets</span>
 </header>
 
 <div class="stage" id="stage">
-  <div id="loading">Loading brochure…</div>
   <button class="side" id="prev" aria-label="Previous page">‹</button>
   <div id="book"></div>
   <button class="side" id="next" aria-label="Next page">›</button>
@@ -87,7 +114,6 @@
   <button id="bnext" aria-label="Next">▶</button>
   <button id="last" aria-label="Last page">⏭</button>
   <button id="zbtn">🔍 Zoom</button>
-  <button id="fs">⛶ Full screen</button>
 </div>
 
 <div class="thumbs" id="thumbs"></div>
@@ -141,7 +167,6 @@ function build(start = 0) {
   flip.on('flip', update);
   flip.on('changeOrientation', update);
   update();
-  document.getElementById('loading').style.display = 'none';
 }
 
 function update() {
@@ -180,33 +205,6 @@ document.getElementById('zbtn').onclick = () => {
 function closeZoom(){ zoom.classList.remove('open'); }
 document.getElementById('zclose').onclick = closeZoom;
 
-// ---- Full screen: native where supported, "focus mode" fallback (iPhone) ----
-const fsBtn = document.getElementById('fs');
-const de = document.documentElement;
-const nativeFS = !!(de.requestFullscreen || de.webkitRequestFullscreen) &&
-  !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
-const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
-function setFocus(on){
-  document.body.classList.toggle('focus', on);
-  fsBtn.textContent = on ? '✕ Exit full screen' : '⛶ Full screen';
-  setTimeout(() => rebuild(true), 350);
-}
-fsBtn.onclick = async () => {
-  const on = document.body.classList.contains('focus');
-  if (on) {
-    if (fsEl()) { try { await (document.exitFullscreen ? document.exitFullscreen() : document.webkitExitFullscreen()); } catch(e){} }
-    setFocus(false); return;
-  }
-  if (nativeFS) {
-    try { await (de.requestFullscreen ? de.requestFullscreen() : de.webkitRequestFullscreen()); } catch(e){}
-  }
-  setFocus(true);
-};
-['fullscreenchange','webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => {
-  if (!fsEl() && document.body.classList.contains('focus')) setFocus(false);
-}));
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('focus') && !fsEl()) setFocus(false); });
-
 function rebuild(force){
   if (!flip) return;
   if (!force && Math.abs(window.innerWidth - lastW) < 2 && Math.abs(window.innerHeight - lastH) < (window.innerWidth < 700 ? 120 : 2)) return;
@@ -234,7 +232,28 @@ function rebuildOn(el, cur){
   flip.on('flip', update); flip.on('changeOrientation', update); update();
 }
 
-if (document.readyState === 'complete') build(); else window.addEventListener('load', () => build());
+// ---- Loader logic ----
+(function(){
+  const PRE = 6, t0 = Date.now(), MIN = 2600, MAX = 9000;
+  let done = 0, finished = false;
+  const bar = document.getElementById('lgBar'), pct = document.getElementById('lgPct');
+  const set = v => { bar.style.width = (v * 100) + '%'; pct.textContent = Math.round(v * 100) + '%'; };
+  function finish(){
+    if (finished) return; finished = true; set(1);
+    setTimeout(() => {
+      build();
+      document.body.classList.add('reveal');
+      document.getElementById('loader').classList.add('done');
+      setTimeout(() => document.getElementById('loader').remove(), 1300);
+    }, Math.max(350, MIN - (Date.now() - t0)));
+  }
+  for (let i = 1; i <= PRE; i++) {
+    const im = new Image();
+    im.onload = im.onerror = () => { done++; set(done / PRE * 0.95); if (done === PRE) finish(); };
+    im.src = src(i);
+  }
+  setTimeout(finish, MAX);
+})();
 </script>
 </body>
 </html>
