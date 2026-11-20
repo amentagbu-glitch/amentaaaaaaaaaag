@@ -406,12 +406,11 @@ function rebuildOn(el, cur){
 
   if (VIMEO_ID) {
     intro.classList.add('yt');
-    videoOK = true;
     const tag = document.createElement('script'); tag.src = 'https://player.vimeo.com/api/player.js';
-    tag.onload = () => { videoSettled = true; };
+    tag.onload = () => preloadVimeo();
     tag.onerror = () => { videoOK = false; videoSettled = true; };
     document.head.appendChild(tag);
-    setTimeout(() => { videoSettled = true; }, 6000);
+    setTimeout(() => { videoSettled = true; }, 10000);   // don't let a slow video hold the loader forever
   } else if (YT_ID) {
     intro.classList.add('yt');
     videoOK = true;
@@ -426,6 +425,35 @@ function rebuildOn(el, cur){
     vid.src = 'intro.mp4'; vid.load();
   }
 
+  // Build the Vimeo player hidden behind the loader so it is buffered and ready the moment progress hits 100%.
+  function preloadVimeo(){
+    if (!window.Vimeo || !Vimeo.Player) { videoSettled = true; return; }
+    intro.classList.add('on');                       // sits under the loader (lower z-index), not visible yet
+    const f = document.createElement('iframe');
+    f.src = 'https://player.vimeo.com/video/' + VIMEO_ID +
+      '?autoplay=0&muted=1&playsinline=1&controls=0&title=0&byline=0&portrait=0&dnt=1&quality=1080p&transparent=0&autopause=0';
+    f.allow = 'autoplay; fullscreen; picture-in-picture';
+    f.setAttribute('allowfullscreen', '');
+    document.getElementById('ytPlayer').replaceWith(f);
+    vm = new Vimeo.Player(f);
+    vm.setMuted(true).catch(()=>{});
+    vm.on('error', () => { if (!videoSettled) { videoOK = false; videoSettled = true; } else endIntro(); });
+    vm.ready().then(async () => {
+      // pick the highest quality this account/player allows (1080p+), fall back silently
+      try {
+        const qs = await vm.getQualities();
+        const order = ['2160p','1440p','1080p','720p'];
+        const best = order.find(q => qs.some(x => x.id === q));
+        if (best) await vm.setQuality(best);
+      } catch(_) {}
+      videoOK = true;
+      // warm the buffer: start muted, then pause at 0 so play is instant later
+      vm.on('bufferend', () => { videoSettled = true; });
+      try { await vm.play(); await vm.pause(); await vm.setCurrentTime(0); } catch(_) {}
+      setTimeout(() => { videoSettled = true; }, 2500);
+    }).catch(() => { videoOK = false; videoSettled = true; });
+  }
+
   function endIntro(){
     if (ended) return; ended = true;
     clearInterval(ytTimer);
@@ -437,21 +465,15 @@ function rebuildOn(el, cur){
   function playIntro(){
     intro.classList.add('on');
     if (VIMEO_ID) {
-      if (!window.Vimeo || !Vimeo.Player) return endIntro();
-      const f = document.createElement('iframe');
-      f.src = 'https://player.vimeo.com/video/' + VIMEO_ID +
-        '?autoplay=1&muted=1&playsinline=1&controls=0&title=0&byline=0&portrait=0&dnt=1&quality=1080p&transparent=0';
-      f.allow = 'autoplay; fullscreen; picture-in-picture';
-      f.setAttribute('allowfullscreen', '');
-      document.getElementById('ytPlayer').replaceWith(f);
-      vm = new Vimeo.Player(f);
+      if (!vm || !videoOK) return endIntro();
       let started = false;
       vm.on('play', () => { started = true; });
+      vm.on('playing', () => { started = true; });
       vm.on('ended', endIntro);
-      vm.on('error', endIntro);
       vm.on('timeupdate', d => { if (d && d.duration) bar2.style.width = (d.percent * 100) + '%'; });
-      vm.setMuted(true).catch(()=>{}); vm.play().catch(()=>{});
-      setTimeout(() => { if (!started) endIntro(); }, 10000);   // never get stuck
+      vm.setCurrentTime(0).catch(()=>{});
+      vm.play().catch(() => endIntro());
+      setTimeout(() => { if (!started) endIntro(); }, 8000);   // never get stuck
       return;
     }
     if (YT_ID) {
@@ -514,7 +536,7 @@ function rebuildOn(el, cur){
     setTimeout(() => {
       build();
       if (videoOK) { playIntro(); }
-      else { document.body.classList.add('reveal'); }
+      else { intro.classList.remove('on'); document.body.classList.add('reveal'); }
       document.getElementById('loader').classList.add('done');
       setTimeout(() => document.getElementById('loader').remove(), 1300);
     }, 300);
