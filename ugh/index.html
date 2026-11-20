@@ -18,6 +18,13 @@
   header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;gap:12px}
   .back{color:var(--txt);text-decoration:none;font-size:12px;font-weight:600;opacity:.8;padding:6px 10px;border:1px solid rgba(255,255,255,.2);border-radius:999px;white-space:nowrap}
   .back:hover{background:var(--acc);color:var(--g1);opacity:1}
+  .tagline{font-size:12px;opacity:.75;margin-left:auto}
+  .social{display:flex;gap:8px;margin-left:14px}
+  .tagline + .social{margin-left:18px}
+  .social a{display:flex;align-items:center;gap:7px;color:var(--txt);text-decoration:none;font-size:12px;font-weight:600;
+    padding:7px 12px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(255,255,255,.06);transition:.2s}
+  .social a:hover{background:var(--acc);color:var(--g1);border-color:var(--acc)}
+  .social svg{width:16px;height:16px;flex:none}
   header h1{font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
   header h1 span{color:var(--acc)}
   .stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:6px 14px;position:relative;overflow:hidden;z-index:1}
@@ -63,7 +70,8 @@
   body.focus .stage{padding:18px 14px 6px}
   body.focus .bar{padding:6px 8px calc(12px + env(safe-area-inset-bottom))}
   body.focus .bar button{background:rgba(255,255,255,.06);backdrop-filter:blur(6px)}
-  @media (max-width:520px){header>span{display:none}}
+  @media (max-width:900px){.tagline{display:none}.tagline + .social{margin-left:auto}}
+  @media (max-width:520px){.social a span{display:none}.social a{padding:8px}}
   @media (max-width:700px){.side{display:none}header h1{font-size:13px}.thumbs img{height:44px;width:44px}}
   /* ---- Loader ---- */
   #loader{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;
@@ -100,12 +108,37 @@
   #intro.on{display:flex}
   #intro.out{opacity:0;pointer-events:none}
   #introVid{width:100%;height:100%;object-fit:contain;background:#000}
+  #ytWrap{position:absolute;inset:0;display:none}
+  #ytWrap iframe{width:100%;height:100%;border:0}
+  #ytShield{position:absolute;inset:0;z-index:1;display:none}
+  #intro.yt #introVid{display:none} #intro.yt #ytWrap,#intro.yt #ytShield{display:block}
   .iv-btn{position:absolute;z-index:2;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.45);color:#fff;
     font:600 14px Montserrat,sans-serif;padding:10px 18px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
   .iv-btn:hover{background:#7cc242;color:#0f3d1c;border-color:#7cc242}
   #ivSkip{right:18px;bottom:calc(22px + env(safe-area-inset-bottom))}
   #ivSnd{left:18px;bottom:calc(22px + env(safe-area-inset-bottom));padding:10px 14px}
   #ivBar{position:absolute;left:0;bottom:0;height:3px;width:0;background:#7cc242;z-index:2}
+  /* ---- End popup ---- */
+  #endPop{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:20px;
+    background:rgba(4,18,9,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s ease}
+  #endPop.show{opacity:1;pointer-events:auto}
+  .ep-card{position:relative;width:min(420px,100%);background:radial-gradient(120% 90% at 50% 0%,#ffffff 0%,#f3f8ec 70%,#e8f1dd 100%);
+    border-radius:22px;padding:34px 26px 24px;text-align:center;color:#0f3d1c;box-shadow:0 30px 80px -20px rgba(0,0,0,.6);
+    transform:translateY(24px) scale(.94);transition:transform .55s cubic-bezier(.2,.9,.25,1.15)}
+  #endPop.show .ep-card{transform:none}
+  .ep-card img{width:min(250px,70%);height:auto;display:block;margin:0 auto 18px}
+  .ep-card h2{font-size:19px;font-weight:700;margin-bottom:6px}
+  .ep-card p{font-size:13.5px;line-height:1.55;color:#3c5a44;margin-bottom:20px}
+  .ep-links{display:flex;flex-direction:column;gap:10px}
+  .ep-links a{display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;font:600 14px Montserrat,sans-serif;
+    padding:13px 16px;border-radius:12px;transition:transform .15s, box-shadow .2s}
+  .ep-links a:hover{transform:translateY(-2px);box-shadow:0 10px 20px -10px rgba(0,0,0,.4)}
+  .ep-links svg{width:18px;height:18px;flex:none}
+  .ep-web{background:#1c6a2f;color:#fff}
+  .ep-li{background:#0a66c2;color:#fff}
+  .ep-again{margin-top:14px;background:none;border:0;color:#1c6a2f;font:600 13px Montserrat,sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+  .ep-x{position:absolute;top:10px;right:12px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(15,61,28,.08);color:#0f3d1c;font-size:18px;cursor:pointer}
+  .ep-x:hover{background:rgba(15,61,28,.16)}
 </style>
 </head>
 <body>
@@ -117,13 +150,22 @@
 </div>
 <div id="intro" aria-label="Intro video">
   <video id="introVid" playsinline muted preload="auto"></video>
+  <div id="ytWrap"><div id="ytPlayer"></div></div><div id="ytShield"></div>
   <button class="iv-btn" id="ivSnd" aria-label="Turn sound on">🔇 Sound</button>
   <button class="iv-btn" id="ivSkip">Skip ›</button>
   <div id="ivBar"></div>
 </div>
 <header style="justify-content:flex-start">
   <h1>Unique Group <span>Holding</span></h1>
-  <span style="font-size:12px;opacity:.75;margin-left:auto">From Moroccan Soil to Global Markets</span>
+  <span class="tagline">From Moroccan Soil to Global Markets</span>
+  <nav class="social">
+    <a href="https://uniquegroupholding.ma" target="_blank" rel="noopener" aria-label="Website: uniquegroupholding.ma">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+      <span>uniquegroupholding.ma</span></a>
+    <a href="https://www.linkedin.com/company/uniquegroupholding/" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+      <span>LinkedIn</span></a>
+  </nav>
 </header>
 
 <div class="stage" id="stage">
@@ -145,6 +187,23 @@
 
 <footer>© 2026 Unique Group Holding · Powered by <a href="https://taskalart.ma" target="_blank" rel="noopener"><b>Taskalart</b></a></footer>
 
+<div id="endPop" role="dialog" aria-modal="true" aria-label="Follow us">
+  <div class="ep-card">
+    <button class="ep-x" id="epX" aria-label="Close">✕</button>
+    <img src="logo.png" alt="Unique Group Holding">
+    <h2>Follow us</h2>
+    <p>Stay connected with Unique Group Holding.</p>
+    <div class="ep-links">
+      <a class="ep-web" href="https://uniquegroupholding.ma" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+        Visit uniquegroupholding.ma</a>
+      <a class="ep-li" href="https://www.linkedin.com/company/uniquegroupholding/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        Follow us on LinkedIn</a>
+    </div>
+    <button class="ep-again" id="epAgain">↺ Read again from the start</button>
+  </div>
+</div>
 <div id="zoom"></div>
 <button id="zclose">✕ Close</button>
 
@@ -196,6 +255,7 @@ function build(start = 0) {
 
 function update() {
   const i = flip.getCurrentPageIndex();
+  maybeEndPop(i);
   const portrait = flip.getOrientation() === 'portrait';
   let label;
   if (portrait || i === 0 || i === N - 1) label = `${i + 1} / ${N}`;
@@ -204,6 +264,20 @@ function update() {
   [...thumbs.children].forEach((t, k) => t.classList.toggle('on', k === i || (!portrait && i>0 && i<N-1 && k === (i % 2 ? i + 1 : i - 1))));
   const on = thumbs.children[i]; if (on) on.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
 }
+
+// ---- End popup ----
+const endPop = document.getElementById('endPop');
+let popTimer = null, popShownAt = -1;
+function maybeEndPop(i){
+  clearTimeout(popTimer);
+  if (i === N - 1 && popShownAt !== N - 1) popTimer = setTimeout(() => { endPop.classList.add('show'); popShownAt = N - 1; }, 1100);
+  if (i !== N - 1) popShownAt = -1;   // show again if they come back to the end later
+}
+function closePop(){ endPop.classList.remove('show'); }
+document.getElementById('epX').onclick = closePop;
+endPop.addEventListener('click', e => { if (e.target === endPop) closePop(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePop(); });
+document.getElementById('epAgain').onclick = () => { closePop(); setTimeout(() => flip.flip(0), 250); };
 
 const go = f => () => f();
 document.getElementById('prev').onclick = go(() => flip.flipPrev());
@@ -284,35 +358,70 @@ function rebuildOn(el, cur){
     layer.appendChild(a);
   }
 
-  // intro video (ugh/intro.mp4). If it is missing or fails, the brochure opens directly.
+  // ---- Intro video ----
+  // YT_ID: YouTube video ID (preferred: YouTube serves HD/4K adaptively). Leave '' to use ugh/intro.mp4 instead.
+  const YT_ID = '';
   const vid = document.getElementById('introVid'), intro = document.getElementById('intro');
-  let videoOK = false, videoSettled = false;
-  vid.addEventListener('canplay', () => { videoOK = true; videoSettled = true; }, { once: true });
-  vid.addEventListener('error', () => { videoSettled = true; }, { once: true });
-  vid.src = 'intro.mp4';
-  vid.load();
+  const bar2 = document.getElementById('ivBar'), sndBtn = document.getElementById('ivSnd');
+  let videoOK = false, videoSettled = false, yt = null, ytReady = false, ytTimer = null, ended = false;
+
+  if (YT_ID) {
+    intro.classList.add('yt');
+    videoOK = true;
+    const tag = document.createElement('script'); tag.src = 'https://www.youtube.com/iframe_api';
+    window.onYouTubeIframeAPIReady = () => { ytReady = true; videoSettled = true; };
+    tag.onerror = () => { videoOK = false; videoSettled = true; };
+    document.head.appendChild(tag);
+    setTimeout(() => { videoSettled = true; }, 6000);
+  } else {
+    vid.addEventListener('canplay', () => { videoOK = true; videoSettled = true; }, { once: true });
+    vid.addEventListener('error', () => { videoSettled = true; }, { once: true });
+    vid.src = 'intro.mp4'; vid.load();
+  }
+
   function endIntro(){
-    if (intro.classList.contains('out')) return;
+    if (ended) return; ended = true;
+    clearInterval(ytTimer);
     intro.classList.add('out');
     document.body.classList.add('reveal');
-    // re-run the book entrance animation now that it is visible
     const bk = document.getElementById('book'); if (bk) { bk.style.animation = 'none'; bk.offsetHeight; bk.style.animation = ''; }
-    setTimeout(() => { try { vid.pause(); } catch(e){} intro.remove(); }, 850);
+    setTimeout(() => { try { vid.pause(); } catch(e){} try { yt && yt.stopVideo(); } catch(e){} intro.remove(); }, 850);
   }
   function playIntro(){
     intro.classList.add('on');
+    if (YT_ID) {
+      if (!ytReady || !window.YT || !YT.Player) return endIntro();
+      let started = false;
+      yt = new YT.Player('ytPlayer', {
+        videoId: YT_ID,
+        playerVars: { autoplay: 1, mute: 1, controls: 0, playsinline: 1, rel: 0, modestbranding: 1, iv_load_policy: 3, disablekb: 1, fs: 0, vq: 'hd1080' },
+        events: {
+          onReady: e => { e.target.mute(); try { e.target.setPlaybackQuality('hd1080'); } catch(_){} e.target.playVideo(); },
+          onStateChange: e => {
+            if (e.data === YT.PlayerState.PLAYING) started = true;
+            if (e.data === YT.PlayerState.ENDED) endIntro();
+          },
+          onError: () => endIntro()
+        }
+      });
+      setTimeout(() => { if (!started) endIntro(); }, 9000);   // never get stuck
+      ytTimer = setInterval(() => {
+        try { const d = yt.getDuration(), t = yt.getCurrentTime(); if (d) bar2.style.width = (t / d * 100) + '%';
+              if (d && t >= d - 0.3) endIntro(); } catch(_){}
+      }, 250);
+      return;
+    }
     vid.muted = true;
     const p = vid.play(); if (p && p.catch) p.catch(() => endIntro());
     vid.addEventListener('ended', endIntro);
-    vid.addEventListener('timeupdate', () => {
-      if (vid.duration) document.getElementById('ivBar').style.width = (vid.currentTime / vid.duration * 100) + '%';
-    });
+    vid.addEventListener('timeupdate', () => { if (vid.duration) bar2.style.width = (vid.currentTime / vid.duration * 100) + '%'; });
   }
   document.getElementById('ivSkip').onclick = endIntro;
-  document.getElementById('ivSnd').onclick = () => {
-    vid.muted = !vid.muted;
-    if (!vid.muted) { vid.volume = 1; vid.play().catch(()=>{}); }
-    document.getElementById('ivSnd').textContent = vid.muted ? '🔇 Sound' : '🔊 Sound';
+  sndBtn.onclick = () => {
+    let muted;
+    if (yt && yt.isMuted) { if (yt.isMuted()) { yt.unMute(); yt.setVolume(100); muted = false; } else { yt.mute(); muted = true; } }
+    else { vid.muted = !vid.muted; if (!vid.muted) { vid.volume = 1; vid.play().catch(()=>{}); } muted = vid.muted; }
+    sndBtn.textContent = muted ? '🔇 Sound' : '🔊 Sound';
   };
 
   // progress: real loading, shown as a smooth 0 → 100 count
