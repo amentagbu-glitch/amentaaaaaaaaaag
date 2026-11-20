@@ -135,7 +135,10 @@
     border-radius:16px;overflow:hidden;box-shadow:0 30px 80px -20px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.08);background:#000}
   @media (max-width:700px){#intro.yt #ytWrap{width:94vw;border-radius:12px}}
   #ytShield{position:absolute;inset:0;z-index:2;display:none}
-  #intro.yt #introVid{display:none} #intro.yt #ytWrap,#intro.yt #ytShield{display:block}
+  #intro.yt #introVid{display:none}
+  #intro.mp4 #introVid{display:block;width:100%;height:100%;object-fit:cover;background:#000}
+  #ambCanvas{position:absolute;inset:-8%;width:116%;height:116%;filter:blur(42px) saturate(1.4) brightness(.8);opacity:.9}
+  #intro.mp4.needtap #ytShield{display:block;cursor:pointer} #intro.yt #ytWrap,#intro.yt #ytShield{display:block}
   .iv-btn{position:absolute;z-index:2;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.45);color:#fff;
     font:600 14px Montserrat,sans-serif;padding:10px 18px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
   .iv-btn:hover{background:#ed1c28;color:#0a1c3a;border-color:#ed1c28}
@@ -170,9 +173,9 @@
     padding:13px 16px;border-radius:12px;transition:transform .15s, box-shadow .2s}
   .ep-links a:hover{transform:translateY(-2px);box-shadow:0 10px 20px -10px rgba(0,0,0,.4)}
   .ep-links svg{width:18px;height:18px;flex:none}
-  .ep-web{background:#0a1c3a;color:#fff}
+  .ep-web{background:#13294f;color:#fff}
   .ep-li{background:#ed1c28;color:#fff}
-  .ep-wa{background:#25d366;color:#fff}
+  .ep-wa{background:#0a1c3a;color:#fff}
   .ep-again{margin-top:14px;background:none;border:0;color:#0a1c3a;font:600 13px Montserrat,sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
   .ep-x{position:absolute;top:10px;right:12px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(10,28,58,.08);color:#0a1c3a;font-size:18px;cursor:pointer}
   .ep-x:hover{background:rgba(10,28,58,.16)}
@@ -180,11 +183,11 @@
   #waFloat{position:fixed;right:calc(16px + env(safe-area-inset-right));bottom:calc(30px + env(safe-area-inset-bottom));z-index:70;
     display:flex;align-items:center;gap:10px;text-decoration:none;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
   body.reveal #waFloat{opacity:1;transform:none;transition-delay:1.2s}
-  .wf-btn{position:relative;width:60px;height:60px;border-radius:50%;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;
+  .wf-btn{position:relative;width:60px;height:60px;border-radius:50%;background:#ed1c28;color:#fff;display:flex;align-items:center;justify-content:center;
     box-shadow:0 10px 24px -6px rgba(0,0,0,.45);transition:transform .2s}
-  .wf-btn::before{content:"";position:absolute;inset:0;border-radius:50%;background:#25d366;z-index:-1;animation:waPulse 2.4s ease-out infinite}
-  .wf-btn svg{width:34px;height:34px}
-  .wf-label{background:#25d366;color:#fff;font:500 14px Montserrat,sans-serif;padding:7px 14px;border-radius:10px;white-space:nowrap;
+  .wf-btn::before{content:"";position:absolute;inset:0;border-radius:50%;background:#ed1c28;z-index:-1;animation:waPulse 2.4s ease-out infinite}
+  .wf-btn svg{width:28px;height:28px}
+  .wf-label{background:#0a1c3a;color:#fff;font:500 14px Montserrat,sans-serif;padding:7px 14px;border-radius:10px;white-space:nowrap;
     box-shadow:0 6px 16px -6px rgba(0,0,0,.4)}
   #waFloat:hover .wf-btn{transform:scale(1.08)}
   @keyframes waPulse{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.6);opacity:0}}
@@ -209,7 +212,7 @@
   <div id="ambWrap"><div id="ambPlayer"></div></div><div id="ambTint"></div>
   <img id="ivLogo" src="logo-white.png" alt="Expeditiously Trans">
   <div id="ytWrap"><div id="ytPlayer"></div><div id="ytShield"></div></div>
-  <p id="ivTitle"></p>
+  <p id="ivTitle"><span class="g">Expediting Freshness.</span> Delivering Excellence.</p>
   <button class="iv-btn" id="ivSnd" aria-label="Turn sound on">🔇 Sound</button>
   <button class="iv-btn" id="ivSkip">Discover Our Brochure 🥑</button>
   <div id="ivBar"></div>
@@ -260,16 +263,16 @@
       <a class="ep-li" href="mailto:contact@expeditiouslytrans.ma">
         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
         contact@expeditiouslytrans.ma</a>
-      <a class="ep-wa" href="https://wa.me/212707141126" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.05 21.5h-.01a9.47 9.47 0 0 1-4.83-1.32l-.35-.21-3.59.94.96-3.5-.23-.36a9.43 9.43 0 0 1-1.45-5.03c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.4 9.4 0 0 1 2.77 6.7c0 5.23-4.25 9.47-9.47 9.47zm8.06-17.53A11.33 11.33 0 0 0 12.05.64C5.77.64.66 5.75.66 12.03c0 2.01.52 3.97 1.52 5.69L.57 23.6l6.03-1.58a11.36 11.36 0 0 0 5.44 1.39h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.33-8.05z"/></svg>
-        Chat on WhatsApp</a>
+      <a class="ep-wa" href="tel:+212539394403">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+        Call +212 539 394 403</a>
     </div>
     <button class="ep-again" id="epAgain">↺ Read again from the start</button>
   </div>
 </div>
-<a id="waFloat" href="https://wa.me/212707141126" target="_blank" rel="noopener" aria-label="WhatsApp us">
-  <span class="wf-label">WhatsApp us</span>
-  <span class="wf-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.05 21.5h-.01a9.47 9.47 0 0 1-4.83-1.32l-.35-.21-3.59.94.96-3.5-.23-.36a9.43 9.43 0 0 1-1.45-5.03c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.4 9.4 0 0 1 2.77 6.7c0 5.23-4.25 9.47-9.47 9.47zm8.06-17.53A11.33 11.33 0 0 0 12.05.64C5.77.64.66 5.75.66 12.03c0 2.01.52 3.97 1.52 5.69L.57 23.6l6.03-1.58a11.36 11.36 0 0 0 5.44 1.39h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.33-8.05z"/></svg></span>
+<a id="waFloat" href="tel:+212539394403" aria-label="Call us: +212 539 394 403">
+  <span class="wf-label">Call us</span>
+  <span class="wf-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></span>
 </a>
 <div id="zoom"></div>
 <button id="zclose">✕ Close</button>
@@ -431,6 +434,8 @@ function rebuildOn(el, cur){
   const YT_ID = '';
   // VIMEO_ID: Vimeo video ID (used when set; takes priority over YouTube and intro.mp4).
   const VIMEO_ID = '';
+  // VIDEO_FILE: self-hosted intro video (used when VIMEO_ID is empty)
+  const VIDEO_FILE = 'intro.mp4';
   let vm = null, amb = null;
   const vid = document.getElementById('introVid'), intro = document.getElementById('intro');
   const bar2 = document.getElementById('ivBar'), sndBtn = document.getElementById('ivSnd');
@@ -451,10 +456,44 @@ function rebuildOn(el, cur){
     tag.onerror = () => { videoOK = false; videoSettled = true; };
     document.head.appendChild(tag);
     setTimeout(() => { videoSettled = true; }, 6000);
-  } else {
+  } else if (VIDEO_FILE) {
+    preloadFile();
+  }
+
+  // Self-hosted video: wrap <video> in the same API as the Vimeo player so every feature works unchanged
+  function makeAdapter(v){
+    const P = x => Promise.resolve(x);
+    return {
+      play: () => v.play(), pause: () => { v.pause(); return P(); },
+      setMuted: m => { v.muted = m; return P(); }, getMuted: () => P(v.muted),
+      setVolume: x => { v.volume = x; return P(); }, getPaused: () => P(v.paused),
+      setCurrentTime: t => { try { v.currentTime = t; } catch(_){} return P(); }, getCurrentTime: () => P(v.currentTime),
+      getQualities: () => P([]), setQuality: () => P(), unload: () => P(), ready: () => P(),
+      on: (ev, cb) => {
+        if (ev === 'timeupdate') v.addEventListener('timeupdate', () => cb({ seconds: v.currentTime, duration: v.duration, percent: v.duration ? v.currentTime / v.duration : 0 }));
+        else if (ev === 'loaded') v.addEventListener('canplay', cb, { once: true });
+        else v.addEventListener(ev, cb);
+      }
+    };
+  }
+  function preloadFile(){
+    intro.classList.add('yt','mp4','on');                 // sits under the loader, not visible yet
+    vid.removeAttribute('muted'); vid.muted = true; vid.playsInline = true; vid.preload = 'auto';
+    vid.poster = 'poster.jpg';
+    document.getElementById('ytPlayer').replaceWith(vid);
+    vm = makeAdapter(vid);
     vid.addEventListener('canplay', () => { videoOK = true; videoSettled = true; }, { once: true });
-    vid.addEventListener('error', () => { videoSettled = true; }, { once: true });
-    vid.src = 'intro.mp4'; vid.load();
+    vid.addEventListener('error', () => { videoOK = false; videoSettled = true; intro.classList.remove('yt','mp4','on'); }, { once: true });
+    vid.src = VIDEO_FILE; vid.load();
+    // ambient background: draw the playing video into a tiny canvas, blurred behind (one stream, perfectly in sync)
+    const cv = document.createElement('canvas'); cv.width = 64; cv.height = 36; cv.id = 'ambCanvas';
+    document.getElementById('ambPlayer').replaceWith(cv);
+    const cx = cv.getContext('2d');
+    setInterval(() => { if (!vid.paused && !vid.ended && intro.classList.contains('on')) { try { cx.drawImage(vid, 0, 0, 64, 36); } catch(_){} } }, 120);
+    // if the phone blocks autoplay completely (e.g. Low Power Mode), the first tap anywhere starts it with sound
+    document.addEventListener('pointerdown', () => {
+      if (intro.classList.contains('needtap') && !ended) { vid.muted = false; vid.volume = 1; vid.play().then(() => { intro.classList.remove('needtap'); setSoundUI(true); }).catch(()=>{}); }
+    }, true);
   }
 
   // Build the Vimeo player hidden behind the loader so it is buffered and ready the moment progress hits 100%.
@@ -537,7 +576,7 @@ function rebuildOn(el, cur){
   }
   function playIntro(){
     intro.classList.add('on'); placeLogo();
-    if (VIMEO_ID) {
+    if (VIMEO_ID || (VIDEO_FILE && vm)) {
       if (!vm || !videoOK) return endIntro();
       let started = false;
       const onStart = () => {
