@@ -450,7 +450,7 @@ function rebuildOn(el, cur){
   // Build the Vimeo player hidden behind the loader so it is buffered and ready the moment progress hits 100%.
   function preloadVimeo(){
     if (!window.Vimeo || !Vimeo.Player) { videoSettled = true; return; }
-    intro.classList.add('on');                       // sits under the loader (lower z-index), not visible yet
+    intro.classList.add('on'); requestAnimationFrame(placeLogo);   // sits under the loader (lower z-index), not visible yet
     const f = document.createElement('iframe');
     f.src = 'https://player.vimeo.com/video/' + VIMEO_ID +
       '?autoplay=0&muted=1&playsinline=1&controls=0&title=0&byline=0&portrait=0&dnt=1&autopause=0&transparent=0&quality=1080p';
@@ -475,6 +475,17 @@ function rebuildOn(el, cur){
     }).catch(() => { videoOK = false; videoSettled = true; });
   }
 
+  // Logo sits in the middle of the space above the video frame
+  function placeLogo(){
+    const lg = document.getElementById('ivLogo'), fr = document.getElementById('ytWrap');
+    if (!lg || !fr || !intro.classList.contains('on')) return;
+    const top = fr.getBoundingClientRect().top - intro.getBoundingClientRect().top;
+    const h = lg.offsetHeight || 40;
+    if (top > h + 8) lg.style.top = Math.round(top / 2 - h / 2) + 'px';
+  }
+  window.addEventListener('resize', () => requestAnimationFrame(placeLogo));
+  document.getElementById('ivLogo').addEventListener('load', placeLogo);
+
   function endIntro(){
     if (ended) return; ended = true;
     clearInterval(ytTimer);
@@ -494,7 +505,7 @@ function rebuildOn(el, cur){
     }, 850);
   }
   function playIntro(){
-    intro.classList.add('on');
+    intro.classList.add('on'); placeLogo();
     if (VIMEO_ID) {
       if (!vm || !videoOK) return endIntro();
       let started = false;
@@ -557,7 +568,7 @@ function rebuildOn(el, cur){
     ld.classList.remove('done'); ld.style.display = 'none'; ld.offsetHeight; ld.style.display = '';
     // get the video ready underneath
     ended = false;
-    intro.classList.remove('out','needtap'); intro.classList.add('on');
+    intro.classList.remove('out','needtap'); intro.classList.add('on'); placeLogo();
     bar2.style.width = '0%';
     vm.setCurrentTime(0).catch(()=>{}); vm.setMuted(true).catch(()=>{});
     if (amb) amb.setCurrentTime(0).catch(()=>{});
