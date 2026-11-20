@@ -34,6 +34,9 @@
   .social a:nth-child(3)::after{animation-delay:.5s}
   @keyframes sweep{0%,55%{left:-60%}85%,100%{left:130%}}
   .social a.wa:hover{background:#25d366;border-color:#25d366;color:#fff}
+  h1.brand{line-height:0}
+  h1.brand img{height:34px;width:auto;display:block}
+  @media (max-width:700px){h1.brand img{height:26px}}
   header h1{font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
   header h1 span{color:var(--acc)}
   .stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:6px 14px;position:relative;overflow:hidden;z-index:1}
@@ -136,6 +139,9 @@
   .iv-btn{position:absolute;z-index:2;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.45);color:#fff;
     font:600 14px Montserrat,sans-serif;padding:10px 18px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
   .iv-btn:hover{background:#7cc242;color:#0f3d1c;border-color:#7cc242}
+  #ivLogo{position:absolute;z-index:3;left:0;right:0;margin:0 auto;top:calc(26px + env(safe-area-inset-top));
+    height:44px;width:auto;filter:drop-shadow(0 4px 14px rgba(0,0,0,.45));opacity:0;animation:fadeUp .8s ease .4s forwards}
+  @media (max-width:700px){#ivLogo{height:32px;top:calc(40px + env(safe-area-inset-top))}}
   #ivSkip{right:18px;bottom:calc(22px + env(safe-area-inset-bottom))}
   #ivSnd{left:18px;bottom:calc(22px + env(safe-area-inset-bottom));padding:10px 14px}
   #intro.needtap #ytShield{display:none}
@@ -196,10 +202,11 @@
   <div id="ytWrap"><div id="ytPlayer"></div></div><div id="ytShield"></div>
   <button class="iv-btn" id="ivSnd" aria-label="Turn sound on">🔇 Sound</button>
   <button class="iv-btn" id="ivSkip">See the Catalog 🥑</button>
+  <img id="ivLogo" src="logo-white.png" alt="Unique Group Holding">
   <div id="ivBar"></div>
 </div>
 <header style="justify-content:flex-start">
-  <h1>Unique Group <span>Holding</span></h1>
+  <h1 class="brand"><img src="logo-white.png" alt="Unique Group Holding"></h1>
   <span class="tagline">From Moroccan Soil to Global Markets</span>
   <nav class="social">
     <a href="https://uniquegroupholding.ma" target="_blank" rel="noopener" aria-label="Website: uniquegroupholding.ma">
