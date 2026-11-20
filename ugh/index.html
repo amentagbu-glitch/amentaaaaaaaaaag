@@ -138,13 +138,7 @@
   .iv-btn:hover{background:#7cc242;color:#0f3d1c;border-color:#7cc242}
   #ivSkip{right:18px;bottom:calc(22px + env(safe-area-inset-bottom))}
   #ivSnd{left:18px;bottom:calc(22px + env(safe-area-inset-bottom));padding:10px 14px}
-  #ivPlay{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);display:none;flex-direction:column;align-items:center;gap:12px;
-    background:none;border:0;color:#fff;font:600 15px Montserrat,sans-serif;cursor:pointer}
-  #ivPlay span{width:84px;height:84px;border-radius:50%;background:rgba(124,194,66,.92);display:flex;align-items:center;justify-content:center;
-    font-size:30px;padding-left:6px;box-shadow:0 0 0 10px rgba(124,194,66,.25),0 12px 30px -8px rgba(0,0,0,.6);position:relative}
-  #ivPlay span::before{content:"";position:absolute;inset:0;border-radius:50%;background:rgba(124,194,66,.6);z-index:-1;animation:waPulse 2s ease-out infinite}
-  #ivPlay{text-shadow:0 2px 8px rgba(0,0,0,.6)}
-  #intro.needtap #ivPlay{display:flex}
+  #intro.needtap #ytShield{display:none}
   #ivBar{position:absolute;left:0;bottom:0;height:3px;width:0;background:#7cc242;z-index:2}
   /* ---- End popup ---- */
   #endPop{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:20px;
@@ -202,7 +196,6 @@
   <div id="ytWrap"><div id="ytPlayer"></div></div><div id="ytShield"></div>
   <button class="iv-btn" id="ivSnd" aria-label="Turn sound on">🔇 Sound</button>
   <button class="iv-btn" id="ivSkip">See the Catalog 🥑</button>
-  <button id="ivPlay" aria-label="Play video"><span>▶</span>Play video</button>
   <div id="ivBar"></div>
 </div>
 <header style="justify-content:flex-start">
@@ -452,7 +445,7 @@ function rebuildOn(el, cur){
     intro.classList.add('on');                       // sits under the loader (lower z-index), not visible yet
     const f = document.createElement('iframe');
     f.src = 'https://player.vimeo.com/video/' + VIMEO_ID +
-      '?autoplay=0&muted=1&playsinline=1&title=0&byline=0&portrait=0&dnt=1&autopause=0&transparent=0';
+      '?autoplay=0&muted=1&playsinline=1&controls=0&title=0&byline=0&portrait=0&dnt=1&autopause=0&transparent=0&quality=1080p';
     f.allow = 'autoplay; fullscreen; picture-in-picture';
     f.setAttribute('allowfullscreen', '');
     document.getElementById('ytPlayer').replaceWith(f);
@@ -505,13 +498,8 @@ function rebuildOn(el, cur){
       vm.on('pause', () => { if (amb) amb.pause().catch(()=>{}); });
       vm.setMuted(true).catch(()=>{});
       vm.play().catch(() => intro.classList.add('needtap'));
-      // autoplay blocked (e.g. iPhone Low Power Mode): show a big play button instead of skipping the video
+      // autoplay blocked (e.g. iPhone Low Power Mode): let the viewer start it with Vimeo's own control (no extra button)
       setTimeout(() => { if (!started) intro.classList.add('needtap'); }, 2500);
-      document.getElementById('ivPlay').onclick = () => {
-        vm.setMuted(false).catch(()=>{}); vm.setVolume(1).catch(()=>{});
-        sndBtn.textContent = '🔊 Sound';
-        vm.play().then(onStart).catch(() => { vm.setMuted(true).then(() => vm.play()).catch(()=>{}); sndBtn.textContent = '🔇 Sound'; });
-      };
       return;
     }
     if (YT_ID) {
