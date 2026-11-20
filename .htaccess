@@ -1,1 +1,5 @@
 DirectoryIndex index.html
+RewriteEngine On
+# Client's own domain: home address opens their brochure directly
+RewriteCond %{HTTP_HOST} uniquegroupholding\. [NC]
+RewriteRule ^$ /ugh/ [R=302,L]

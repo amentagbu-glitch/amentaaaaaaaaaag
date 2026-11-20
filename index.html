@@ -39,6 +39,8 @@
 <main><div class="grid" id="grid"></div></main>
 <footer>© <span id="y"></span> · Powered by <a href="https://taskalart.ma" target="_blank" rel="noopener">Taskalart</a></footer>
 <script>
+  // On a client's own domain, the home address opens their brochure directly.
+  if (/uniquegroupholding/i.test(location.hostname)) location.replace('/ugh/');
   // To add a brochure: put its folder next to /ugh and add one line here.
   // Kept private: each client only gets their own link.
   const BOOKS = [];
