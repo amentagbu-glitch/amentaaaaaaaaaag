@@ -24,7 +24,16 @@
   .social a{display:flex;align-items:center;gap:7px;color:var(--txt);text-decoration:none;font-size:12px;font-weight:600;
     padding:7px 12px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(255,255,255,.06);transition:.2s}
   .social a:hover{background:var(--acc);color:var(--g1);border-color:var(--acc)}
-  .social svg{width:16px;height:16px;flex:none}
+  .social svg{width:16px;height:16px;flex:none;position:relative;z-index:1}
+  .social a span{position:relative;z-index:1}
+  .social a{position:relative;overflow:hidden;isolation:isolate}
+  .social a::after{content:"";position:absolute;top:-20%;bottom:-20%;left:-60%;width:45%;z-index:0;pointer-events:none;
+    background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.55) 50%,transparent 100%);
+    transform:skewX(-20deg) translateX(0);animation:sweep 3.6s ease-in-out infinite}
+  .social a:nth-child(2)::after{animation-delay:.25s}
+  .social a:nth-child(3)::after{animation-delay:.5s}
+  @keyframes sweep{0%,55%{left:-60%}85%,100%{left:130%}}
+  .social a.wa:hover{background:#25d366;border-color:#25d366;color:#fff}
   header h1{font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
   header h1 span{color:var(--acc)}
   .stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:6px 14px;position:relative;overflow:hidden;z-index:1}
@@ -71,7 +80,7 @@
   body.focus .bar{padding:6px 8px calc(12px + env(safe-area-inset-bottom))}
   body.focus .bar button{background:rgba(255,255,255,.06);backdrop-filter:blur(6px)}
   @media (max-width:900px){.tagline{display:none}.tagline + .social{margin-left:auto}}
-  @media (max-width:520px){.social a span{display:none}.social a{padding:8px}}
+  @media (max-width:520px){.social a span{display:none}.social a{padding:8px}.social{gap:6px}}
   @media (max-width:700px){.side{display:none}header h1{font-size:13px}.thumbs img{height:44px;width:44px}}
   /* ---- Loader ---- */
   #loader{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;
@@ -136,9 +145,29 @@
   .ep-links svg{width:18px;height:18px;flex:none}
   .ep-web{background:#1c6a2f;color:#fff}
   .ep-li{background:#0a66c2;color:#fff}
+  .ep-wa{background:#25d366;color:#fff}
   .ep-again{margin-top:14px;background:none;border:0;color:#1c6a2f;font:600 13px Montserrat,sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
   .ep-x{position:absolute;top:10px;right:12px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(15,61,28,.08);color:#0f3d1c;font-size:18px;cursor:pointer}
   .ep-x:hover{background:rgba(15,61,28,.16)}
+  /* ---- Floating WhatsApp ---- */
+  #waFloat{position:fixed;right:calc(16px + env(safe-area-inset-right));bottom:calc(30px + env(safe-area-inset-bottom));z-index:70;
+    display:flex;align-items:center;gap:10px;text-decoration:none;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+  body.reveal #waFloat{opacity:1;transform:none;transition-delay:1.2s}
+  .wf-btn{position:relative;width:60px;height:60px;border-radius:50%;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 24px -6px rgba(0,0,0,.45);transition:transform .2s}
+  .wf-btn::before{content:"";position:absolute;inset:0;border-radius:50%;background:#25d366;z-index:-1;animation:waPulse 2.4s ease-out infinite}
+  .wf-btn svg{width:34px;height:34px}
+  .wf-label{background:#25d366;color:#fff;font:500 14px Montserrat,sans-serif;padding:7px 14px;border-radius:10px;white-space:nowrap;
+    box-shadow:0 6px 16px -6px rgba(0,0,0,.4)}
+  #waFloat:hover .wf-btn{transform:scale(1.08)}
+  @keyframes waPulse{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.6);opacity:0}}
+  .thumbs{padding-right:220px}
+  @media (max-width:700px){
+    .thumbs{padding-right:76px}
+    body.reveal .wf-label{animation:labelOut .5s ease 6s forwards}
+  }
+  @keyframes labelOut{to{opacity:0;transform:translateX(10px);visibility:hidden}}
+  @media (max-width:700px){.wf-btn{width:54px;height:54px}.wf-btn svg{width:30px;height:30px}.wf-label{font-size:13px;padding:6px 12px}}
 </style>
 </head>
 <body>
@@ -200,10 +229,17 @@
       <a class="ep-li" href="https://www.linkedin.com/company/uniquegroupholding/" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
         Follow us on LinkedIn</a>
+      <a class="ep-wa" href="https://wa.me/212661461060" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.05 21.5h-.01a9.47 9.47 0 0 1-4.83-1.32l-.35-.21-3.59.94.96-3.5-.23-.36a9.43 9.43 0 0 1-1.45-5.03c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.4 9.4 0 0 1 2.77 6.7c0 5.23-4.25 9.47-9.47 9.47zm8.06-17.53A11.33 11.33 0 0 0 12.05.64C5.77.64.66 5.75.66 12.03c0 2.01.52 3.97 1.52 5.69L.57 23.6l6.03-1.58a11.36 11.36 0 0 0 5.44 1.39h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.33-8.05z"/></svg>
+        Chat on WhatsApp</a>
     </div>
     <button class="ep-again" id="epAgain">↺ Read again from the start</button>
   </div>
 </div>
+<a id="waFloat" href="https://wa.me/212661461060" target="_blank" rel="noopener" aria-label="WhatsApp us">
+  <span class="wf-label">WhatsApp us</span>
+  <span class="wf-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.05 21.5h-.01a9.47 9.47 0 0 1-4.83-1.32l-.35-.21-3.59.94.96-3.5-.23-.36a9.43 9.43 0 0 1-1.45-5.03c0-5.22 4.25-9.47 9.48-9.47 2.53 0 4.91.99 6.7 2.78a9.4 9.4 0 0 1 2.77 6.7c0 5.23-4.25 9.47-9.47 9.47zm8.06-17.53A11.33 11.33 0 0 0 12.05.64C5.77.64.66 5.75.66 12.03c0 2.01.52 3.97 1.52 5.69L.57 23.6l6.03-1.58a11.36 11.36 0 0 0 5.44 1.39h.01c6.28 0 11.39-5.11 11.39-11.39 0-3.04-1.18-5.9-3.33-8.05z"/></svg></span>
+</a>
 <div id="zoom"></div>
 <button id="zclose">✕ Close</button>
 
@@ -361,11 +397,22 @@ function rebuildOn(el, cur){
   // ---- Intro video ----
   // YT_ID: YouTube video ID (preferred: YouTube serves HD/4K adaptively). Leave '' to use ugh/intro.mp4 instead.
   const YT_ID = '';
+  // VIMEO_ID: Vimeo video ID (used when set; takes priority over YouTube and intro.mp4).
+  const VIMEO_ID = '1248526063';
+  let vm = null;
   const vid = document.getElementById('introVid'), intro = document.getElementById('intro');
   const bar2 = document.getElementById('ivBar'), sndBtn = document.getElementById('ivSnd');
   let videoOK = false, videoSettled = false, yt = null, ytReady = false, ytTimer = null, ended = false;
 
-  if (YT_ID) {
+  if (VIMEO_ID) {
+    intro.classList.add('yt');
+    videoOK = true;
+    const tag = document.createElement('script'); tag.src = 'https://player.vimeo.com/api/player.js';
+    tag.onload = () => { videoSettled = true; };
+    tag.onerror = () => { videoOK = false; videoSettled = true; };
+    document.head.appendChild(tag);
+    setTimeout(() => { videoSettled = true; }, 6000);
+  } else if (YT_ID) {
     intro.classList.add('yt');
     videoOK = true;
     const tag = document.createElement('script'); tag.src = 'https://www.youtube.com/iframe_api';
@@ -385,10 +432,28 @@ function rebuildOn(el, cur){
     intro.classList.add('out');
     document.body.classList.add('reveal');
     const bk = document.getElementById('book'); if (bk) { bk.style.animation = 'none'; bk.offsetHeight; bk.style.animation = ''; }
-    setTimeout(() => { try { vid.pause(); } catch(e){} try { yt && yt.stopVideo(); } catch(e){} intro.remove(); }, 850);
+    setTimeout(() => { try { vid.pause(); } catch(e){} try { yt && yt.stopVideo(); } catch(e){} try { vm && vm.unload(); } catch(e){} intro.remove(); }, 850);
   }
   function playIntro(){
     intro.classList.add('on');
+    if (VIMEO_ID) {
+      if (!window.Vimeo || !Vimeo.Player) return endIntro();
+      const f = document.createElement('iframe');
+      f.src = 'https://player.vimeo.com/video/' + VIMEO_ID +
+        '?autoplay=1&muted=1&playsinline=1&controls=0&title=0&byline=0&portrait=0&dnt=1&quality=1080p&transparent=0';
+      f.allow = 'autoplay; fullscreen; picture-in-picture';
+      f.setAttribute('allowfullscreen', '');
+      document.getElementById('ytPlayer').replaceWith(f);
+      vm = new Vimeo.Player(f);
+      let started = false;
+      vm.on('play', () => { started = true; });
+      vm.on('ended', endIntro);
+      vm.on('error', endIntro);
+      vm.on('timeupdate', d => { if (d && d.duration) bar2.style.width = (d.percent * 100) + '%'; });
+      vm.setMuted(true).catch(()=>{}); vm.play().catch(()=>{});
+      setTimeout(() => { if (!started) endIntro(); }, 10000);   // never get stuck
+      return;
+    }
     if (YT_ID) {
       if (!ytReady || !window.YT || !YT.Player) return endIntro();
       let started = false;
@@ -419,6 +484,11 @@ function rebuildOn(el, cur){
   document.getElementById('ivSkip').onclick = endIntro;
   sndBtn.onclick = () => {
     let muted;
+    if (vm) {
+      vm.getMuted().then(m => { const nm = !m; vm.setMuted(nm); if (!nm) { vm.setVolume(1); vm.play().catch(()=>{}); }
+        sndBtn.textContent = nm ? '🔇 Sound' : '🔊 Sound'; }).catch(()=>{});
+      return;
+    }
     if (yt && yt.isMuted) { if (yt.isMuted()) { yt.unMute(); yt.setVolume(100); muted = false; } else { yt.mute(); muted = true; } }
     else { vid.muted = !vid.muted; if (!vid.muted) { vid.volume = 1; vid.play().catch(()=>{}); } muted = vid.muted; }
     sndBtn.textContent = muted ? '🔇 Sound' : '🔊 Sound';
