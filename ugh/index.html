@@ -231,6 +231,7 @@
   <button id="bnext" aria-label="Next">▶</button>
   <button id="last" aria-label="Last page">⏭</button>
   <button id="zbtn">🔍 Zoom</button>
+  <button id="rwBtn" style="display:none">🎬 Watch video</button>
 </div>
 
 <div class="thumbs" id="thumbs"></div>
@@ -480,7 +481,17 @@ function rebuildOn(el, cur){
     intro.classList.add('out');
     document.body.classList.add('reveal');
     const bk = document.getElementById('book'); if (bk) { bk.style.animation = 'none'; bk.offsetHeight; bk.style.animation = ''; }
-    setTimeout(() => { try { vid.pause(); } catch(e){} try { yt && yt.stopVideo(); } catch(e){} try { vm && vm.unload(); } catch(e){} try { amb && amb.unload(); } catch(e){} intro.remove(); }, 850);
+    const canReplay = !!(vm && videoOK);
+    setTimeout(() => {
+      try { vid.pause(); } catch(e){} try { yt && yt.stopVideo(); } catch(e){}
+      if (canReplay) {                       // keep the Vimeo player so the video can be watched again
+        try { vm.pause(); } catch(e){} try { amb && amb.pause(); } catch(e){}
+        intro.classList.remove('on','out','needtap');
+        document.getElementById('rwBtn').style.display = '';
+      } else {
+        try { vm && vm.unload(); } catch(e){} try { amb && amb.unload(); } catch(e){} intro.remove();
+      }
+    }, 850);
   }
   function playIntro(){
     intro.classList.add('on');
@@ -537,6 +548,19 @@ function rebuildOn(el, cur){
     vid.addEventListener('timeupdate', () => { if (vid.duration) bar2.style.width = (vid.currentTime / vid.duration * 100) + '%'; });
   }
   document.getElementById('ivSkip').onclick = endIntro;
+  // Re-watch the intro video from the toolbar
+  document.getElementById('rwBtn').onclick = () => {
+    if (!vm) return;
+    ended = false;
+    intro.classList.remove('out','needtap'); intro.classList.add('on');
+    bar2.style.width = '0%';
+    vm.setCurrentTime(0).catch(()=>{});
+    if (amb) amb.setCurrentTime(0).then(() => amb.play()).catch(()=>{});
+    // the viewer tapped, so sound is allowed this time
+    vm.setMuted(false).then(() => vm.setVolume(1)).catch(()=>{});
+    sndBtn.textContent = '🔊 Sound';
+    vm.play().catch(() => { vm.setMuted(true).then(() => vm.play()).catch(()=>{}); sndBtn.textContent = '🔇 Sound'; });
+  };
   sndBtn.onclick = () => {
     let muted;
     if (vm) {
