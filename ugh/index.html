@@ -548,19 +548,35 @@ function rebuildOn(el, cur){
     vid.addEventListener('timeupdate', () => { if (vid.duration) bar2.style.width = (vid.currentTime / vid.duration * 100) + '%'; });
   }
   document.getElementById('ivSkip').onclick = endIntro;
-  // Re-watch the intro video from the toolbar
+  // Re-watch: show the loader again (logo, falling fruit, 0 → 100%), then the video — same as the first visit
   document.getElementById('rwBtn').onclick = () => {
     if (!vm) return;
+    const ld = document.getElementById('loader'), lbar = document.getElementById('lgBar'), lpct = document.getElementById('lgPct');
+    // reset loader visuals and restart its CSS animations
+    lbar.style.width = '0%'; lpct.textContent = '0%';
+    ld.classList.remove('done'); ld.style.display = 'none'; ld.offsetHeight; ld.style.display = '';
+    // get the video ready underneath
     ended = false;
     intro.classList.remove('out','needtap'); intro.classList.add('on');
     bar2.style.width = '0%';
-    vm.setCurrentTime(0).catch(()=>{});
-    if (amb) amb.setCurrentTime(0).then(() => amb.play()).catch(()=>{});
-    // the viewer tapped, so sound is allowed this time
-    vm.setMuted(false).then(() => vm.setVolume(1)).catch(()=>{});
-    sndBtn.textContent = '🔊 Sound';
-    vm.play().catch(() => { vm.setMuted(true).then(() => vm.play()).catch(()=>{}); sndBtn.textContent = '🔇 Sound'; });
+    vm.setCurrentTime(0).catch(()=>{}); vm.setMuted(true).catch(()=>{});
+    if (amb) amb.setCurrentTime(0).catch(()=>{});
+    sndBtn.textContent = '🔇 Sound';
+    const t0r = performance.now(), DUR = 2600;
+    (function step(now){
+      const k = Math.min(1, (now - t0r) / DUR), v = (1 - Math.pow(1 - k, 2)) * 100;
+      lbar.style.width = v + '%'; lpct.textContent = Math.floor(v) + '%';
+      if (k < 1) return requestAnimationFrame(step);
+      lpct.textContent = '100%';
+      setTimeout(() => {
+        ld.classList.add('done');
+        vm.play().catch(() => intro.classList.add('needtap'));
+        if (amb) amb.play().catch(()=>{});
+        setTimeout(() => { ld.style.display = 'none'; }, 1300);
+      }, 300);
+    })(t0r);
   };
+
   sndBtn.onclick = () => {
     let muted;
     if (vm) {
@@ -595,7 +611,7 @@ function rebuildOn(el, cur){
       if (videoOK) { playIntro(); }
       else { intro.classList.remove('on'); document.body.classList.add('reveal'); }
       document.getElementById('loader').classList.add('done');
-      setTimeout(() => document.getElementById('loader').remove(), 1300);
+      setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1300);
     }, 300);
   }
   for (let i = 1; i <= PRE; i++) {
