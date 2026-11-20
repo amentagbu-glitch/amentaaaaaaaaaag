@@ -117,8 +117,20 @@
   #intro.on{display:flex}
   #intro.out{opacity:0;pointer-events:none}
   #introVid{width:100%;height:100%;object-fit:contain;background:#000}
+  #intro{background:#062c1b}
+  #ambWrap{position:absolute;inset:0;overflow:hidden;display:none;z-index:0}
+  #ambWrap iframe{position:absolute;left:50%;top:50%;width:max(100vw,177.78vh);height:max(100vh,56.25vw);border:0;
+    transform:translate(-50%,-50%) scale(1.25);filter:blur(48px) saturate(1.5) brightness(.85);opacity:.85;pointer-events:none}
+  #ambTint{position:absolute;inset:0;z-index:0;display:none;pointer-events:none;
+    background:radial-gradient(75% 70% at 50% 50%, rgba(11,90,58,.25) 0%, rgba(11,90,58,.6) 60%, rgba(4,40,24,.9) 100%),
+               linear-gradient(180deg, rgba(58,181,74,.18), rgba(11,90,58,.45))}
+  #intro.yt #ambWrap,#intro.yt #ambTint{display:block}
   #ytWrap{position:absolute;inset:0;display:none}
   #ytWrap iframe{width:100%;height:100%;border:0}
+  #intro.yt #ytWrap{inset:auto;position:relative;z-index:1;width:min(92vw,calc((100vh - 150px) * 16 / 9));aspect-ratio:16/9;
+    border-radius:16px;overflow:hidden;box-shadow:0 30px 80px -20px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.08);background:#000}
+  #intro.yt #ytShield{inset:auto;width:min(92vw,calc((100vh - 150px) * 16 / 9));aspect-ratio:16/9;z-index:2}
+  @media (max-width:700px){#intro.yt #ytWrap,#intro.yt #ytShield{width:94vw;border-radius:12px}}
   #ytShield{position:absolute;inset:0;z-index:1;display:none}
   #intro.yt #introVid{display:none} #intro.yt #ytWrap,#intro.yt #ytShield{display:block}
   .iv-btn{position:absolute;z-index:2;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.45);color:#fff;
@@ -126,6 +138,13 @@
   .iv-btn:hover{background:#7cc242;color:#0f3d1c;border-color:#7cc242}
   #ivSkip{right:18px;bottom:calc(22px + env(safe-area-inset-bottom))}
   #ivSnd{left:18px;bottom:calc(22px + env(safe-area-inset-bottom));padding:10px 14px}
+  #ivPlay{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);display:none;flex-direction:column;align-items:center;gap:12px;
+    background:none;border:0;color:#fff;font:600 15px Montserrat,sans-serif;cursor:pointer}
+  #ivPlay span{width:84px;height:84px;border-radius:50%;background:rgba(124,194,66,.92);display:flex;align-items:center;justify-content:center;
+    font-size:30px;padding-left:6px;box-shadow:0 0 0 10px rgba(124,194,66,.25),0 12px 30px -8px rgba(0,0,0,.6);position:relative}
+  #ivPlay span::before{content:"";position:absolute;inset:0;border-radius:50%;background:rgba(124,194,66,.6);z-index:-1;animation:waPulse 2s ease-out infinite}
+  #ivPlay{text-shadow:0 2px 8px rgba(0,0,0,.6)}
+  #intro.needtap #ivPlay{display:flex}
   #ivBar{position:absolute;left:0;bottom:0;height:3px;width:0;background:#7cc242;z-index:2}
   /* ---- End popup ---- */
   #endPop{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:20px;
@@ -179,9 +198,11 @@
 </div>
 <div id="intro" aria-label="Intro video">
   <video id="introVid" playsinline muted preload="auto"></video>
+  <div id="ambWrap"><div id="ambPlayer"></div></div><div id="ambTint"></div>
   <div id="ytWrap"><div id="ytPlayer"></div></div><div id="ytShield"></div>
   <button class="iv-btn" id="ivSnd" aria-label="Turn sound on">🔇 Sound</button>
-  <button class="iv-btn" id="ivSkip">Skip ›</button>
+  <button class="iv-btn" id="ivSkip">See the Catalog 🥑</button>
+  <button id="ivPlay" aria-label="Play video"><span>▶</span>Play video</button>
   <div id="ivBar"></div>
 </div>
 <header style="justify-content:flex-start">
@@ -399,7 +420,7 @@ function rebuildOn(el, cur){
   const YT_ID = '';
   // VIMEO_ID: Vimeo video ID (used when set; takes priority over YouTube and intro.mp4).
   const VIMEO_ID = '1248526063';
-  let vm = null;
+  let vm = null, amb = null;
   const vid = document.getElementById('introVid'), intro = document.getElementById('intro');
   const bar2 = document.getElementById('ivBar'), sndBtn = document.getElementById('ivSnd');
   let videoOK = false, videoSettled = false, yt = null, ytReady = false, ytTimer = null, ended = false;
@@ -431,26 +452,25 @@ function rebuildOn(el, cur){
     intro.classList.add('on');                       // sits under the loader (lower z-index), not visible yet
     const f = document.createElement('iframe');
     f.src = 'https://player.vimeo.com/video/' + VIMEO_ID +
-      '?autoplay=0&muted=1&playsinline=1&controls=0&title=0&byline=0&portrait=0&dnt=1&quality=1080p&transparent=0&autopause=0';
+      '?autoplay=0&muted=1&playsinline=1&title=0&byline=0&portrait=0&dnt=1&autopause=0&transparent=0';
     f.allow = 'autoplay; fullscreen; picture-in-picture';
     f.setAttribute('allowfullscreen', '');
     document.getElementById('ytPlayer').replaceWith(f);
     vm = new Vimeo.Player(f);
-    vm.setMuted(true).catch(()=>{});
-    vm.on('error', () => { if (!videoSettled) { videoOK = false; videoSettled = true; } else endIntro(); });
-    vm.ready().then(async () => {
-      // pick the highest quality this account/player allows (1080p+), fall back silently
-      try {
-        const qs = await vm.getQualities();
-        const order = ['2160p','1440p','1080p','720p'];
-        const best = order.find(q => qs.some(x => x.id === q));
-        if (best) await vm.setQuality(best);
-      } catch(_) {}
+    // ambient copy: same video, muted, blurred and tinted behind (like YouTube ambient mode)
+    try {
+      const af = document.createElement('iframe');
+      af.src = 'https://player.vimeo.com/video/' + VIMEO_ID + '?autoplay=0&muted=1&playsinline=1&background=1&dnt=1&autopause=0&quality=240p';
+      af.allow = 'autoplay'; af.tabIndex = -1; af.setAttribute('aria-hidden','true');
+      document.getElementById('ambPlayer').replaceWith(af);
+      amb = new Vimeo.Player(af);
+      amb.setMuted(true).catch(()=>{});
+    } catch(_) { amb = null; }
+    vm.ready().then(() => {
       videoOK = true;
-      // warm the buffer: start muted, then pause at 0 so play is instant later
-      vm.on('bufferend', () => { videoSettled = true; });
-      try { await vm.play(); await vm.pause(); await vm.setCurrentTime(0); } catch(_) {}
-      setTimeout(() => { videoSettled = true; }, 2500);
+      vm.setMuted(true).catch(()=>{});
+      vm.on('loaded', () => { videoSettled = true; });
+      setTimeout(() => { videoSettled = true; }, 2000);
     }).catch(() => { videoOK = false; videoSettled = true; });
   }
 
@@ -460,20 +480,38 @@ function rebuildOn(el, cur){
     intro.classList.add('out');
     document.body.classList.add('reveal');
     const bk = document.getElementById('book'); if (bk) { bk.style.animation = 'none'; bk.offsetHeight; bk.style.animation = ''; }
-    setTimeout(() => { try { vid.pause(); } catch(e){} try { yt && yt.stopVideo(); } catch(e){} try { vm && vm.unload(); } catch(e){} intro.remove(); }, 850);
+    setTimeout(() => { try { vid.pause(); } catch(e){} try { yt && yt.stopVideo(); } catch(e){} try { vm && vm.unload(); } catch(e){} try { amb && amb.unload(); } catch(e){} intro.remove(); }, 850);
   }
   function playIntro(){
     intro.classList.add('on');
     if (VIMEO_ID) {
       if (!vm || !videoOK) return endIntro();
       let started = false;
-      vm.on('play', () => { started = true; });
-      vm.on('playing', () => { started = true; });
+      const onStart = () => {
+        if (started) return; started = true; intro.classList.remove('needtap');
+        if (amb) amb.play().catch(()=>{});
+        // ask for the best quality once playing (works on plans that allow it; otherwise Vimeo auto-adjusts)
+        vm.getQualities().then(qs => { const best = ['2160p','1440p','1080p'].find(q => qs.some(x => x.id === q)); if (best) return vm.setQuality(best); }).catch(()=>{});
+      };
+      vm.on('playing', onStart); vm.on('play', onStart);
       vm.on('ended', endIntro);
-      vm.on('timeupdate', d => { if (d && d.duration) bar2.style.width = (d.percent * 100) + '%'; });
-      vm.setCurrentTime(0).catch(()=>{});
-      vm.play().catch(() => endIntro());
-      setTimeout(() => { if (!started) endIntro(); }, 8000);   // never get stuck
+      let lastSync = 0;
+      vm.on('timeupdate', d => {
+        if (!d || !d.duration) return;
+        bar2.style.width = (d.percent * 100) + '%'; if (d.seconds > 0.2) onStart();
+        if (amb && Date.now() - lastSync > 2000) { lastSync = Date.now();
+          amb.getCurrentTime().then(t => { if (Math.abs(t - d.seconds) > 0.6) amb.setCurrentTime(d.seconds).catch(()=>{}); }).catch(()=>{}); }
+      });
+      vm.on('pause', () => { if (amb) amb.pause().catch(()=>{}); });
+      vm.setMuted(true).catch(()=>{});
+      vm.play().catch(() => intro.classList.add('needtap'));
+      // autoplay blocked (e.g. iPhone Low Power Mode): show a big play button instead of skipping the video
+      setTimeout(() => { if (!started) intro.classList.add('needtap'); }, 2500);
+      document.getElementById('ivPlay').onclick = () => {
+        vm.setMuted(false).catch(()=>{}); vm.setVolume(1).catch(()=>{});
+        sndBtn.textContent = '🔊 Sound';
+        vm.play().then(onStart).catch(() => { vm.setMuted(true).then(() => vm.play()).catch(()=>{}); sndBtn.textContent = '🔇 Sound'; });
+      };
       return;
     }
     if (YT_ID) {
