@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ezzouhour S.A. — Catalogue des produits 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="page-flip.browser.js"></script>
+<style>
+  :root{--g1:#1b2a6b;--g2:#24378a;--acc:#32a540;--txt:#f1f5fb}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:Montserrat,system-ui,sans-serif;color:var(--txt);
+    background:radial-gradient(ellipse at 50% 35%,#2d46a3 0%,var(--g1) 60%,#0f1a4c 100%);
+    display:flex;flex-direction:column;overflow:hidden;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+  header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;gap:12px}
+  .back{color:var(--txt);text-decoration:none;font-size:12px;font-weight:600;opacity:.8;padding:6px 10px;border:1px solid rgba(255,255,255,.2);border-radius:999px;white-space:nowrap}
+  .back:hover{background:var(--acc);color:var(--g1);opacity:1}
+  .tagline{font-size:12px;opacity:.75;margin-left:auto}
+  .social{display:flex;gap:8px;margin-left:14px}
+  .tagline + .social{margin-left:18px}
+  .social a{display:flex;align-items:center;gap:7px;color:var(--txt);text-decoration:none;font-size:12px;font-weight:600;
+    padding:7px 12px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(255,255,255,.06);transition:.2s}
+  .social a:hover{background:var(--acc);color:var(--g1);border-color:var(--acc)}
+  .social svg{width:16px;height:16px;flex:none;position:relative;z-index:1}
+  .social a span{position:relative;z-index:1}
+  .social a{position:relative;overflow:hidden;isolation:isolate}
+  .social a::after{content:"";position:absolute;top:-20%;bottom:-20%;left:-60%;width:45%;z-index:0;pointer-events:none;
+    background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.55) 50%,transparent 100%);
+    transform:skewX(-20deg) translateX(0);animation:sweep 3.6s ease-in-out infinite}
+  .social a:nth-child(2)::after{animation-delay:.25s}
+  .social a:nth-child(3)::after{animation-delay:.5s}
+  @keyframes sweep{0%,55%{left:-60%}85%,100%{left:130%}}
+  .social a.wa:hover{background:#25d366;border-color:#25d366;color:#fff}
+  h1.brand{line-height:0}
+  h1.brand img{height:34px;width:auto;display:block}
+  @media (max-width:700px){h1.brand img{height:26px}}
+  header h1{font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+  header h1 span{color:var(--acc)}
+  .stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:6px 14px;position:relative;overflow:hidden;z-index:1}
+  #book{margin:0 auto;flex:none;filter:drop-shadow(0 22px 34px rgba(0,0,0,.45))}
+  .bar,.thumbs,footer,header{position:relative;z-index:3}
+  .page{background:#fff;overflow:hidden}
+  .page img{width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none}
+  .side{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;
+    border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.25);color:#fff;font-size:22px;cursor:pointer;z-index:5;
+    display:flex;align-items:center;justify-content:center;transition:background .2s}
+  .side:hover{background:var(--acc);color:var(--g1)}
+  #prev{left:12px}#next{right:12px}
+  .bar{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 12px 4px;flex-wrap:wrap}
+  .bar button{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:var(--txt);
+    font:600 13px Montserrat,sans-serif;padding:8px 13px;border-radius:999px;cursor:pointer;transition:background .2s}
+  .bar button:hover{background:var(--acc);color:var(--g1)}
+  #count{font-size:13px;font-weight:600;min-width:92px;text-align:center;opacity:.9}
+  .thumbs{display:flex;gap:6px;overflow-x:auto;padding:8px 14px;scrollbar-width:thin}
+  .thumbs img{height:56px;width:40px;object-fit:cover;border-radius:3px;cursor:pointer;opacity:.55;border:2px solid transparent;flex:none;transition:.2s}
+  .thumbs img.on{opacity:1;border-color:var(--acc)}
+  footer{text-align:center;font-size:11.5px;padding:6px 10px 12px;opacity:.85;letter-spacing:.03em}
+  footer b{color:var(--acc);font-weight:700}
+  footer a{text-decoration:none}footer a:hover b{text-decoration:underline}
+  #zoom{position:fixed;inset:0;background:rgba(5,20,9,.96);z-index:50;display:none;overflow:auto;-webkit-overflow-scrolling:touch}
+  #zoom.open{display:block}
+  #zoom img{display:block;width:min(1600px,94vw);max-width:none;margin:12px auto}
+  @media (max-width:700px){#zoom img{width:180vw;margin:0 auto}}
+  #zclose{position:fixed;top:calc(12px + env(safe-area-inset-top));right:14px;z-index:51;background:var(--acc);color:var(--g1);border:0;
+    font:700 14px Montserrat,sans-serif;padding:9px 15px;border-radius:999px;cursor:pointer;display:none}
+  #zoom.open + #zclose{display:block}
+  #loading{position:absolute;font-size:13px;opacity:.7}
+  body.focus header, body.focus .thumbs, body.focus footer{display:none}
+  body.focus{background:
+      radial-gradient(60% 55% at 50% 46%, rgba(50,165,64,.22) 0%, rgba(50,165,64,0) 70%),
+      radial-gradient(120% 70% at 50% 115%, #1f7a36 0%, rgba(31,122,54,0) 60%),
+      radial-gradient(90% 60% at 50% -15%, #134a23 0%, rgba(19,74,35,0) 65%),
+      linear-gradient(180deg,#0a2412 0%,#061a0c 55%,#041208 100%)}
+  body.focus::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background-image:radial-gradient(rgba(255,255,255,.07) 1px, transparent 1.2px);background-size:22px 22px;
+    -webkit-mask-image:radial-gradient(70% 65% at 50% 50%, transparent 35%, #000 100%);mask-image:radial-gradient(70% 65% at 50% 50%, transparent 35%, #000 100%)}
+  body.focus::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;box-shadow:inset 0 0 180px rgba(0,0,0,.65)}
+  body.focus #book{filter:drop-shadow(0 30px 50px rgba(0,0,0,.6)) drop-shadow(0 0 60px rgba(50,165,64,.12))}
+  body.focus .stage{padding:18px 14px 6px}
+  body.focus .bar{padding:6px 8px calc(12px + env(safe-area-inset-bottom))}
+  body.focus .bar button{background:rgba(255,255,255,.06);backdrop-filter:blur(6px)}
+  @media (max-width:900px){.tagline{display:none}.tagline + .social{margin-left:auto}}
+  @media (max-width:520px){.social a span{display:none}.social a{padding:8px}.social{gap:6px}}
+  @media (max-width:700px){.side{display:none}header h1{font-size:13px}.thumbs img{height:50px;width:35px}}
+  /* ---- Loader ---- */
+  #loader{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;
+    background:radial-gradient(70% 60% at 50% 45%,#ffffff 0%,#f4f8f3 55%,#e1ecdf 100%);
+    transition:clip-path 1s cubic-bezier(.75,0,.2,1), opacity .4s ease .7s;clip-path:inset(0 0 0 0)}
+  #loader.done{clip-path:inset(0 0 100% 0);opacity:0;pointer-events:none}
+  #loader::before{content:"";position:absolute;width:520px;height:520px;max-width:120vw;max-height:120vw;border-radius:50%;
+    background:radial-gradient(circle,rgba(50,165,64,.18),transparent 65%);animation:pulse 3s ease-in-out infinite}
+  .lg-box{position:relative;width:min(250px,58vw)}
+  #loaderLogo{display:block;width:100%;height:auto;clip-path:inset(0 100% 0 0);
+    animation:wipe 1.1s cubic-bezier(.65,0,.25,1) .2s forwards, breathe 3.2s ease-in-out 1.6s infinite}
+  .lg-leaf{position:absolute;left:20%;top:-12%;width:12%;aspect-ratio:1;border-radius:50%;
+    background:radial-gradient(circle,rgba(50,165,64,.55),transparent 70%);opacity:0;animation:spark 1.2s ease 1.1s forwards}
+  .lg-track{position:relative;width:min(240px,56vw);height:4px;border-radius:3px;background:rgba(27,42,107,.12);overflow:hidden;
+    opacity:0;animation:fadeUp .6s ease .9s forwards}
+  .lg-bar{position:absolute;inset:0;width:0;background:linear-gradient(90deg,#2a3e92,#32a540);border-radius:3px}
+  .lg-pct{position:relative;font-size:15px;font-weight:700;letter-spacing:.12em;color:#1b2a6b;margin-top:-20px;opacity:0;animation:fadeUp .6s ease 1s forwards}
+  .avo-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;opacity:.2}
+  .avo{position:absolute;top:-14%;will-change:transform;animation:fall linear infinite}
+  .avo svg{display:block;width:100%;height:auto;animation:spin ease-in-out infinite alternate}
+  @keyframes fall{to{transform:translateY(130vh)}}
+  @keyframes spin{from{transform:rotate(var(--r0))}to{transform:rotate(var(--r1))}}
+  .lg-box,.lg-track,.lg-pct{z-index:1}
+  .lg-pct{font-variant-numeric:tabular-nums}
+  @keyframes wipe{to{clip-path:inset(0 0 0 0)}}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+  @keyframes spark{0%{opacity:0;transform:scale(.3)}50%{opacity:1;transform:scale(1.6)}100%{opacity:0;transform:scale(2.4)}}
+  @keyframes pulse{0%,100%{transform:scale(.9);opacity:.7}50%{transform:scale(1.08);opacity:1}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  body.reveal #book{animation:bookIn 1s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes bookIn{from{opacity:0;transform:translateY(24px) scale(.94)}to{opacity:1;transform:none}}
+  /* ---- Intro video ---- */
+  #intro{position:fixed;inset:0;z-index:90;background:#000;display:none;align-items:center;justify-content:center;transition:opacity .8s ease}
+  #intro.on{display:flex}
+  #intro.out{opacity:0;pointer-events:none}
+  #introVid{width:100%;height:100%;object-fit:contain;background:#000}
+  #intro{background:#101c55}
+  #ambWrap{position:absolute;inset:0;overflow:hidden;display:none;z-index:0}
+  #ambWrap iframe{position:absolute;left:50%;top:50%;width:max(100vw,177.78vh);height:max(100vh,56.25vw);border:0;
+    transform:translate(-50%,-50%) scale(1.25);filter:blur(48px) saturate(1.5) brightness(.85);opacity:.85;pointer-events:none}
+  #ambTint{position:absolute;inset:0;z-index:0;display:none;pointer-events:none;
+    background:radial-gradient(75% 70% at 50% 50%, rgba(36,55,138,.25) 0%, rgba(36,55,138,.6) 60%, rgba(10,18,55,.9) 100%),
+               linear-gradient(180deg, rgba(50,165,64,.18), rgba(36,55,138,.45))}
+  #intro.yt #ambWrap,#intro.yt #ambTint{display:block}
+  #ytWrap{position:absolute;inset:0;display:none}
+  #ytWrap iframe{width:100%;height:100%;border:0}
+  #intro.yt{flex-direction:column;justify-content:space-evenly;padding:calc(10px + env(safe-area-inset-top)) 0 calc(86px + env(safe-area-inset-bottom))}
+  #intro.yt #ytWrap{inset:auto;position:relative;z-index:1;flex:none;width:min(92vw,calc((100dvh - 340px) * 16 / 9));aspect-ratio:16/9;
+    border-radius:16px;overflow:hidden;box-shadow:0 30px 80px -20px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.08);background:#000}
+  @media (max-width:700px){#intro.yt #ytWrap{width:94vw;border-radius:12px}}
+  #ytShield{position:absolute;inset:0;z-index:2;display:none}
+  #intro.yt #introVid{display:none}
+  #intro.mp4 #introVid{display:block;width:100%;height:100%;object-fit:cover;background:#000}
+  #ambCanvas{position:absolute;inset:-8%;width:116%;height:116%;filter:blur(42px) saturate(1.4) brightness(.8);opacity:.9}
+  #intro.mp4.needtap #ytShield{display:block;cursor:pointer} #intro.yt #ytWrap,#intro.yt #ytShield{display:block}
+  .iv-btn{position:absolute;z-index:2;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.45);color:#fff;
+    font:600 14px Montserrat,sans-serif;padding:10px 18px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+  .iv-btn:hover{background:#32a540;color:#1b2a6b;border-color:#32a540}
+  #ivLogo{position:relative;z-index:3;flex:none;height:min(130px,16vh);width:auto;max-width:86vw;object-fit:contain;
+    filter:drop-shadow(0 4px 14px rgba(0,0,0,.45));opacity:0;animation:fadeUp .8s ease .4s forwards}
+  #ivTitle{position:relative;z-index:3;flex:none;margin:0;padding:0 22px;max-width:900px;text-align:center;color:#fff;
+    font:700 26px/1.35 Montserrat,sans-serif;letter-spacing:.01em;text-wrap:balance;text-shadow:0 3px 14px rgba(0,0,0,.45);
+    opacity:0;animation:fadeUp .8s ease .9s forwards}
+  #ivTitle .g{color:#32a540}
+  #intro:not(.yt) #ivLogo,#intro:not(.yt) #ivTitle{display:none}
+  @media (max-width:700px){#ivLogo{height:86px}#ivTitle{font-size:19px}
+    #intro .iv-btn{font-size:12.5px;padding:9px 13px}#ivSkip{right:14px}#ivSnd{left:14px}}
+  #ivSkip{right:18px;bottom:calc(22px + env(safe-area-inset-bottom))}
+  #ivSnd.hint{background:#32a540;color:#1b2a6b;border-color:#32a540;animation:sndPulse 1.6s ease-in-out infinite}
+  @keyframes sndPulse{0%,100%{box-shadow:0 0 0 0 rgba(50,165,64,.6)}50%{box-shadow:0 0 0 10px rgba(50,165,64,0)}}
+  #ivSnd{left:18px;bottom:calc(22px + env(safe-area-inset-bottom));padding:10px 14px}
+  #intro.needtap #ytShield{display:none}
+  #ivBar{position:absolute;left:0;bottom:0;height:3px;width:0;background:#32a540;z-index:2}
+  /* ---- End popup ---- */
+  #endPop{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:20px;
+    background:rgba(10,18,55,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .4s ease}
+  #endPop.show{opacity:1;pointer-events:auto}
+  .ep-card{position:relative;width:min(420px,100%);background:radial-gradient(120% 90% at 50% 0%,#ffffff 0%,#f3f8f2 70%,#e2ede0 100%);
+    border-radius:22px;padding:34px 26px 24px;text-align:center;color:#1b2a6b;box-shadow:0 30px 80px -20px rgba(0,0,0,.6);
+    transform:translateY(24px) scale(.94);transition:transform .55s cubic-bezier(.2,.9,.25,1.15)}
+  #endPop.show .ep-card{transform:none}
+  .ep-card img{width:auto;height:110px;max-width:70%;object-fit:contain;display:block;margin:0 auto 14px}
+  .ep-card h2{font-size:19px;font-weight:700;margin-bottom:6px}
+  .ep-card p{font-size:13.5px;line-height:1.55;color:#3d4a72;margin-bottom:20px}
+  .ep-links{display:flex;flex-direction:column;gap:10px}
+  .ep-links a{display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;font:600 14px Montserrat,sans-serif;
+    padding:13px 16px;border-radius:12px;transition:transform .15s, box-shadow .2s}
+  .ep-links a:hover{transform:translateY(-2px);box-shadow:0 10px 20px -10px rgba(0,0,0,.4)}
+  .ep-links svg{width:18px;height:18px;flex:none}
+  .ep-web{background:#24378a;color:#fff}
+  .ep-li{background:#0a66c2;color:#fff}
+  .ep-row{display:flex;gap:10px}.ep-row a{flex:1}
+  .ep-ig{background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af);color:#fff}
+  .ep-fb{background:#1877f2;color:#fff}
+  .ep-wa{background:#1b2a6b;color:#fff}
+  .ep-again{margin-top:14px;background:none;border:0;color:#1b2a6b;font:600 13px Montserrat,sans-serif;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+  .ep-x{position:absolute;top:10px;right:12px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(27,42,107,.08);color:#1b2a6b;font-size:18px;cursor:pointer}
+  .ep-x:hover{background:rgba(27,42,107,.16)}
+  /* ---- Floating WhatsApp ---- */
+  #waFloat{position:fixed;right:calc(16px + env(safe-area-inset-right));bottom:calc(30px + env(safe-area-inset-bottom));z-index:70;
+    display:flex;align-items:center;gap:10px;text-decoration:none;opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
+  body.reveal #waFloat{opacity:1;transform:none;transition-delay:1.2s}
+  .wf-btn{position:relative;width:60px;height:60px;border-radius:50%;background:#32a540;color:#fff;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 24px -6px rgba(0,0,0,.45);transition:transform .2s}
+  .wf-btn::before{content:"";position:absolute;inset:0;border-radius:50%;background:#32a540;z-index:-1;animation:waPulse 2.4s ease-out infinite}
+  .wf-btn svg{width:28px;height:28px}
+  .wf-label{background:#1b2a6b;color:#fff;font:500 14px Montserrat,sans-serif;padding:7px 14px;border-radius:10px;white-space:nowrap;
+    box-shadow:0 6px 16px -6px rgba(0,0,0,.4)}
+  #waFloat:hover .wf-btn{transform:scale(1.08)}
+  @keyframes waPulse{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.6);opacity:0}}
+  .thumbs{padding-right:220px}
+  @media (max-width:700px){
+    .thumbs{padding-right:76px}
+    body.reveal .wf-label{animation:labelOut .5s ease 6s forwards}
+  }
+  @keyframes labelOut{to{opacity:0;transform:translateX(10px);visibility:hidden}}
+  @media (max-width:700px){.wf-btn{width:54px;height:54px}.wf-btn svg{width:30px;height:30px}.wf-label{font-size:13px;padding:6px 12px}}
+</style>
+</head>
+<body>
+<div id="loader" role="status" aria-label="Chargement du catalogue">
+  <div class="avo-layer" id="avoLayer"></div>
+  <div class="lg-box"><img id="loaderLogo" src="logo.png" alt="Ezzouhour S.A."></div>
+  <div class="lg-track"><div class="lg-bar" id="lgBar"></div></div>
+  <div class="lg-pct" id="lgPct">0%</div>
+</div>
+<div id="intro" aria-label="Intro video">
+  <video id="introVid" playsinline muted preload="auto"></video>
+  <div id="ambWrap"><div id="ambPlayer"></div></div><div id="ambTint"></div>
+  <img id="ivLogo" src="logo-white.png" alt="Ezzouhour S.A.">
+  <div id="ytWrap"><div id="ytPlayer"></div><div id="ytShield"></div></div>
+  <p id="ivTitle"><span class="g">Au service de l’agriculteur</span> depuis 49 ans.</p>
+  <button class="iv-btn" id="ivSnd" aria-label="Activer le son">🔇 Son</button>
+  <button class="iv-btn" id="ivSkip">Découvrir le catalogue 🌱</button>
+  <div id="ivBar"></div>
+</div>
+<header style="justify-content:flex-start">
+  <h1 class="brand"><img src="logo-white-text.png" alt="Ezzouhour S.A."></h1>
+  <span class="tagline">Au service de l’agriculteur depuis 49 ans</span>
+  <nav class="social">
+    <a href="https://ezzouhour.ma" target="_blank" rel="noopener" aria-label="Site web : ezzouhour.ma">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+      <span>ezzouhour.ma</span></a>
+    <a href="https://www.linkedin.com/company/ezzouhoursa/" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+      <span>LinkedIn</span></a>
+    <a href="https://www.instagram.com/ezzouhour.sa/" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg>
+      <span>Instagram</span></a>
+  </nav>
+</header>
+
+<div class="stage" id="stage">
+  <button class="side" id="prev" aria-label="Previous page">‹</button>
+  <div id="book"></div>
+  <button class="side" id="next" aria-label="Next page">›</button>
+</div>
+
+<div class="bar">
+  <button id="first" aria-label="First page">⏮</button>
+  <button id="bprev" aria-label="Previous">◀</button>
+  <span id="count">1 / 32</span>
+  <button id="bnext" aria-label="Next">▶</button>
+  <button id="last" aria-label="Last page">⏭</button>
+  <button id="zbtn">🔍 Zoom</button>
+  <button id="rwBtn" style="display:none">🎬 Voir la vidéo</button>
+</div>
+
+<div class="thumbs" id="thumbs"></div>
+
+<footer>© 2026 Ezzouhour S.A. · Powered by <a href="https://taskalart.ma" target="_blank" rel="noopener"><b>Taskalart</b></a></footer>
+
+<div id="endPop" role="dialog" aria-modal="true" aria-label="Restons en contact">
+  <div class="ep-card">
+    <button class="ep-x" id="epX" aria-label="Fermer">✕</button>
+    <img src="logo.png" alt="Ezzouhour S.A.">
+    <h2>Restons en contact</h2>
+    <p>Au service de l’agriculteur depuis 49 ans.</p>
+    <div class="ep-links">
+      <a class="ep-web" href="https://ezzouhour.ma" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+        Visiter ezzouhour.ma</a>
+      <a class="ep-li" href="https://www.linkedin.com/company/ezzouhoursa/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        Suivez-nous sur LinkedIn</a>
+      <div class="ep-row">
+        <a class="ep-ig" href="https://www.instagram.com/ezzouhour.sa/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg> Instagram</a>
+        <a class="ep-fb" href="https://web.facebook.com/ezzouhour.sa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.5V4.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.4H8v3h2.6V21z"/></svg> Facebook</a>
+      </div>
+      <a class="ep-wa" href="tel:+212528248926">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+        Appeler +212 528 248 926</a>
+    </div>
+    <button class="ep-again" id="epAgain">↺ Relire depuis le début</button>
+  </div>
+</div>
+<a id="waFloat" href="tel:+212528248926" aria-label="Appelez-nous : +212 528 248 926">
+  <span class="wf-label">Appelez-nous</span>
+  <span class="wf-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></span>
+</a>
+<div id="zoom"></div>
+<button id="zclose">✕ Fermer</button>
+
+<script>
+const N = 20;
+const R = 0.7071; // page width / height (A4 portrait)
+const src = i => `p/pg-${String(i).padStart(2,'0')}.jpg`;
+const book = document.getElementById('book');
+for (let i = 1; i <= N; i++) {
+  const d = document.createElement('div');
+  d.className = 'page';
+  d.dataset.density = (i === 1 || i === N) ? 'hard' : 'soft';
+  d.innerHTML = `<img src="${src(i)}" alt="Page ${i}" ${i>4?'loading="lazy"':''}>`;
+  book.appendChild(d);
+}
+const thumbs = document.getElementById('thumbs');
+for (let i = 1; i <= N; i++) {
+  const t = document.createElement('img');
+  t.src = src(i); t.loading = 'lazy'; t.alt = 'Page ' + i;
+  t.onclick = () => flip.flip(i - 1);
+  thumbs.appendChild(t);
+}
+
+function dims() {
+  const st = document.getElementById('stage');
+  const cs = getComputedStyle(st);
+  const arrows = getComputedStyle(document.getElementById('prev')).display !== 'none';
+  const w = st.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - (arrows ? 130 : 0) - 4;
+  const h = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - 4;
+  const landscape = window.innerWidth >= 700 && w >= h * R * 1.15;
+  const side = Math.max(160, Math.floor(landscape ? Math.min(w / 2, h * R) : Math.min(w, h * R)));
+  return { s: side, h: Math.round(side / R), landscape };
+}
+function sizeBook(el, d){ el.style.width = (d.landscape ? d.s * 2 : d.s) + 'px'; el.style.height = d.h + 'px'; }
+
+let flip;
+function build(start = 0) {
+  const d = dims(), s = d.s; sizeBook(book, d);
+  flip = new St.PageFlip(book, {
+    width: s, height: d.h, size: 'fixed',
+    showCover: true, usePortrait: true, mobileScrollSupport: true,
+    maxShadowOpacity: 0.45, flippingTime: 800, drawShadow: true, startPage: start,
+    autoSize: false
+  });
+  flip.loadFromHTML(book.querySelectorAll('.page'));
+  flip.on('flip', update);
+  flip.on('changeOrientation', update);
+  update();
+}
+
+function update() {
+  const i = flip.getCurrentPageIndex();
+  maybeEndPop(i);
+  const portrait = flip.getOrientation() === 'portrait';
+  let label;
+  if (portrait || i === 0 || i === N - 1) label = `${i + 1} / ${N}`;
+  else { const a = i % 2 ? i : i - 1; label = `${a + 1}–${Math.min(a + 2, N)} / ${N}`; }
+  document.getElementById('count').textContent = label;
+  [...thumbs.children].forEach((t, k) => t.classList.toggle('on', k === i || (!portrait && i>0 && i<N-1 && k === (i % 2 ? i + 1 : i - 1))));
+  const on = thumbs.children[i]; if (on) on.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+}
+
+// ---- End popup ----
+const endPop = document.getElementById('endPop');
+let popTimer = null, popShownAt = -1;
+function maybeEndPop(i){
+  clearTimeout(popTimer);
+  if (i === N - 1 && popShownAt !== N - 1) popTimer = setTimeout(() => { endPop.classList.add('show'); popShownAt = N - 1; }, 1100);
+  if (i !== N - 1) popShownAt = -1;   // show again if they come back to the end later
+}
+function closePop(){ endPop.classList.remove('show'); }
+document.getElementById('epX').onclick = closePop;
+endPop.addEventListener('click', e => { if (e.target === endPop) closePop(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePop(); });
+document.getElementById('epAgain').onclick = () => { closePop(); setTimeout(() => flip.flip(0), 250); };
+
+const go = f => () => f();
+document.getElementById('prev').onclick = go(() => flip.flipPrev());
+document.getElementById('next').onclick = go(() => flip.flipNext());
+document.getElementById('bprev').onclick = go(() => flip.flipPrev());
+document.getElementById('bnext').onclick = go(() => flip.flipNext());
+document.getElementById('first').onclick = go(() => flip.flip(0));
+document.getElementById('last').onclick = go(() => flip.flip(N - 1));
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') flip.flipNext();
+  if (e.key === 'ArrowLeft') flip.flipPrev();
+  if (e.key === 'Escape') closeZoom();
+});
+
+const zoom = document.getElementById('zoom');
+document.getElementById('zbtn').onclick = () => {
+  const i = flip.getCurrentPageIndex();
+  const portrait = flip.getOrientation() === 'portrait';
+  let pages = [i];
+  if (!portrait && i > 0 && i < N - 1) { const a = i % 2 ? i : i - 1; pages = [a, a + 1].filter(p => p < N); }
+  zoom.innerHTML = pages.map(p => `<img src="${src(p + 1)}" alt="Page ${p + 1}">`).join('');
+  zoom.classList.add('open'); zoom.scrollTop = 0;
+};
+function closeZoom(){ zoom.classList.remove('open'); }
+document.getElementById('zclose').onclick = closeZoom;
+
+function rebuild(force){
+  if (!flip) return;
+  if (!force && Math.abs(window.innerWidth - lastW) < 2 && Math.abs(window.innerHeight - lastH) < (window.innerWidth < 700 ? 120 : 2)) return;
+  lastW = window.innerWidth; lastH = window.innerHeight;
+  const cur = flip.getCurrentPageIndex();
+  try { flip.destroy(); } catch (e) {}
+  const old = document.getElementById('book'); if (old) old.remove();
+  const b = document.createElement('div'); b.id = 'book';
+  document.getElementById('stage').insertBefore(b, document.getElementById('next'));
+  for (let i = 1; i <= N; i++) {
+    const d = document.createElement('div'); d.className = 'page';
+    d.dataset.density = (i === 1 || i === N) ? 'hard' : 'soft';
+    d.innerHTML = `<img src="${src(i)}" alt="Page ${i}">`; b.appendChild(d);
+  }
+  rebuildOn(b, cur);
+}
+let rt, lastW = window.innerWidth, lastH = window.innerHeight;
+window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => rebuild(false), 250); });
+window.addEventListener('orientationchange', () => setTimeout(() => rebuild(true), 400));
+function rebuildOn(el, cur){
+  const d = dims(), s = d.s; sizeBook(el, d);
+  flip = new St.PageFlip(el, { width:s, height:d.h, size:'fixed', showCover:true, usePortrait:true, autoSize:false,
+    mobileScrollSupport:true, maxShadowOpacity:.45, flippingTime:800, startPage:cur });
+  flip.loadFromHTML(el.querySelectorAll('.page'));
+  flip.on('flip', update); flip.on('changeOrientation', update); update();
+}
+
+// ---- Loader logic ----
+(function(){
+  // falling avocados (20% opacity layer)
+  // agriculture elements falling (leaves, sprouts, drops, fruit) in the brand green & blue
+  const LEAF = '<svg viewBox="0 0 60 60"><path d="M8 52C8 24 26 8 54 6c-2 28-18 46-46 46z" fill="#32a540"/><path d="M10 50C22 36 34 24 48 12" stroke="#1f7a2c" stroke-width="2.5" fill="none"/></svg>';
+  const SPROUT = '<svg viewBox="0 0 60 70"><path d="M30 68V34" stroke="#1f7a2c" stroke-width="4" stroke-linecap="round"/><path d="M30 38C30 22 18 12 4 12c0 16 12 26 26 26z" fill="#32a540"/><path d="M30 32C30 16 42 6 56 6c0 16-12 26-26 26z" fill="#4cbb4f"/></svg>';
+  const DROP = '<svg viewBox="0 0 40 56"><path d="M20 2C20 2 4 24 4 36a16 16 0 0 0 32 0C36 24 20 2 20 2z" fill="#2a3e92"/><path d="M12 36a8 8 0 0 0 8 8" stroke="#a9b6ea" stroke-width="3" fill="none" stroke-linecap="round"/></svg>';
+  const TOMATO = '<svg viewBox="0 0 60 60"><circle cx="30" cy="34" r="22" fill="#e2402f"/><path d="M30 14l4 6 7-2-4 6 6 4-8 0-5 6-1-7-7-2 6-3-2-7z" fill="#32a540"/><circle cx="22" cy="28" r="5" fill="#f6836f" opacity=".6"/></svg>';
+  const ORANGE = '<svg viewBox="0 0 60 60"><circle cx="30" cy="32" r="22" fill="#f39a1e"/><path d="M30 10c6-6 14-6 18-2-6 4-12 4-18 2z" fill="#32a540"/><circle cx="23" cy="26" r="4" fill="#ffc46b" opacity=".7"/></svg>';
+  const FRUITS = [[LEAF,4],[SPROUT,2],[DROP,2],[TOMATO,1],[ORANGE,1]];
+  const pick = () => { const t = FRUITS.reduce((a,f)=>a+f[1],0); let r = Math.random()*t; for (const f of FRUITS) { if ((r -= f[1]) < 0) return f[0]; } return LEAF; };
+  const layer = document.getElementById('avoLayer');
+  const count = window.innerWidth < 700 ? 18 : 30;
+  for (let i = 0; i < count; i++) {
+    const a = document.createElement('div'); a.className = 'avo';
+    const svg = pick(), small = svg === DROP;
+    const size = small ? 16 + Math.random() * 16 : 24 + Math.random() * 32, dur = 5 + Math.random() * 5;
+    a.style.left = (Math.random() * 100) + '%';
+    a.style.width = size + 'px';
+    a.style.animationDuration = dur + 's';
+    a.style.animationDelay = (-Math.random() * dur) + 's';
+    a.innerHTML = svg;
+    const sv = a.firstChild, r0 = (Math.random() * 80 - 40);
+    sv.style.setProperty('--r0', r0 + 'deg'); sv.style.setProperty('--r1', (r0 + (Math.random() * 120 - 60)) + 'deg');
+    sv.style.animationDuration = (1.6 + Math.random() * 2) + 's';
+    layer.appendChild(a);
+  }
+
+  // ---- Intro video ----
+  // YT_ID: YouTube video ID (preferred: YouTube serves HD/4K adaptively). Leave '' to use ugh/intro.mp4 instead.
+  const YT_ID = '';
+  // VIMEO_ID: Vimeo video ID (used when set; takes priority over YouTube and intro.mp4).
+  const VIMEO_ID = '774208284';
+  // VIDEO_FILE: self-hosted intro video (used when VIMEO_ID is empty)
+  const VIDEO_FILE = '';
+  let vm = null, amb = null;
+  const vid = document.getElementById('introVid'), intro = document.getElementById('intro');
+  const bar2 = document.getElementById('ivBar'), sndBtn = document.getElementById('ivSnd');
+  let videoOK = false, videoSettled = false, yt = null, ytReady = false, ytTimer = null, ended = false;
+
+  if (VIMEO_ID) {
+    intro.classList.add('yt');
+    const tag = document.createElement('script'); tag.src = 'https://player.vimeo.com/api/player.js';
+    tag.onload = () => preloadVimeo();
+    tag.onerror = () => { videoOK = false; videoSettled = true; };
+    document.head.appendChild(tag);
+    setTimeout(() => { videoSettled = true; }, 10000);   // don't let a slow video hold the loader forever
+  } else if (YT_ID) {
+    intro.classList.add('yt');
+    videoOK = true;
+    const tag = document.createElement('script'); tag.src = 'https://www.youtube.com/iframe_api';
+    window.onYouTubeIframeAPIReady = () => { ytReady = true; videoSettled = true; };
+    tag.onerror = () => { videoOK = false; videoSettled = true; };
+    document.head.appendChild(tag);
+    setTimeout(() => { videoSettled = true; }, 6000);
+  } else if (VIDEO_FILE) {
+    preloadFile();
+  }
+
+  // Self-hosted video: wrap <video> in the same API as the Vimeo player so every feature works unchanged
+  function makeAdapter(v){
+    const P = x => Promise.resolve(x);
+    return {
+      play: () => v.play(), pause: () => { v.pause(); return P(); },
+      setMuted: m => { v.muted = m; return P(); }, getMuted: () => P(v.muted),
+      setVolume: x => { v.volume = x; return P(); }, getPaused: () => P(v.paused),
+      setCurrentTime: t => { try { v.currentTime = t; } catch(_){} return P(); }, getCurrentTime: () => P(v.currentTime),
+      getQualities: () => P([]), setQuality: () => P(), unload: () => P(), ready: () => P(),
+      on: (ev, cb) => {
+        if (ev === 'timeupdate') v.addEventListener('timeupdate', () => cb({ seconds: v.currentTime, duration: v.duration, percent: v.duration ? v.currentTime / v.duration : 0 }));
+        else if (ev === 'loaded') v.addEventListener('canplay', cb, { once: true });
+        else v.addEventListener(ev, cb);
+      }
+    };
+  }
+  function preloadFile(){
+    intro.classList.add('yt','mp4','on');                 // sits under the loader, not visible yet
+    vid.removeAttribute('muted'); vid.muted = true; vid.playsInline = true; vid.preload = 'auto';
+    vid.poster = 'poster.jpg';
+    document.getElementById('ytPlayer').replaceWith(vid);
+    vm = makeAdapter(vid);
+    vid.addEventListener('canplay', () => { videoOK = true; videoSettled = true; }, { once: true });
+    vid.addEventListener('error', () => { videoOK = false; videoSettled = true; intro.classList.remove('yt','mp4','on'); }, { once: true });
+    vid.src = VIDEO_FILE; vid.load();
+    // ambient background: draw the playing video into a tiny canvas, blurred behind (one stream, perfectly in sync)
+    const cv = document.createElement('canvas'); cv.width = 64; cv.height = 36; cv.id = 'ambCanvas';
+    document.getElementById('ambPlayer').replaceWith(cv);
+    const cx = cv.getContext('2d');
+    setInterval(() => { if (!vid.paused && !vid.ended && intro.classList.contains('on')) { try { cx.drawImage(vid, 0, 0, 64, 36); } catch(_){} } }, 120);
+    // if the phone blocks autoplay completely (e.g. Low Power Mode), the first tap anywhere starts it with sound
+    document.addEventListener('pointerdown', () => {
+      if (intro.classList.contains('needtap') && !ended) { vid.muted = false; vid.volume = 1; vid.play().then(() => { intro.classList.remove('needtap'); setSoundUI(true); }).catch(()=>{}); }
+    }, true);
+  }
+
+  // Build the Vimeo player hidden behind the loader so it is buffered and ready the moment progress hits 100%.
+  function preloadVimeo(){
+    if (!window.Vimeo || !Vimeo.Player) { videoSettled = true; return; }
+    intro.classList.add('on'); requestAnimationFrame(placeLogo);   // sits under the loader (lower z-index), not visible yet
+    const f = document.createElement('iframe');
+    f.src = 'https://player.vimeo.com/video/' + VIMEO_ID +
+      '?autoplay=0&muted=1&playsinline=1&controls=0&title=0&byline=0&portrait=0&dnt=1&autopause=0&transparent=0&quality=1080p';
+    f.allow = 'autoplay; fullscreen; picture-in-picture';
+    f.setAttribute('allowfullscreen', '');
+    document.getElementById('ytPlayer').replaceWith(f);
+    vm = new Vimeo.Player(f);
+    // ambient copy: same video, muted, blurred and tinted behind (like YouTube ambient mode)
+    try {
+      const af = document.createElement('iframe');
+      af.src = 'https://player.vimeo.com/video/' + VIMEO_ID + '?autoplay=0&muted=1&playsinline=1&background=1&dnt=1&autopause=0&quality=240p';
+      af.allow = 'autoplay'; af.tabIndex = -1; af.setAttribute('aria-hidden','true');
+      document.getElementById('ambPlayer').replaceWith(af);
+      amb = new Vimeo.Player(af);
+      amb.setMuted(true).catch(()=>{});
+    } catch(_) { amb = null; }
+    vm.ready().then(() => {
+      videoOK = true;
+      vm.setMuted(true).catch(()=>{});
+      vm.on('loaded', () => { videoSettled = true; });
+      setTimeout(() => { videoSettled = true; }, 2000);
+    }).catch(() => { videoOK = false; videoSettled = true; });
+  }
+
+  // Logo sits in the middle of the space above the video frame
+  function placeLogo(){
+    return; // layout is handled by CSS now
+    const lg = document.getElementById('ivLogo'), fr = document.getElementById('ytWrap');
+    if (!lg || !fr || !intro.classList.contains('on')) return;
+    const top = fr.getBoundingClientRect().top - intro.getBoundingClientRect().top;
+    const h = lg.offsetHeight || 40;
+    if (top > h + 8) lg.style.top = Math.round(top / 2 - h / 2) + 'px';
+  }
+  window.addEventListener('resize', () => requestAnimationFrame(placeLogo));
+  document.getElementById('ivLogo').addEventListener('load', placeLogo);
+
+  // Try to start WITH sound; browsers that block it get a muted start, and the first tap anywhere turns sound on.
+  function setSoundUI(on){ sndBtn.textContent = on ? '🔊 Son' : (window.innerWidth < 700 ? '🔇 Son' : '🔇 Touchez pour le son'); sndBtn.classList.toggle('hint', !on); }
+  function playWithSound(){
+    if (!vm) return;
+    vm.setMuted(false).then(() => vm.setVolume(1)).then(() => vm.play()).then(() => {
+      // some browsers "accept" then pause right away — double-check
+      setTimeout(() => vm.getPaused().then(p => { if (p) fallbackMuted(); else setSoundUI(true); }).catch(()=>{}), 700);
+    }).catch(fallbackMuted);
+  }
+  function fallbackMuted(){
+    vm.setMuted(true).then(() => vm.play()).catch(() => intro.classList.add('needtap'));
+    setSoundUI(false);
+    const unmute = () => {
+      document.removeEventListener('pointerdown', unmute, true);
+      if (!intro.classList.contains('on') || ended) return;
+      vm.setMuted(false).then(() => vm.setVolume(1)).then(() => setSoundUI(true)).catch(()=>{});
+    };
+    document.addEventListener('pointerdown', unmute, true);
+  }
+
+  function endIntro(){
+    if (ended) return; ended = true;
+    clearInterval(ytTimer);
+    intro.classList.add('out');
+    document.body.classList.add('reveal');
+    const bk = document.getElementById('book'); if (bk) { bk.style.animation = 'none'; bk.offsetHeight; bk.style.animation = ''; }
+    const canReplay = !!(vm && videoOK);
+    setTimeout(() => {
+      try { vid.pause(); } catch(e){} try { yt && yt.stopVideo(); } catch(e){}
+      if (canReplay) {                       // keep the Vimeo player so the video can be watched again
+        try { vm.pause(); } catch(e){} try { amb && amb.pause(); } catch(e){}
+        intro.classList.remove('on','out','needtap');
+        document.getElementById('rwBtn').style.display = '';
+      } else {
+        try { vm && vm.unload(); } catch(e){} try { amb && amb.unload(); } catch(e){} intro.remove();
+      }
+    }, 850);
+  }
+  function playIntro(){
+    intro.classList.add('on'); placeLogo();
+    if (VIMEO_ID || (VIDEO_FILE && vm)) {
+      if (!vm || !videoOK) return endIntro();
+      let started = false;
+      const onStart = () => {
+        if (started) return; started = true; intro.classList.remove('needtap');
+        if (amb) amb.play().catch(()=>{});
+        // ask for the best quality once playing (works on plans that allow it; otherwise Vimeo auto-adjusts)
+        vm.getQualities().then(qs => { const best = ['2160p','1440p','1080p'].find(q => qs.some(x => x.id === q)); if (best) return vm.setQuality(best); }).catch(()=>{});
+      };
+      vm.on('playing', onStart); vm.on('play', onStart);
+      vm.on('ended', endIntro);
+      let lastSync = 0;
+      vm.on('timeupdate', d => {
+        if (!d || !d.duration) return;
+        bar2.style.width = (d.percent * 100) + '%'; if (d.seconds > 0.2) onStart();
+        if (amb && Date.now() - lastSync > 2000) { lastSync = Date.now();
+          amb.getCurrentTime().then(t => { if (Math.abs(t - d.seconds) > 0.6) amb.setCurrentTime(d.seconds).catch(()=>{}); }).catch(()=>{}); }
+      });
+      vm.on('pause', () => { if (amb) amb.pause().catch(()=>{}); });
+      playWithSound();
+      // autoplay blocked (e.g. iPhone Low Power Mode): let the viewer start it with Vimeo's own control (no extra button)
+      setTimeout(() => { if (!started) intro.classList.add('needtap'); }, 2500);
+      return;
+    }
+    if (YT_ID) {
+      if (!ytReady || !window.YT || !YT.Player) return endIntro();
+      let started = false;
+      yt = new YT.Player('ytPlayer', {
+        videoId: YT_ID,
+        playerVars: { autoplay: 1, mute: 1, controls: 0, playsinline: 1, rel: 0, modestbranding: 1, iv_load_policy: 3, disablekb: 1, fs: 0, vq: 'hd1080' },
+        events: {
+          onReady: e => { e.target.mute(); try { e.target.setPlaybackQuality('hd1080'); } catch(_){} e.target.playVideo(); },
+          onStateChange: e => {
+            if (e.data === YT.PlayerState.PLAYING) started = true;
+            if (e.data === YT.PlayerState.ENDED) endIntro();
+          },
+          onError: () => endIntro()
+        }
+      });
+      setTimeout(() => { if (!started) endIntro(); }, 9000);   // never get stuck
+      ytTimer = setInterval(() => {
+        try { const d = yt.getDuration(), t = yt.getCurrentTime(); if (d) bar2.style.width = (t / d * 100) + '%';
+              if (d && t >= d - 0.3) endIntro(); } catch(_){}
+      }, 250);
+      return;
+    }
+    vid.muted = true;
+    const p = vid.play(); if (p && p.catch) p.catch(() => endIntro());
+    vid.addEventListener('ended', endIntro);
+    vid.addEventListener('timeupdate', () => { if (vid.duration) bar2.style.width = (vid.currentTime / vid.duration * 100) + '%'; });
+  }
+  document.getElementById('ivSkip').onclick = endIntro;
+  // Re-watch: show the loader again (logo, falling fruit, 0 → 100%), then the video — same as the first visit
+  document.getElementById('rwBtn').onclick = () => {
+    if (!vm) return;
+    const ld = document.getElementById('loader'), lbar = document.getElementById('lgBar'), lpct = document.getElementById('lgPct');
+    // reset loader visuals and restart its CSS animations
+    lbar.style.width = '0%'; lpct.textContent = '0%';
+    ld.classList.remove('done'); ld.style.display = 'none'; ld.offsetHeight; ld.style.display = '';
+    // get the video ready underneath
+    ended = false;
+    intro.classList.remove('out','needtap'); intro.classList.add('on'); placeLogo();
+    bar2.style.width = '0%';
+    vm.setCurrentTime(0).catch(()=>{});
+    if (amb) amb.setCurrentTime(0).catch(()=>{});
+    const t0r = performance.now(), DUR = 2600;
+    (function step(now){
+      const k = Math.min(1, (now - t0r) / DUR), v = (1 - Math.pow(1 - k, 2)) * 100;
+      lbar.style.width = v + '%'; lpct.textContent = Math.floor(v) + '%';
+      if (k < 1) return requestAnimationFrame(step);
+      lpct.textContent = '100%';
+      setTimeout(() => {
+        ld.classList.add('done');
+        playWithSound();
+        if (amb) amb.play().catch(()=>{});
+        setTimeout(() => { ld.style.display = 'none'; }, 1300);
+      }, 300);
+    })(t0r);
+  };
+
+  sndBtn.onclick = () => {
+    let muted;
+    if (vm) {
+      vm.getMuted().then(m => { const nm = !m; vm.setMuted(nm); if (!nm) { vm.setVolume(1); vm.play().catch(()=>{}); }
+        setSoundUI(!nm); }).catch(()=>{});
+      return;
+    }
+    if (yt && yt.isMuted) { if (yt.isMuted()) { yt.unMute(); yt.setVolume(100); muted = false; } else { yt.mute(); muted = true; } }
+    else { vid.muted = !vid.muted; if (!vid.muted) { vid.volume = 1; vid.play().catch(()=>{}); } muted = vid.muted; }
+    sndBtn.textContent = muted ? '🔇 Son' : '🔊 Son';
+  };
+
+  // progress: real loading, shown as a smooth 0 → 100 count
+  const PRE = 6, t0 = Date.now(), MIN = 3000, MAX = 12000;
+  let loaded = 0, shown = 0, finished = false;
+  const bar = document.getElementById('lgBar'), pct = document.getElementById('lgPct');
+  function tick(){
+    const real = finished ? 1 : (loaded / PRE) * (videoSettled ? 1 : 0.9);
+    const timeCap = Math.min(1, (Date.now() - t0) / MIN);        // never faster than MIN
+    const target = Math.min(real, timeCap) * 100;
+    shown += Math.max(0, target - shown) * 0.12 + (shown < target ? 0.25 : 0);
+    if (shown > target) shown = target;
+    bar.style.width = shown + '%'; pct.textContent = Math.floor(shown) + '%';
+    if (shown >= 99.9 && real >= 1) { pct.textContent = '100%'; return reveal(); }
+    requestAnimationFrame(tick);
+  }
+  let revealed = false;
+  function reveal(){
+    if (revealed) return; revealed = true;
+    setTimeout(() => {
+      build();
+      if (videoOK) { playIntro(); }
+      else { intro.classList.remove('on'); document.body.classList.add('reveal'); }
+      document.getElementById('loader').classList.add('done');
+      setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 1300);
+    }, 300);
+  }
+  for (let i = 1; i <= PRE; i++) {
+    const im = new Image();
+    im.onload = im.onerror = () => { loaded++; };
+    im.src = src(i);
+  }
+  setTimeout(() => { finished = true; }, MAX);
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
