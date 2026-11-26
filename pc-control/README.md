@@ -7,8 +7,10 @@ browser on the same Wi-Fi.
 |---|---|
 | **System** | Live CPU, memory, disk, network speed, battery, uptime |
 | **Power** | Lock, sleep, sign out, restart, shut down, cancel a pending shutdown |
-| **Screen** | One screenshot, or a live view refreshed about once a second |
-| **Camera** | Live webcam view. The camera is only on while you're watching. |
+| **Screens** | Watch one screen or all of them side by side, live or as a screenshot |
+| **Cameras** | Every plugged-in camera, each with its own live view. A camera is only on while you're watching it. |
+| **Microphone** | Listen live to any microphone on the PC (about half a second behind) |
+| **Devices** | What's plugged in: screens, cameras, mics and speakers, keyboards and mice, controllers, drives, phones, printers, USB |
 | **Processes** | See what's using memory and end a program |
 | **Wake-on-LAN** | Turn on *another* PC on the network |
 
@@ -44,6 +46,13 @@ Open that address on your phone (same Wi-Fi) and sign in.
   *Run as administrator*.
 - Start it automatically: press `Win + R`, type `shell:startup`, and put a
   shortcut to `start-windows.bat` in that folder.
+
+### Hear the PC's own sound
+The microphone panel plays microphones only. To hear what the PC itself is
+playing, on Windows enable **Stereo Mix**: Sound settings → *More sound
+settings* → *Recording* tab → right-click → *Show disabled devices* → enable
+*Stereo Mix*. It then appears in the microphone list. Not every sound card
+has it.
 
 ## "Start my PC" — how turning it on works
 

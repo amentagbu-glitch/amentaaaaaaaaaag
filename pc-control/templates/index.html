@@ -46,10 +46,29 @@
   th { color:var(--muted); font-weight:500; }
   td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
   .table-wrap { max-height:380px; overflow:auto; }
+  .table-wrap table { table-layout:fixed; }
+  .table-wrap td:first-child { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   input { padding:10px 12px; border-radius:10px; border:1px solid var(--line); background:#0e1116;
           color:var(--text); font-size:14px; width:100%; }
   .row-flex { display:flex; gap:8px; margin-top:10px; }
   .muted { color:var(--muted); font-size:13px; }
+  .tabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+  .tabs button.on { border-color:var(--accent); background:#20304d; }
+  .view.screen { aspect-ratio:auto; min-height:200px; max-height:75vh; }
+  .view.screen img { height:auto; max-height:75vh; }
+  .cams { display:grid; gap:14px; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); margin-bottom:6px; }
+  .cams .view { margin:8px 0; }
+  .cam-head { display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:14px; }
+  .cam-head b { font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  select { width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--line); background:#0e1116;
+           color:var(--text); font-size:14px; }
+  .vol { display:flex; align-items:center; gap:8px; flex:1; }
+  .vol input { flex:1; padding:0; }
+  .devices { columns:260px; column-gap:24px; }
+  .devices details { border-bottom:1px solid var(--line); padding:8px 0; break-inside:avoid; }
+  .devices summary { cursor:pointer; font-weight:500; }
+  .devices ul { margin:8px 0 0; padding-left:22px; color:var(--muted); font-size:14px; }
+  .devices li { padding:2px 0; overflow-wrap:anywhere; }
   #toast { position:fixed; left:50%; bottom:20px; transform:translateX(-50%); background:#2a303b;
            padding:10px 16px; border-radius:10px; opacity:0; transition:opacity .3s; pointer-events:none;
            max-width:calc(100% - 32px); }
@@ -96,21 +115,35 @@
   </section>
 
   <section class="card">
-    <h2>Screen <span id="screen-live" class="live" hidden>live</span></h2>
-    <div class="view" id="screen-view">Off</div>
+    <h2>Microphone <span id="mic-live" class="live" hidden>live</span></h2>
+    <select id="mic-select"><option>Loading…</option></select>
+    <div class="bar" style="margin-top:12px"><i id="mic-level"></i></div>
+    <div class="row-flex">
+      <button class="small" id="mic-btn">🎧 Listen</button>
+      <label class="muted vol">Volume <input type="range" id="mic-vol" min="0" max="4" step="0.1" value="1.5"></label>
+    </div>
+    <p class="muted">Plays what the PC's microphone hears, about half a second behind. Use headphones if you're near the PC, or it will echo.</p>
+  </section>
+
+  <section class="card wide">
+    <h2>Screens <span id="screen-live" class="live" hidden>live</span></h2>
+    <div class="tabs" id="screen-tabs"></div>
+    <div class="view screen" id="screen-view">Off</div>
     <div class="row-flex">
       <button class="small" id="screen-btn">▶ Start live screen</button>
       <button class="small" id="shot-btn">📸 One screenshot</button>
     </div>
   </section>
 
-  <section class="card">
-    <h2>Camera <span id="cam-live" class="live" hidden>live</span></h2>
-    <div class="view" id="cam-view">Off</div>
-    <div class="row-flex">
-      <button class="small" id="cam-btn">▶ Turn on camera</button>
-    </div>
-    <p class="muted">The webcam is only used while this view is on. It turns off when you stop it or close the page.</p>
+  <section class="card wide">
+    <h2>Cameras <button class="small" id="cam-scan">↻ Find cameras</button></h2>
+    <div class="cams" id="cams"><p class="muted">Looking for cameras…</p></div>
+    <p class="muted">A camera is only on while its view is on. It turns off when you stop it or close the page.</p>
+  </section>
+
+  <section class="card wide">
+    <h2>Plugged-in devices <button class="small" id="dev-refresh">↻ Refresh</button></h2>
+    <div id="devices" class="devices"><p class="muted">Loading…</p></div>
   </section>
 
   <section class="card wide">
@@ -118,6 +151,7 @@
     <input id="proc-filter" placeholder="Filter by name…">
     <div class="table-wrap" style="margin-top:10px">
       <table>
+        <colgroup><col><col style="width:64px"><col style="width:84px"><col style="width:58px"></colgroup>
         <thead><tr><th>Name</th><th class="num">PID</th><th class="num">Memory</th><th></th></tr></thead>
         <tbody id="procs"></tbody>
       </table>
@@ -172,28 +206,114 @@ async function wake(mac) { const r = await post("/api/wake", { mac }); toast(r.o
 document.querySelectorAll("[data-wake]").forEach(b => b.onclick = () => wake(b.dataset.wake));
 $("wake-btn").onclick = () => wake($("mac").value.trim());
 
-// --- screen
-let screenTimer = null;
+// --- screens
+let screenTimer = null, screenN = 0;
 function showImg(view, src) { let img = view.querySelector("img"); if (!img) { view.textContent=""; img=document.createElement("img"); view.appendChild(img); } img.src = src; return img; }
+const screenUrl = () => "/screen/"+screenN+".jpg?t="+Date.now();
 const screenFail = () => { $("screen-view").innerHTML = "Can't capture the screen right now (screen locked or no display)."; };
-$("shot-btn").onclick = () => { showImg($("screen-view"), "/screen.jpg?t="+Date.now()).onerror = screenFail; };
+async function loadScreens() {
+  const list = await (await fetch("/api/screens")).json();
+  const tabs = $("screen-tabs"); tabs.innerHTML = "";
+  const opts = list.length > 1 ? [[0, "All screens"], ...list.map(m => [m.index, "Screen "+m.index])] : [[0, "Screen"]];
+  if (list.length <= 1) { tabs.hidden = true; return; }
+  opts.forEach(([n, label]) => {
+    const b = document.createElement("button"); b.className = "small" + (n === screenN ? " on" : ""); b.textContent = label;
+    b.onclick = () => { screenN = n; tabs.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); if (!screenTimer) $("shot-btn").onclick(); };
+    tabs.appendChild(b);
+  });
+}
+loadScreens();
+$("shot-btn").onclick = () => { showImg($("screen-view"), screenUrl()).onerror = screenFail; };
 $("screen-btn").onclick = () => {
   if (screenTimer) { clearTimeout(screenTimer); screenTimer=null; $("screen-live").hidden=true; $("screen-btn").textContent="▶ Start live screen"; return; }
   $("screen-live").hidden=false; $("screen-btn").textContent="■ Stop live screen";
-  const loop = () => { const img = showImg($("screen-view"), "/screen.jpg?t="+Date.now()); img.onload = () => { if (screenTimer) screenTimer = setTimeout(loop, 700); };
+  const loop = () => { const img = showImg($("screen-view"), screenUrl()); img.onload = () => { if (screenTimer) screenTimer = setTimeout(loop, 500); };
     img.onerror = () => { screenFail(); if (screenTimer) screenTimer = setTimeout(loop, 3000); }; };
   screenTimer = setTimeout(loop, 0);
 };
 
-// --- camera
-let camOn = false;
-$("cam-btn").onclick = () => {
-  const v = $("cam-view");
-  if (camOn) { v.innerHTML = "Off"; camOn=false; $("cam-live").hidden=true; $("cam-btn").textContent="▶ Turn on camera"; return; }
-  camOn = true; $("cam-live").hidden=false; $("cam-btn").textContent="■ Turn off camera";
-  const img = showImg(v, "/camera.mjpg?t="+Date.now());
-  img.onerror = () => { v.innerHTML = "Camera not available (no webcam, or already open in another tab)."; camOn=false; $("cam-live").hidden=true; $("cam-btn").textContent="▶ Turn on camera"; };
+// --- cameras
+async function loadCameras(rescan) {
+  $("cams").innerHTML = '<p class="muted">Looking for cameras…</p>';
+  const list = await (await fetch("/api/cameras" + (rescan ? "?rescan=1" : ""))).json();
+  $("cams").innerHTML = list.length ? "" : '<p class="muted">No camera found. Plug one in and press “Find cameras”.</p>';
+  list.forEach(c => {
+    const tile = document.createElement("div");
+    tile.innerHTML = `<div class="cam-head"><b></b><span class="live" hidden>live</span></div><div class="view">Off</div><button class="small">▶ Turn on</button>`;
+    tile.querySelector("b").textContent = c.name;
+    const v = tile.querySelector(".view"), btn = tile.querySelector("button"), live = tile.querySelector(".live");
+    let on = false;
+    const stop = (msg) => { v.innerHTML = msg || "Off"; on = false; live.hidden = true; btn.textContent = "▶ Turn on"; };
+    btn.onclick = () => {
+      if (on) return stop();
+      on = true; live.hidden = false; btn.textContent = "■ Turn off";
+      showImg(v, "/camera/"+c.index+".mjpg?t="+Date.now()).onerror = () => stop("Can't open this camera (unplugged, or used by another app or tab).");
+    };
+    $("cams").appendChild(tile);
+  });
+}
+loadCameras(false);
+$("cam-scan").onclick = () => loadCameras(true);
+
+// --- microphone
+let mic = null; // { ctx, abort }
+async function loadMics() {
+  const r = await (await fetch("/api/microphones")).json();
+  const sel = $("mic-select"); sel.innerHTML = "";
+  if (!r.mics.length) { sel.innerHTML = "<option>No microphone found</option>"; $("mic-btn").disabled = true; return; }
+  r.mics.forEach(m => { const o = document.createElement("option"); o.value = m.index; o.textContent = m.name; o.selected = m.default; sel.appendChild(o); });
+}
+loadMics();
+function stopMic() { if (!mic) return; mic.abort.abort(); mic.ctx.close(); mic = null; $("mic-live").hidden = true; $("mic-btn").textContent = "🎧 Listen"; $("mic-level").style.width = "0"; }
+$("mic-vol").oninput = () => { if (mic) mic.gain.gain.value = $("mic-vol").value; };
+$("mic-select").onchange = () => { if (mic) { stopMic(); $("mic-btn").onclick(); } };
+$("mic-btn").onclick = async () => {
+  if (mic) return stopMic();
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const gain = ctx.createGain(); gain.gain.value = $("mic-vol").value; gain.connect(ctx.destination);
+  const abort = new AbortController();
+  mic = { ctx, abort, gain };
+  $("mic-live").hidden = false; $("mic-btn").textContent = "■ Stop";
+  try {
+    const res = await fetch("/mic.pcm?device="+$("mic-select").value, { signal: abort.signal });
+    if (!res.ok) throw new Error("mic");
+    const rate = +res.headers.get("X-Sample-Rate") || 24000;
+    const reader = res.body.getReader();
+    let t = 0, rest = new Uint8Array(0);
+    for (;;) {
+      const { value, done } = await reader.read(); if (done) break;
+      const bytes = new Uint8Array(rest.length + value.length); bytes.set(rest); bytes.set(value, rest.length);
+      const n = bytes.length >> 1; rest = bytes.slice(n * 2);
+      if (!n) continue;
+      const pcm = new Int16Array(bytes.buffer, 0, n), buf = ctx.createBuffer(1, n, rate), ch = buf.getChannelData(0);
+      let sum = 0; for (let i = 0; i < n; i++) { ch[i] = pcm[i] / 32768; sum += ch[i] * ch[i]; }
+      const lvl = Math.min(100, Math.sqrt(sum / n) * 400); $("mic-level").style.width = lvl + "%"; $("mic-level").style.background = "var(--good)";
+      const now = ctx.currentTime;
+      if (t < now + 0.05 || t > now + 1.0) t = now + 0.3; // start, or catch up if we fell behind
+      const src = ctx.createBufferSource(); src.buffer = buf; src.connect(gain); src.start(t); t += buf.duration;
+    }
+  } catch (e) {
+    if (mic && !abort.signal.aborted) toast("Can't open that microphone.");
+  }
+  if (mic && mic.abort === abort) stopMic();
 };
+
+// --- devices
+const devIcons = { "Screens":"🖥️", "Cameras":"📷", "Microphones & speakers":"🎙️", "Microphones":"🎙️", "Speakers & headphones":"🔊", "Keyboards & mice":"⌨️", "Controllers":"🎮", "Drives":"💾", "Phones & portable devices":"📱", "Bluetooth":"🔵", "Printers":"🖨️", "USB":"🔌" };
+async function loadDevices() {
+  $("devices").innerHTML = '<p class="muted">Loading…</p>';
+  const groups = await (await fetch("/api/devices")).json();
+  $("devices").innerHTML = groups.length ? "" : '<p class="muted">Nothing found.</p>';
+  groups.forEach(g => {
+    const d = document.createElement("details"); d.open = ["Screens","Cameras","Microphones & speakers","Microphones","Drives","Keyboards & mice","Controllers","Phones & portable devices"].includes(g.group);
+    d.innerHTML = "<summary></summary><ul></ul>";
+    d.querySelector("summary").textContent = (devIcons[g.group] || "•") + " " + g.group + " (" + g.items.length + ")";
+    g.items.forEach(name => { const li = document.createElement("li"); li.textContent = name; d.querySelector("ul").appendChild(li); });
+    $("devices").appendChild(d);
+  });
+}
+loadDevices();
+$("dev-refresh").onclick = loadDevices;
 
 // --- processes
 let procs = [];

@@ -228,21 +228,40 @@ def wake():
         return jsonify(ok=False, error=str(e)), 400
 
 
-# ------------------------------------------------------- screen + camera ---
-@app.route("/screen.jpg")
+# ---------------------------------------------------------------- screens ---
+@app.route("/api/screens")
 @login_required
-def screenshot():
+def screens():
+    import mss
+    try:
+        with mss.mss() as sct:
+            mons = sct.monitors[1:]
+    except Exception:  # noqa: BLE001 - no display
+        mons = []
+    return jsonify([{"index": i + 1, "width": m["width"], "height": m["height"]}
+                    for i, m in enumerate(mons)])
+
+
+@app.route("/screen.jpg")
+@app.route("/screen/<int:n>.jpg")
+@login_required
+def screenshot(n=0):
+    """n = 0: all screens side by side, n = 1, 2...: one screen."""
     import cv2
     import mss
     import numpy as np
 
     try:
         with mss.mss() as sct:
-            img = np.array(sct.grab(sct.monitors[0]))[:, :, :3]  # BGRA -> BGR
+            mon = sct.monitors[n]
+            img = np.array(sct.grab(mon))[:, :, :3]  # BGRA -> BGR
+    except IndexError:
+        abort(404)
     except Exception:  # noqa: BLE001 - no display, locked screen, etc.
         abort(503)
     h, w = img.shape[:2]
-    scale = min(1.0, 1600 / max(h, w))
+    limit = 2400 if n == 0 else 1600
+    scale = min(1.0, limit / max(h, w))
     if scale < 1:
         img = cv2.resize(img, (int(w * scale), int(h * scale)), interpolation=cv2.INTER_AREA)
     _, jpg = cv2.imencode(".jpg", img, [cv2.IMWRITE_JPEG_QUALITY, 70])
@@ -250,22 +269,74 @@ def screenshot():
                     headers={"Cache-Control": "no-store"})
 
 
-_camera_lock = threading.Lock()
+# ---------------------------------------------------------------- cameras ---
+_camera_locks = {}
+_camera_list = None  # cached result of the last scan
+
+
+def _open_camera(index):
+    import cv2
+    if SYSTEM == "Windows":  # DirectShow opens much faster than the default on Windows
+        return cv2.VideoCapture(index, cv2.CAP_DSHOW)
+    return cv2.VideoCapture(index)
+
+
+def _camera_names():
+    """Best-effort friendly names of the webcams Windows knows about."""
+    if SYSTEM != "Windows":
+        return []
+    out = _powershell("Get-PnpDevice -PresentOnly -Class Camera,Image | "
+                      "Where-Object Status -eq OK | Select-Object -ExpandProperty FriendlyName")
+    return [line.strip() for line in out.splitlines() if line.strip()]
+
+
+@app.route("/api/cameras")
+@login_required
+def cameras():
+    """Finds the cameras by trying to open each one. Lights may blink briefly."""
+    global _camera_list
+    if _camera_list is not None and request.args.get("rescan") != "1":
+        return jsonify(_camera_list)
+    found = []
+    misses = 0
+    for i in range(10):
+        if _camera_locks.get(i) and _camera_locks[i].locked():
+            found.append(i)  # in use by the dashboard right now, so it exists
+            continue
+        cap = _open_camera(i)
+        ok = cap.isOpened() and cap.read()[0]
+        cap.release()
+        if ok:
+            found.append(i)
+            misses = 0
+        else:
+            misses += 1
+            if misses >= 2:
+                break
+    names = _camera_names()
+    _camera_list = [{"index": i,
+                     "name": names[k] if len(names) == len(found) else f"Camera {k + 1}"}
+                    for k, i in enumerate(found)]
+    return jsonify(_camera_list)
 
 
 @app.route("/camera.mjpg")
+@app.route("/camera/<int:index>.mjpg")
 @login_required
-def camera():
+def camera(index=None):
     import cv2
 
-    if not _camera_lock.acquire(blocking=False):
-        abort(409)  # someone is already watching
+    if index is None:
+        index = CFG.get("camera_index", 0)
+    lock = _camera_locks.setdefault(index, threading.Lock())
+    if not lock.acquire(blocking=False):
+        abort(409)  # already open in another tab
 
-    cap = cv2.VideoCapture(CFG.get("camera_index", 0))
+    cap = _open_camera(index)
     if not cap.isOpened():
         cap.release()
-        _camera_lock.release()
-        abort(503)  # no webcam found
+        lock.release()
+        abort(503)  # no camera with that number
 
     def frames():
         try:
@@ -280,10 +351,182 @@ def camera():
                 time.sleep(0.05)
         finally:
             cap.release()  # camera turns off as soon as you close the view
-            _camera_lock.release()
+            lock.release()
 
     return Response(frames(), mimetype="multipart/x-mixed-replace; boundary=frame",
                     headers={"Cache-Control": "no-store"})
+
+
+# ------------------------------------------------------------- microphone ---
+MIC_RATE = 24000  # mono 16-bit: clear voice, ~48 KB/s (and a rate every browser accepts)
+
+
+@app.route("/api/microphones")
+@login_required
+def microphones():
+    try:
+        import sounddevice as sd
+        default_in = sd.default.device[0]
+        mics = [{"index": i, "name": d["name"], "default": i == default_in}
+                for i, d in enumerate(sd.query_devices()) if d["max_input_channels"] > 0]
+    except Exception as e:  # noqa: BLE001 - no audio system / PortAudio missing
+        return jsonify(error=str(e), mics=[])
+    # Windows lists each mic once per audio API; keep the first of each name.
+    seen, unique = set(), []
+    for m in mics:
+        key = m["name"][:31]
+        if "sound mapper" in key.lower() or "primary sound capture" in key.lower():
+            continue
+        if key not in seen:
+            seen.add(key)
+            unique.append(m)
+    return jsonify(mics=unique)
+
+
+@app.route("/mic.pcm")
+@login_required
+def mic():
+    """Raw 16-bit mono PCM; the page plays it with the Web Audio API."""
+    import queue
+    import sounddevice as sd
+
+    device = request.args.get("device", type=int)
+    chunks = queue.Queue(maxsize=50)
+
+    def callback(indata, frames, time_info, status):  # noqa: ARG001
+        try:
+            chunks.put_nowait(bytes(indata))
+        except queue.Full:
+            pass  # listener is too slow: drop audio rather than lag behind
+
+    try:
+        stream = sd.RawInputStream(samplerate=MIC_RATE, channels=1, dtype="int16",
+                                   device=device, blocksize=MIC_RATE // 10,
+                                   callback=callback)
+        stream.start()
+    except Exception:  # noqa: BLE001
+        abort(503)
+
+    def gen():
+        try:
+            while True:
+                try:
+                    yield chunks.get(timeout=2)
+                except queue.Empty:
+                    yield b"\0\0" * (MIC_RATE // 10)  # keep the connection alive
+        finally:
+            stream.stop()  # mic is released as soon as you stop listening
+            stream.close()
+
+    return Response(gen(), mimetype="application/octet-stream",
+                    headers={"Cache-Control": "no-store", "X-Sample-Rate": str(MIC_RATE)})
+
+
+# ---------------------------------------------------------------- devices ---
+def _powershell(command):
+    try:
+        return subprocess.run(
+            ["powershell", "-NoProfile", "-NonInteractive", "-Command", command],
+            capture_output=True, text=True, timeout=20,
+            creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0)).stdout
+    except Exception:  # noqa: BLE001
+        return ""
+
+
+WIN_CLASSES = {
+    "Camera": "Cameras", "Image": "Cameras", "AudioEndpoint": "Microphones & speakers",
+    "Monitor": "Screens", "Keyboard": "Keyboards & mice", "Mouse": "Keyboards & mice",
+    "DiskDrive": "Drives", "Bluetooth": "Bluetooth", "Printer": "Printers",
+    "WPD": "Phones & portable devices", "USB": "USB", "XboxComposite": "Controllers",
+    "HIDClass": "Other input devices",
+}
+NOISE = ("root hub", "host controller", "generic usb hub", "composite device",
+         "vendor-defined", "system controller", "consumer control", "usb input device",
+         "enumerator", "bluetooth device (rfcomm", "bluetooth le generic",
+         "microsoft bluetooth", "generic pnp monitor", "hid-compliant device")
+
+
+def _list_devices():
+    groups = {}
+
+    def add(group, name):
+        name = (name or "").strip()
+        if name and name not in groups.setdefault(group, []):
+            groups[group].append(name)
+
+    if SYSTEM == "Windows":
+        classes = ",".join(f"'{c}'" for c in WIN_CLASSES)
+        out = _powershell(
+            "Get-PnpDevice -PresentOnly | Where-Object { $_.Status -eq 'OK' -and "
+            f"$_.Class -in @({classes}) }} | ForEach-Object {{ $_.Class + '|' + $_.FriendlyName }}")
+        for line in out.splitlines():
+            cls, _, name = line.partition("|")
+            if name and not any(n in name.lower() for n in NOISE):
+                add(WIN_CLASSES.get(cls.strip(), "Other"), name)
+    elif SYSTEM == "Linux":
+        try:
+            out = subprocess.run(["lsusb"], capture_output=True, text=True, timeout=10).stdout
+            for line in out.splitlines():
+                name = line.split(" ", 6)[-1] if "ID " in line else ""
+                if name and "root hub" not in name.lower():
+                    add("USB", name)
+        except Exception:  # noqa: BLE001
+            pass
+    elif SYSTEM == "Darwin":
+        try:
+            data = json.loads(subprocess.run(
+                ["system_profiler", "SPUSBDataType", "-json"],
+                capture_output=True, text=True, timeout=20).stdout or "{}")
+
+            def walk(items):
+                for it in items or []:
+                    if "_name" in it and "hub" not in it["_name"].lower():
+                        add("USB", it["_name"])
+                    walk(it.get("_items"))
+            walk(data.get("SPUSBDataType"))
+        except Exception:  # noqa: BLE001
+            pass
+
+    # The same on every system: screens, microphones/speakers, drives.
+    try:
+        import mss
+        with mss.mss() as sct:
+            for i, m in enumerate(sct.monitors[1:], 1):
+                add("Screens", f"Screen {i}: {m['width']}×{m['height']}")
+    except Exception:  # noqa: BLE001
+        pass
+    try:
+        import sounddevice as sd
+        # Windows already listed them above with better names.
+        for d in ([] if SYSTEM == "Windows" else sd.query_devices()):
+            if d["max_input_channels"] > 0:
+                add("Microphones", d["name"])
+            if d["max_output_channels"] > 0:
+                add("Speakers & headphones", d["name"])
+    except Exception:  # noqa: BLE001
+        pass
+    for part in psutil.disk_partitions(all=False):
+        try:
+            size = psutil.disk_usage(part.mountpoint).total
+        except Exception:  # noqa: BLE001
+            continue
+        if size < 1e9:
+            continue  # tiny system/recovery partitions
+        kind = "removable" if "removable" in part.opts else part.fstype
+        add("Drives", f"{part.mountpoint}  ({size / 1e9:.0f} GB, {kind})")
+
+    order = ["Screens", "Cameras", "Microphones & speakers", "Microphones",
+             "Speakers & headphones",
+             "Keyboards & mice", "Controllers", "Drives", "Phones & portable devices",
+             "Bluetooth", "Printers", "USB", "Other input devices", "Other"]
+    return [{"group": g, "items": groups[g]}
+            for g in sorted(groups, key=lambda g: order.index(g) if g in order else 99)]
+
+
+@app.route("/api/devices")
+@login_required
+def devices():
+    return jsonify(_list_devices())
 
 
 # ------------------------------------------------------------------ main ---
