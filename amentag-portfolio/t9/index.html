@@ -1,0 +1,543 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portfolio Template T9</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Oussama Amentag — filmmaker, video mapping artist, designer and app developer based in Agadir, Morocco.">
+<meta name="theme-color" content="#fbfaf8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@200;300;400;500&family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE a quiet screening: white, airy, precise, the work does the talking
+   IDEA a private screening in five rooms: stills orbit the name, frames hang on a curved wall, the brief is written inside a 3D screening room
+   PICTURE the hero ring: project stills floating in a slow 3D orbit around the name, a thin orbit line drawn through the page
+   COLOUR warm white #fbfaf8, ink #121212, graphite #3a3a37, mute #6b6b68, hairline #e6e3dd, one coral accent #ef7a52
+   TYPE Onest 200–500 throughout (thin display, regular text); Cairo for Arabic
+   LAYOUT laptop: centred name inside the ring, intro and buttons under it, footer meta in the corners; phone: same, ring smaller */
+:root{--bg:#fbfaf8;--ink:#121212;--gr:#3a3a37;--mute:#6b6b68;--line:#e6e3dd;--acc:#ef7a52;--soft:#f3f1ed;--g:max(5vw,16px)}
+*{box-sizing:border-box;min-width:0}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font:300 16px/1.6 Onest,"Cairo",system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+html[dir=rtl] body{font-family:"Cairo",Onest,system-ui,sans-serif}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+h1,h2,h3{font-weight:200;line-height:1;letter-spacing:-.035em;margin:0}
+h2{font-size:clamp(44px,6.4vw,96px)}
+h3{font-weight:400;font-size:20px;letter-spacing:-.01em}
+p{margin:0 0 1em}
+b,strong{font-weight:500}
+.wrap{max-width:1280px;margin:0 auto}
+.band{padding-block:clamp(72px,10vw,150px);padding-left:max(var(--g),env(safe-area-inset-left,0px));padding-right:max(var(--g),env(safe-area-inset-right,0px))}
+.lbl{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:400}
+.lead{font-size:clamp(17px,1.5vw,19px);color:var(--mute);max-width:52ch}
+.mute{color:var(--mute)}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 24px;border-radius:999px;font:400 15px Onest,sans-serif;text-decoration:none;border:1px solid var(--ink);background:none;color:var(--ink);cursor:pointer;transition:background .3s,color .3s}
+.btn:hover{background:var(--ink);color:var(--bg)}
+.btn.ink{background:var(--ink);color:var(--bg)}
+.btn.ink:hover{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn.ghost{border-color:transparent;padding-inline:6px}
+.btn.ghost:hover{background:none;color:var(--acc)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pills button,.pill{min-height:38px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);font:400 14px Onest,sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.pills button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.1em;margin-bottom:-.1em}
+.wi{display:inline-block}
+/* header */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:40}
+header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:30;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;height:64px;padding-left:max(var(--g),env(safe-area-inset-left,0px));padding-right:max(var(--g),env(safe-area-inset-right,0px));max-width:1380px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:400;font-size:15px;white-space:nowrap}
+.brand svg{width:26px;height:26px}
+nav.main{display:flex;gap:26px}
+nav.main a{text-decoration:none;font-size:14.5px;font-weight:400;padding:6px 0;border-bottom:1px solid transparent}
+nav.main a:hover{color:var(--acc)}
+nav.main a[aria-current=page]{border-color:var(--ink)}
+.tools{display:flex;gap:14px;justify-content:flex-end;align-items:center}
+.langs{display:flex;gap:10px;font-size:13px}
+.langs button{border:0;background:none;padding:4px 0;cursor:pointer;color:var(--mute);font:400 13px Onest,sans-serif;border-bottom:1px solid transparent}
+.langs button[aria-pressed=true]{color:var(--ink);border-color:var(--ink)}
+#menu{display:none;border:1px solid var(--line);background:#fff;border-radius:999px;height:38px;padding:0 16px;font:400 14px Onest,sans-serif;cursor:pointer}
+@media(max-width:900px){.bar{grid-template-columns:1fr auto}nav.main{position:fixed;left:0;right:0;top:calc(64px + env(safe-area-inset-top,0px));flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--line);padding:8px var(--g) 24px;display:none}nav.main.open{display:flex}nav.main a{font-size:30px;font-weight:200;padding:10px 0;border:0}#menu{display:block}}
+/* hero: 3D ring of stills */
+.hero{position:relative;min-height:100svh;display:grid;place-items:center;overflow:hidden;padding:calc(84px + env(safe-area-inset-top,0px)) var(--g) 90px}
+.orbit{position:absolute;inset:0;pointer-events:none;z-index:0}
+.orbit path{fill:none;stroke:var(--ink);stroke-width:1;opacity:.55}
+.orbit circle{fill:var(--bg);stroke:var(--ink)}
+.stage{position:relative;width:min(1100px,100%);height:min(78svh,720px);perspective:1500px;perspective-origin:50% 50%}
+@media(max-width:700px){.ringy{--ys:.8;--ks:.62}}
+.scene{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(-9deg)}
+.ringy{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;animation:orbit 70s linear infinite}
+@keyframes orbit{to{transform:rotateY(-360deg)}}
+.st{position:absolute;left:0;top:0;width:calc(var(--w,120px)*var(--ks,1));margin-left:calc(var(--w,120px)*var(--ks,1)/-2);transform-style:preserve-3d;backface-visibility:visible}
+.st img{width:100%;aspect-ratio:var(--ar,4/3);object-fit:cover;box-shadow:0 12px 24px -10px rgba(0,0,0,.35);background:#ddd}
+.title3d{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) translateZ(calc(var(--R,400px) + 60px)) scale(var(--tz,.9));text-align:center;width:min(720px,92%)}
+.title3d::before{content:"";position:absolute;inset:-18% -14%;background:radial-gradient(closest-side,var(--bg) 55%,color-mix(in srgb,var(--bg) 70%,transparent) 78%,transparent);z-index:-1;pointer-events:none}
+.title3d h1{font-size:clamp(52px,8.6vw,132px);text-transform:uppercase;letter-spacing:-.045em;line-height:.9}
+.title3d p{margin:22px auto 0;max-width:36ch;color:var(--gr);font-size:clamp(15px,1.3vw,17px)}
+.title3d .ctas{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.hmeta{position:absolute;left:0;right:0;bottom:22px;display:flex;justify-content:space-between;gap:16px;padding-inline:var(--g);z-index:2}
+@media(max-width:700px){.stage{height:72svh;perspective:900px}.title3d h1{font-size:13.5vw}.hmeta span:last-child{display:none}}
+/* section scaffolding */
+.sec-h{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px 48px;align-items:end;margin-bottom:clamp(36px,5vw,64px)}
+.sec-h .lbl{grid-column:1/-1}
+.sec-h p{margin:0;justify-self:end;max-width:44ch;color:var(--mute)}
+@media(max-width:800px){.sec-h{grid-template-columns:minmax(0,1fr)}.sec-h p{justify-self:start}}
+/* curved wall of frames */
+.wallw{position:relative;margin-inline:calc(-1*var(--g));perspective:1300px;overflow:hidden}
+.wall{display:flex;gap:28px;overflow-x:auto;scroll-snap-type:x proximity;padding:40px max(var(--g),calc(50vw - 160px)) 46px;scrollbar-width:none;transform-style:preserve-3d;cursor:grab;align-items:flex-end}
+.wall::-webkit-scrollbar{display:none}
+.wall.down{cursor:grabbing;scroll-snap-type:none}
+.fr{flex:none;width:clamp(200px,22vw,300px);scroll-snap-align:center;text-decoration:none;transform-style:preserve-3d;will-change:transform;user-select:none}
+.fr:nth-child(3n+2){width:clamp(170px,17vw,240px)}
+.fr .im{background:#e9e6e0;box-shadow:0 22px 40px -22px rgba(0,0,0,.45)}
+.fr img{width:100%;aspect-ratio:var(--ar,4/5);object-fit:cover;pointer-events:none}
+.fr .cap{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin-top:12px;color:var(--mute)}
+.fr .cap b{color:var(--ink);font-weight:400}
+.dot{display:inline-flex;align-items:center;gap:6px}
+.dot::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--c,var(--acc))}
+.wallnav{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:8px}
+.wallnav button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:16px}
+/* process */
+.proc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px clamp(40px,7vw,120px);align-items:start}
+@media(max-width:860px){.proc{grid-template-columns:minmax(0,1fr)}}
+.proc h2{font-size:clamp(40px,5.2vw,76px)}
+.steps{list-style:none;margin:0;padding:0;position:relative;display:grid;gap:14px}
+.steps::before{content:"";position:absolute;inset-inline-start:7px;top:18px;bottom:18px;width:1px;background:var(--line)}
+.steps li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:16px;align-items:start}
+.steps li::before{content:"";width:15px;height:15px;border-radius:50%;border:1px solid var(--ink);background:var(--bg);margin-top:20px;position:relative;z-index:1}
+.steps li.on::before{background:var(--acc);border-color:var(--acc)}
+.steps .box{border:1px solid var(--line);background:#fff;border-radius:6px;padding:16px 18px}
+.steps .box b{display:block;font-size:17px}
+.steps .box p{margin:4px 0 0;color:var(--mute);font-size:14.5px}
+/* disciplines line list */
+.disc{border-top:1px solid var(--line)}
+.disc div{display:grid;grid-template-columns:64px minmax(0,1fr) minmax(0,1.1fr);gap:16px 32px;align-items:baseline;padding:22px 0;border-bottom:1px solid var(--line)}
+.disc .n{color:var(--mute);font-size:13px}
+.disc h3{font-weight:200;font-size:clamp(28px,3.2vw,46px);letter-spacing:-.03em}
+.disc p{margin:0;color:var(--mute)}
+@media(max-width:760px){.disc div{grid-template-columns:40px minmax(0,1fr)}.disc p{grid-column:2}}
+/* about */
+.aboutb{background:var(--soft)}
+.about{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:40px clamp(40px,7vw,120px);align-items:center}
+@media(max-width:860px){.about{grid-template-columns:minmax(0,1fr)}}
+.about .big{font-size:clamp(26px,2.8vw,40px);font-weight:200;letter-spacing:-.025em;line-height:1.15;margin:20px 0 24px}
+.portrait{position:relative;aspect-ratio:4/5;overflow:hidden;background:#111}
+.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
+.portrait img.on{opacity:1}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 24px;margin-top:28px;font-size:15px}
+.facts small{display:block;color:var(--mute);font-size:12.5px}
+/* quotes + logos */
+.qs{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end;border-top:1px solid var(--line);padding-top:clamp(28px,4vw,48px)}
+.qs blockquote{margin:0;font-weight:200;font-size:clamp(26px,3.2vw,46px);line-height:1.15;letter-spacing:-.025em;max-width:30ch;min-height:4.6em}
+.qs .who{margin-top:20px;color:var(--mute)}
+.qs .who b{color:var(--ink)}
+.qn{display:flex;align-items:center;gap:12px;color:var(--mute);font-variant-numeric:tabular-nums}
+.qn button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer}
+@media(max-width:700px){.qs{grid-template-columns:minmax(0,1fr)}.qs blockquote{min-height:0}}
+.logos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.logo{height:96px;display:grid;place-items:center;padding:14px 18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}
+.logo img{max-height:50px;width:auto;max-width:118px;object-fit:contain;filter:grayscale(1);opacity:.6;transition:filter .3s,opacity .3s}
+.logo img.k{filter:brightness(0);opacity:.55}
+.logo:hover img{filter:none;opacity:1}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(10em,1fr));gap:24px;margin-top:clamp(48px,6vw,80px)}
+.stats b{display:block;font-weight:200;font-size:clamp(56px,6vw,92px);letter-spacing:-.05em;line-height:1}
+.stats span{color:var(--mute);font-size:14px}
+/* 3D screening room */
+.roomw{position:relative;height:min(88svh,820px);overflow:hidden;background:#e9e7e3;perspective:900px;perspective-origin:50% 48%}
+.room{position:absolute;inset:0;transform-style:preserve-3d}
+.room .face{position:absolute;left:50%;top:50%;backface-visibility:hidden}
+.room .back{width:1000px;height:640px;margin:-320px 0 0 -500px;transform:translateZ(-1400px);background:#f6f5f2}
+.room .left,.room .right{width:1400px;height:640px;margin:-320px 0 0 -700px;background:linear-gradient(90deg,#e9e7e2,#fbfaf8)}
+.room .left{transform:translate3d(-500px,0,-700px) rotateY(90deg)}
+.room .right{transform:translate3d(500px,0,-700px) rotateY(-90deg);background:linear-gradient(-90deg,#e9e7e2,#fbfaf8)}
+.room .floor,.room .ceil{width:1000px;height:1400px;margin:-700px 0 0 -500px}
+.room .floor{transform:translate3d(0,320px,-700px) rotateX(90deg);background:linear-gradient(0deg,#efede9,#d6d3cc)}
+.room .ceil{transform:translate3d(0,-320px,-700px) rotateX(-90deg);background:#f6f5f2}
+.room .art{position:absolute;box-shadow:0 10px 22px -8px rgba(0,0,0,.4);object-fit:cover}
+.room .light{position:absolute;left:50%;top:50%;width:1000px;height:640px;margin:-320px 0 0 -500px;transform:translateZ(-1400px);pointer-events:none}
+.formcard{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(460px,92%);background:rgba(251,250,248,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.8);padding:clamp(20px,3vw,30px);box-shadow:0 30px 60px -30px rgba(0,0,0,.35);z-index:2}
+.formcard h3{font-weight:300;font-size:clamp(26px,2.6vw,32px);letter-spacing:-.025em;margin:6px 0 4px}
+form{display:grid;gap:12px;margin-top:16px}
+.r2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+label{display:grid;gap:5px;font-size:12.5px;color:var(--gr);font-weight:400}
+input,textarea{font:16px Onest,sans-serif;padding:11px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);width:100%}
+textarea{border-radius:16px;min-height:90px;resize:vertical}
+input:focus,textarea:focus{outline:0;border-color:var(--acc)}
+.ok{font-size:14px;color:var(--gr);background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.socials{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:28px var(--g) 0}
+footer{border-top:1px solid var(--line);margin-top:40px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px}
+.wa{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));width:50px;height:50px;border-radius:50%;background:#fff;border:1px solid var(--line);display:grid;place-items:center;z-index:20;box-shadow:0 10px 24px -10px rgba(0,0,0,.25)}
+.wa svg{width:24px;height:24px;fill:#25a35a}
+html[dir=rtl] .wa{right:auto;left:calc(18px + env(safe-area-inset-left,0px))}
+/* inner pages */
+.ph{padding-top:calc(150px + env(safe-area-inset-top,0px));padding-bottom:clamp(28px,4vw,56px)}
+.ph h1{font-size:clamp(56px,10vw,160px);letter-spacing:-.05em}
+.ph .lead{margin-top:24px}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:clamp(32px,6vw,96px);align-items:start}
+@media(max-width:860px){.split{grid-template-columns:minmax(0,1fr)}}
+.sticky{position:sticky;top:calc(96px + env(safe-area-inset-top,0px))}
+.prose{max-width:62ch;font-size:17px}
+.prose h2{font-size:clamp(30px,3.2vw,44px);margin:52px 0 16px}
+.prose h2:first-child{margin-top:0}
+.prose ul{padding-inline-start:18px;margin:0;display:grid;gap:10px}
+.tl{border-top:1px solid var(--line)}
+.job{display:grid;grid-template-columns:140px minmax(0,1fr) minmax(0,1.1fr);gap:6px 32px;padding:24px 0;border-bottom:1px solid var(--line)}
+.job .yr{color:var(--mute);font-variant-numeric:tabular-nums}
+.job h3{font-weight:300;font-size:clamp(22px,2vw,28px);letter-spacing:-.02em}
+.job .co{color:var(--mute);margin-top:4px}
+.job p{margin:0;color:var(--gr)}
+@media(max-width:900px){.job{grid-template-columns:100px minmax(0,1fr)}.job p{grid-column:2}}
+@media(max-width:520px){.job{grid-template-columns:minmax(0,1fr)}.job p{grid-column:1}}
+.skills{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin-top:64px}
+@media(max-width:900px){.skills{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.skills h3{margin-bottom:12px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin:0}
+.tags li,.tag{padding:5px 12px;border-radius:999px;border:1px solid var(--line);font-size:13.5px;background:#fff;text-decoration:none}
+.pcover{aspect-ratio:21/9;overflow:hidden;margin-top:12px}
+.pcover img{width:100%;height:100%;object-fit:cover}
+@media(max-width:700px){.pcover{aspect-ratio:4/3}}
+.vids{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px}
+.vid{position:relative;aspect-ratio:16/10;overflow:hidden;background:#000;color:#fff;border:0;padding:0;width:100%;cursor:pointer;text-decoration:none;display:block}
+.vid img{width:100%;height:100%;object-fit:cover;opacity:.75;transition:opacity .3s,transform .8s}
+.vid:hover img{opacity:.9;transform:scale(1.03)}
+.vid span{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:10px;font-size:14px}
+.vid i{width:62px;height:62px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;font-style:normal}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.gal{columns:3 260px;column-gap:16px}
+.gal.g{columns:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:16px}
+.gal button{display:block;width:100%;margin:0 0 16px;padding:0;border:0;overflow:hidden;cursor:zoom-in;background:#e9e6e0;break-inside:avoid}
+.gal.g button{margin:0}
+.lb{position:fixed;inset:0;z-index:60;background:rgba(251,250,248,.97);display:grid;place-items:center;padding:max(4vw,16px)}
+.lb img{max-height:84vh;max-width:100%;width:auto;box-shadow:0 30px 60px -30px rgba(0,0,0,.4)}
+.lb button{position:absolute;color:var(--ink);background:#fff;border:1px solid var(--line);width:48px;height:48px;border-radius:50%;font-size:18px;cursor:pointer}
+.lb .x{top:calc(16px + env(safe-area-inset-top,0px));right:16px}.lb .p{left:16px;top:calc(50% - 24px)}.lb .n{right:16px;top:calc(50% - 24px)}
+.lb .cnt{position:absolute;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;color:var(--mute);font-size:13px}
+.pnav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;border-top:1px solid var(--line);padding-top:24px;margin-top:56px}
+.pnav a{text-decoration:none}
+.pnav b{font-weight:200;font-size:clamp(24px,2.6vw,36px);letter-spacing:-.03em}
+.pnav .nx{text-align:end}
+.faq details{border-bottom:1px solid var(--line);padding:16px 0}
+.faq details:first-child{border-top:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;font-weight:400;font-size:17px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--acc);font-size:20px;line-height:1;transition:transform .3s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{margin:10px 0 0;color:var(--mute)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<header><div class="bar">
+  <a class="brand" href="#home"><svg viewBox="0 0 32 32" fill="none" stroke="#121212" stroke-width="1.3" aria-hidden="true"><circle cx="16" cy="16" r="11"/><circle cx="16" cy="16" r="4.5"/><path d="M16 5v6.5M16 20.5V27M5 16h6.5M20.5 16H27"/></svg>Oussama Amentag</a>
+  <nav class="main" id="nav"><a href="#home" data-i="home">Home</a><a href="#works" data-i="works">My works</a><a href="#about" data-i="about">About me</a><a href="#resume" data-i="resume">My resume</a><a href="#contact" data-i="contact">Contact me</a></nav>
+  <div class="tools"><div class="langs" role="group" aria-label="Language"><button data-l="en">EN</button><button data-l="fr">FR</button><button data-l="ar">AR</button></div><button id="menu" aria-expanded="false">Menu</button></div>
+</div></header>
+<main id="app"></main>
+<footer class="band" style="padding-block:28px"><div class="wrap"><span class="lbl">Oussama Amentag</span><span class="lbl">Agadir, Morocco</span><span class="lbl">2026</span></div></footer>
+<a class="wa" href="https://wa.me/212614686769?text=Hi%20Oussama%2C%20I%27d%20like%20to%20talk%20about%20a%20project" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg></a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+{
+const EMAIL='contact.amentag@gmail.com', PHONE='+212 6 14 68 67 69', TEL='+212614686769';
+const LINKEDIN='https://www.linkedin.com/in/amentaag/', WA='https://wa.me/212614686769';
+const RESUME_PDF='https://drive.google.com/uc?export=download&id=1erseumSfoOspCMHDqZ2Fbon1SYYFnM1O';
+const CAN_EMBED=/blogspot\.com|blogger\.com/.test(location.hostname);
+// Eye-follow portrait: 3 x 3 photos named look-ROWCOL.webp. Until they exist every frame is the current portrait.
+const LOOK={cols:3,rows:3,frames:Array.from({length:9},()=>'img/portrait.webp')};
+// LOOK.frames=Array.from({length:9},(_,i)=>`img/look-${Math.floor(i/3)}${i%3}.webp`);
+
+const T={
+ en:{home:'Home',about:'About me',works:'My works',resume:'My resume',contact:'Contact me',all:'All',view:'View project',dl:'Download resume (PDF)',prev:'Previous project',next:'Next project'},
+ fr:{home:'Accueil',about:'À propos',works:'Mes travaux',resume:'Mon CV',contact:'Contact',all:'Tout',view:'Voir le projet',dl:'Télécharger le CV (PDF)',prev:'Projet précédent',next:'Projet suivant'},
+ ar:{home:'الرئيسية',about:'من أنا',works:'أعمالي',resume:'سيرتي الذاتية',contact:'تواصل معي',all:'الكل',view:'عرض المشروع',dl:'تحميل السيرة الذاتية (PDF)',prev:'المشروع السابق',next:'المشروع التالي'}
+};
+let lang='en'; try{lang=localStorage.getItem('oa-lang')||'en'}catch(e){}
+const t=k=>(T[lang]&&T[lang][k])||T.en[k];
+const LABELS=['Film','Photography','Projects'];
+const LCOL={Film:'#4f86c6',Photography:'#c99a3a',Projects:'#5fa37a'};
+const POSTS=[
+ {slug:'el-kaoutar',title:'El Kaoutar Projects',date:'August 22, 2026',labels:['Film','Projects'],cover:'img/kaoutar-0.webp',
+  summary:'A documentary short about El Kaoutar, one of the Souss region’s largest markets for old car parts and gears.',
+  intro:'A documentary short about El Kaoutar — one of the Souss region\'s largest markets for old car parts and gears — capturing daily life in a space that keeps hundreds of vehicles running while operating without proper lighting or running water.',
+  brief:'El Kaoutar is a sprawling, deeply local market where mechanics, sellers, and buyers meet every day to keep aging vehicles on the road. For years it has operated without basic infrastructure — no reliable lighting, no running water — conditions that shape everyone\'s daily work there. The brief was simple: document the market honestly, at scale, so the footage could speak for itself.',
+  did:'Directing, cinematography, and edit — capturing the market across a full working day to show its real rhythm and scale.',
+  tools:['Premiere Pro','DaVinci Resolve'],
+  videos:[{poster:'img/kaoutar-1.webp',label:'Watch the film',href:'https://amentaag.blogspot.com/2026/08/el-kaoutar-projects.html'}],
+  gallery:['img/kaoutar-0.webp','img/kaoutar-1.webp','img/kaoutar-2.webp','img/kaoutar-4.webp']},
+ {slug:'lil-global',title:'LIL Global Education Services',date:'July 25, 2026',labels:['Film','Photography','Projects'],cover:'img/lil-9.webp',
+  summary:'Photo and video coverage of the “Transition to the UK for International Students” seminar.',
+  intro:'Coverage of LIL Global Education Services\' “Transition to the UK for International Students” seminar — photography and video capturing the panel discussions, speeches, and the students in the room.',
+  brief:'LIL Global Education Services partners with 150+ universities in the UK and 600+ institutions worldwide, helping students from Morocco access UK higher education. For this seminar — run with panel discussions and guest speakers in front of a full auditorium — they needed the day documented from opening to close, delivered as both a photo set and video they could reuse for future recruitment.',
+  did:'Event photography and video coverage from opening to close, delivered as a photo set and highlight videos.',
+  tools:['Photography','Premiere Pro','DaVinci Resolve','Lightroom'],
+  videos:['10chy0j46iscCJj-4ySI2qXIH8EqGF45e','1fziXpV8KQp7DXCb_mtGD8nt7dIdXxPs6','1nGXgwl8VsgZLxxE5iMXph1ZcpaIPWE-d','1dGfgJcbYpSirzQChWVBV6dh5QlVu7OfI'].map((id,i)=>({drive:id,poster:['img/lil-11.webp','img/lil-7.webp','img/lil-4.webp','img/lil-6.webp'][i],label:'Highlight '+(i+1)})),
+  gallery:Array.from({length:14},(_,i)=>'img/lil-'+(i+1)+'.webp'),cta:'Book event coverage'}
+];
+// every frame on the curved wall belongs to a project
+const FRAMES=[];POSTS.forEach(p=>p.gallery.forEach((g,i)=>FRAMES.push({src:g,p,i})));
+FRAMES.sort((a,b)=>a.i-b.i);
+const QUOTES=[
+ ['Meriem','Head of the department, LIL Global Education Services','A huge thank you to Oussama and his team for the incredible videos — they truly captured what I was looking for. The editing is crisp, and I’m obsessed with the final result!'],
+ ['Soufiane Production','Wedding company','Partnering with Oussama for our audio-visual project was nothing short of exceptional. This team has set a new standard for excellence in the industry. Highly recommend!'],
+ ['Go Working','Co-working space, Marrakesh','Thank you, thank you, thank you! Professionalism in work, attention to every detail, and exemplary conduct from the whole team — thank you again!'],
+ ['Turkish Universities Fair in Morocco','Study abroad agency','Thank you so much for your professionalism and magnificent work! Everything was perfect from beginning to end — the photos and videos are superb. Congrats to the whole team!'],
+ ['Commune Lqliaa','Government','An excellent experience with Oussama — high-quality content, quick responses, and excellent follow-up throughout the project.']
+];
+const LOGOS=[['digital-photo-tafraout','Digital Photo Tafraout',1],['soufiane-production','Soufiane Production',1],['lumazic','Lumazic'],['souss-massa','Région Souss-Massa'],['porsche','Porsche'],['sidi-ifni','Sidi Ifni Province'],['go-working','Go Working',1],['agadir','Ville d’Agadir'],['lqliaa','Commune Lqliaa'],['lil-global','LIL Global Education Services'],['tufm','Turkish Universities Fair in Morocco'],['ascam','ASCAM'],['amalway','Amalway'],['bioherb-tim','Bioherb Tim'],['fikhidmatek','Fikhidmatek'],['himam-almaali','Himam Almaali'],['ibn-zohr','Université Ibn Zohr'],['jellouli','Jellouli'],['hbizat','Hbizat Products'],['studio-ali','Studio Ali']];
+const DISC=[['Film & video','Directing, cinematography, cinematic editing, colour grading and motion graphics for brands, events and digital media.'],['Projection mapping','2D and 3D mapped visuals that turn buildings, stages and objects into living screens.'],['Design','Brand and promotional visuals across the Adobe suite, from identity through campaign collateral.'],['Photography','Portrait, event and high-end product work, including retouching for international brands.'],['Apps & development','Cross-platform mobile apps built with Flutter, backed by Python and FastAPI.']];
+const STEPS=[['You reach out','A quick message with what you need and your rough timeline is enough to start.'],['We scope it','A short call or message exchange to nail down the brief, deliverables and budget.'],['I get to work','Filming, mapping, designing or building — with check-ins along the way, not just a reveal at the end.'],['You get the final files','Delivered in the format you need, with a round of revisions included.']];
+const JOBS=[
+ ['2026','2D & 3D Projection Mapping Maker','Lumazic','Creating immersive visuals and motion content for video mapping, 3D projection, and cultural storytelling experiences across Morocco.'],
+ ['2026','Graphic Designer','Chems Ayour & Lumazic','Visual content promoting events, shows, and dining experiences, keeping brand communication strong and consistent.'],
+ ['Ongoing','Freelance Filmmaker & Developer','Independent · Agadir, Morocco','Film, photography, and design work for local and international clients, alongside cross-platform mobile apps built with Flutter and FastAPI.'],
+ ['2025','Picture Editor','Montrichard Group','Collaborated with international watch brands, editing high-end product images for global campaigns.'],
+ ['2025','Filmmaker','Digital Photo Tafraout','Wedding and event videography and production with a company established in 1997 and well regarded for high-quality visual content.'],
+ ['2022–2025','Filmmaker — Head of Editing & Graphics','Soufiane Production','Led editing and graphics for an event videography studio, building a solid foundation in visual storytelling.'],
+ ['2021–2022','Videographer','Medmar Media','Joined as a video editing trainer, preparing team members to produce content, then moved into production to develop my media skills further.'],
+ ['2021','Graphic Designer & Video Editor','AI Technology','Digital marketing and promotional video production for an Agadir-based agency.'],
+ ['2018–2021','Visuals Director & Co-founder','One Eye Production','Co-founded a production startup that secured government documentation projects, directing its visual output.'],
+ ['2017','Video Editor','First One Media','My first on-site role: 3D video, filming, and editing for well-known brands — where my creative and technical foundation took shape.'],
+ ['2017','Graphic Designer','Cool Designer','3D designs and promotional content for recognized brands.']
+];
+const FAQ=[['What’s your typical turnaround time?','It depends on the scope — a short edit can turn around in days, while a full mapping show or app needs weeks. Tell me your deadline up front and I’ll say clearly whether it’s realistic.'],['Do you work with clients outside Morocco?','Yes. Editing, design and app development happen remotely regardless of where you are. Filming, photography and on-site mapping installations are based around Agadir and Morocco, with travel possible for the right project.'],['Can I hire you for just one part of a project — say, only the editing?','Absolutely. Most of what I do works standalone: editing only, design only, a single mapping show, or a full production from concept to delivery.'],['How does pricing work?','It’s scope-based, not a flat rate — send me the details of your project and I’ll come back with a clear quote before anything starts.'],['What do you need from me to get started?','A description of the project, your timeline, and any references or examples of what you like. The more context up front, the faster we can move.']];
+
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const img=(src,alt,w,h,eager)=>`<img src="${src}" alt="${esc(alt)}" width="${w}" height="${h}" ${eager?'fetchpriority="high"':'loading="lazy"'} decoding="async">`;
+const lab=l=>`<span class="dot" style="--c:${LCOL[l]}">${l}</span>`;
+let pendingFilter='All';
+
+/* ---------- pieces ---------- */
+const RING=['img/kaoutar-0.webp','img/lil-9.webp','img/kaoutar-4.webp','img/lil-1.webp','img/lil-14.webp','img/kaoutar-1.webp','img/lil-11.webp','img/lil-3.webp','img/kaoutar-2.webp','img/lil-6.webp','img/lil-2.webp','img/lil-12.webp','img/lil-4.webp','img/lil-7.webp'];
+const ringHTML=()=>RING.map((s,i)=>{const n=RING.length,a=i*360/n,y=(i%2?-1:1)*(200+(i%3)*34),w=[112,86,124,96,80,118,100][i%7],ar=s.includes('lil-14')?'2/3':(i%4===1?'3/4':'4/3');return `<div class="st" style="--w:${w}px;--ar:${ar};transform:rotateY(${a}deg) translateZ(var(--R)) translateY(calc(${y}px * var(--ys,1)))">${img(s,'',300,220)}</div>`}).join('');
+const orbitSVG=()=>`<svg class="orbit" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true"><path id="orbitp" d="M1180 70 C 960 260, 420 210, 250 420 S 380 760, 520 780"/><circle cx="520" cy="780" r="5"/></svg>`;
+const wallHTML=(list)=>list.map((f,i)=>`<a class="fr" href="#work-${f.p.slug}" data-labels="${f.p.labels.join(' ')}" style="--ar:${i%3===1?'3/4':(i%3===2?'1/1':'4/5')}"><div class="im">${img(f.src,f.p.title+' frame',400,500)}</div><div class="cap"><b>${esc(f.p.title)}</b>${lab(f.p.labels[0])}</div></a>`).join('');
+const roomHTML=()=>{
+  const L=['img/kaoutar-0.webp','img/lil-9.webp','img/kaoutar-4.webp'],R=['img/lil-11.webp','img/kaoutar-1.webp','img/lil-3.webp'];
+  const arts=(arr,side)=>arr.map((s,i)=>`<img class="art" src="${s}" alt="" loading="lazy" style="left:${120+i*430}px;top:${190+(i%2)*24}px;width:${[300,250,280][i]}px;height:${[210,180,200][i]}px">`).join('');
+  return `<div class="roomw" id="roomw"><div class="room" id="room">
+    <div class="face back"><img class="art" src="img/lil-6.webp" alt="" loading="lazy" style="left:330px;top:150px;width:340px;height:230px"></div>
+    <div class="face left">${arts(L)}</div><div class="face right">${arts(R)}</div>
+    <div class="face floor"></div><div class="face ceil"></div></div>
+    <div class="formcard"><span class="lbl">(Leave your details)</span><h3>Let’s make something together</h3><p class="mute" style="margin:0;font-size:14px">Or just write: <a href="mailto:${EMAIL}">${EMAIL}</a></p>
+      <form id="cf"><div class="r2"><label for="cf-name">Name<input id="cf-name" name="name" required autocomplete="name"></label><label for="cf-email">Email<input id="cf-email" name="email" type="email" required autocomplete="email"></label></div>
+      <label for="cf-phone">Phone (optional)<input id="cf-phone" name="phone" type="tel" autocomplete="tel"></label>
+      <label for="cf-msg">Message<textarea id="cf-msg" name="message" required></textarea></label>
+      <div><button class="btn ink" type="submit">Send message →</button></div><div id="cf-out" class="ok" hidden></div></form></div></div>
+  <div class="socials"><a class="pill" href="mailto:${EMAIL}">Email ↗</a><a class="pill" href="tel:${TEL}">${PHONE}</a><a class="pill" href="${WA}" target="_blank" rel="noopener">WhatsApp ↗</a><a class="pill" href="${LINKEDIN}" target="_blank" rel="noopener">LinkedIn ↗</a></div>`};
+
+const V={};
+V.home=()=>`
+<section class="hero" id="hero">${orbitSVG()}
+  <div class="stage" id="stage"><div class="scene" id="scene"><div class="ringy" id="ringy">${ringHTML()}</div>
+    <div class="title3d"><h1>Oussama<br>Amentag</h1><p>Filmmaker and creative technologist from Agadir. I film stories, light up spaces with projected visuals, and build apps.</p>
+    <div class="ctas"><a class="btn ink" href="#works">See my works</a><a class="btn ghost" href="#contact">Start a project →</a></div></div></div></div>
+  <div class="hmeta"><span class="lbl">Film · Mapping · Design · Photo · Apps</span><span class="lbl">Available for new projects</span></div>
+</section>
+<section class="band" id="workband"><div class="wrap">
+  <div class="sec-h"><span class="lbl">(01) Works</span><h2>Works</h2><p>Frames from recent projects, hung on a curved wall. Drag or scroll along it, and open any frame to see the full project.</p></div>
+  <div class="pills" role="group" aria-label="Filter by label">${['All',...LABELS].map(l=>`<button data-f="${l}" aria-pressed="${l===pendingFilter}">${l==='All'?t('all'):l}</button>`).join('')}</div>
+  <div class="wallw"><div class="wall" id="wall" tabindex="0" aria-label="Project frames">${wallHTML(FRAMES)}</div></div>
+  <div class="wallnav"><span class="lbl" id="wcount"></span><div style="display:flex;gap:8px"><button id="wprev" aria-label="Previous frames">←</button><button id="wnext" aria-label="Next frames">→</button></div></div>
+</div></section>
+<section class="band" style="padding-top:0"><div class="wrap">
+  <div class="sec-h"><span class="lbl">(02) Crafts</span><h2>Five crafts</h2><p>Different crafts, same discipline: understand the constraint, then make something that feels effortless inside it.</p></div>
+  <div class="disc">${DISC.map((d,i)=>`<div><span class="n">(0${i+1})</span><h3>${d[0]}</h3><p>${d[1]}</p></div>`).join('')}</div>
+</div></section>
+<section class="band" style="padding-top:0"><div class="wrap proc">
+  <div><span class="lbl">(03) Commissions</span><h2 style="margin:16px 0 22px">A film, a show or an app, made to order</h2><p class="lead">A brand film, event coverage, a projection-mapping show or a mobile app. I work from your story, in the format and timeline you need.</p><a class="btn" href="#contact" style="margin-top:12px">Start a project</a></div>
+  <ol class="steps" id="steps">${STEPS.map(s=>`<li><div class="box"><b>${s[0]}</b><p>${s[1]}</p></div></li>`).join('')}</ol>
+</div></section>
+<section class="band aboutb"><div class="wrap about">
+  <div><span class="lbl">(04) About</span><h2 style="margin-top:16px">About</h2><p class="big">I’m Oussama Amentag. I film, design and build.</p>
+    <p class="mute" style="max-width:56ch">For close to a decade I’ve worked behind cameras and inside editing timelines, from my first on-site editing job to leading editing and graphics for production studios. Filmmaking taught me story, rhythm and emotion. Building software taught me systems and precision. The work I’m proudest of needs both.</p>
+    <div class="facts"><div><small>Based in</small>Agadir, Morocco</div><div><small>Behind the camera</small>Since 2017</div><div><small>Languages</small>Arabic, French, English</div><div><small>Available</small>On site & remote</div></div>
+    <a class="btn" href="#about" style="margin-top:28px">More about me</a></div>
+  <div class="portrait" id="pf">${[...new Set(LOOK.frames)].map((f,k)=>`<img src="${f}" alt="${k?'':'Portrait of Oussama Amentag'}" data-src="${f}" width="559" height="640" loading="lazy">`).join('')}</div>
+</div></section>
+<section class="band"><div class="wrap">
+  <div class="sec-h"><span class="lbl">(05) Kind words</span><h2>Kind words</h2></div>
+  <div class="qs"><div><blockquote id="qt"></blockquote><div class="who" id="qw"></div></div><div class="qn"><button id="qp" aria-label="Previous testimonial">←</button><span id="qc"></span><button id="qx" aria-label="Next testimonial">→</button></div></div>
+  <div class="stats"><div><b>20+</b><span>Clients worked with</span></div><div><b>45+</b><span>Projects completed</span></div><div><b>9</b><span>Years behind the camera</span></div><div><b>3</b><span>Working languages</span></div></div>
+</div></section>
+<section class="band" style="padding-top:0"><div class="wrap">
+  <div class="sec-h"><span class="lbl">(06) Clients</span><h2>Trusted by</h2><p>Studios, brands and public institutions I’ve worked with.</p></div>
+  <div class="logos">${LOGOS.map(([f,n,k])=>`<div class="logo"><img src="img/logo-${f}.webp" alt="${esc(n)}" class="${k?'k':''}" loading="lazy" height="50"></div>`).join('')}</div>
+</div></section>
+<section style="padding-bottom:20px"><div class="band" style="padding-bottom:28px"><div class="wrap sec-h" style="margin:0"><span class="lbl">(07) Contact</span><h2>Let’s talk</h2><p>The last room of the screening. Leave your details and I’ll reply within a day or two.</p></div></div>${roomHTML()}</section>`;
+
+V.works=()=>`
+<section class="band ph"><div class="wrap"><span class="lbl">(Works)</span><h1>${t('works')}</h1><div class="sec-h" style="margin:28px 0 0"><div class="pills" role="group" aria-label="Filter by label">${['All',...LABELS].map(l=>`<button data-f="${l}" aria-pressed="${l===pendingFilter}">${l==='All'?t('all'):l}</button>`).join('')}</div><p>Every project has its own page with the brief, the films and the full photo set.</p></div></div></section>
+<section class="band" style="padding-top:0"><div class="wrap">
+  <div class="wallw"><div class="wall" id="wall" tabindex="0" aria-label="Project frames">${wallHTML(FRAMES)}</div></div>
+  <div class="wallnav"><span class="lbl" id="wcount"></span><div style="display:flex;gap:8px"><button id="wprev" aria-label="Previous frames">←</button><button id="wnext" aria-label="Next frames">→</button></div></div>
+  <div style="margin-top:72px" class="tl">${POSTS.map(p=>`<a class="job" href="#work-${p.slug}" data-labels="${p.labels.join(' ')}" style="text-decoration:none"><span class="yr">${p.date}</span><div><h3>${esc(p.title)}</h3><div class="co">${p.labels.map(lab).join(' &nbsp; ')}</div></div><p>${esc(p.summary)}</p></a>`).join('')}</div>
+</div></section>`;
+
+V.about=()=>`
+<section class="band ph"><div class="wrap"><span class="lbl">(About)</span><h1>${t('about')}</h1><p class="lead">Oussama Amentag — a filmmaker, visual designer and creative technologist based in Agadir, Morocco.</p></div></section>
+<section class="band" style="padding-top:0"><div class="wrap split">
+  <div class="sticky"><div class="portrait">${img('img/portrait.webp','Oussama Amentag',559,640)}</div><div class="facts"><div><small>Based in</small>Agadir, Morocco</div><div><small>Experience</small>Since 2017</div><div><small>Languages</small>Arabic, French, English</div><div><small>Available</small>On site & remote</div></div></div>
+  <div class="prose">
+    <p style="font-size:clamp(24px,2.4vw,34px);font-weight:200;letter-spacing:-.025em;line-height:1.2">For close to a decade I’ve worked behind cameras and inside editing timelines, from my first on-site editing job to leading editing and graphics for production studios.</p>
+    <p>Today I move between telling stories on screen and building the visuals and tools that carry them.</p>
+    <h2>What I do</h2><ul>${DISC.map(d=>`<li><b>${d[0]}</b> — ${d[1]}</li>`).join('')}</ul>
+    <h2>How I work</h2><p>Filmmaking taught me story, rhythm and emotion. Building software taught me systems and precision. The work I’m proudest of needs both.</p><p>A mapping show has to run flawlessly on a schedule in front of a live audience. An app has to feel as considered as it functions. A film has to hold someone’s attention in the first five seconds. Different crafts, same discipline — understand the constraint, then make something that feels effortless inside it.</p>
+    <h2>Who I work with</h2><p>I’ve collaborated with production houses, agencies and public institutions — among them Lumazic, Soufiane Production, Digital Photo Tafraout, Montrichard Group, the city of Agadir and the province of Sidi Ifni — on work ranging from cultural events and weddings to campaigns for international watch brands.</p>
+    <h2>Tools I work in</h2><ul class="tags">${['Premiere Pro','After Effects','DaVinci Resolve','Photoshop','Illustrator','Blender','Resolume','Flutter','FastAPI','AI tools'].map(x=>`<li>${x}</li>`).join('')}</ul>
+    <h2>Beyond the work</h2><p>I grew up between Agadir and the Souss, and that landscape still shapes what I point a camera at — the light, the coast, the villages inland. I work in Arabic, French and English, which means most of my projects move between cultures as much as between crafts.</p>
+    <h2>Currently</h2><p>Freelancing from Agadir and taking on new projects — a story to film, a space to light up, or an app to build.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:24px"><a class="btn ink" href="#contact">Get in touch</a><a class="btn" href="#resume">See my full resume</a></div>
+  </div></div></section>`;
+
+V.resume=()=>`
+<section class="band ph"><div class="wrap"><span class="lbl">(Resume)</span><h1>${t('resume')}</h1><div class="sec-h" style="margin:28px 0 0"><p class="lead" style="justify-self:start;margin:0">Filmmaker and cinematic video editor specializing in storytelling-driven content for brands, creators, and organizations — with a parallel practice in projection mapping, design, and app development.</p><a class="btn ink" href="${RESUME_PDF}" target="_blank" rel="noopener" style="justify-self:end">${t('dl')}</a></div></div></section>
+<section class="band" style="padding-top:0"><div class="wrap"><div class="tl">${JOBS.map(j=>`<div class="job"><span class="yr">${j[0]}</span><div><h3>${esc(j[1])}</h3><div class="co">${esc(j[2])}</div></div><p>${esc(j[3])}</p></div>`).join('')}</div>
+  <div class="skills">${[['Software',['Premiere Pro','After Effects','Illustrator','Photoshop','DaVinci Resolve','Blender','Resolume']],['Development',['Flutter','Dart','Python','FastAPI','SQLite']],['Strengths',['Cinematic editing','Colour grading','Motion graphics','Creative direction','Works under pressure','Problem solver']],['Languages',['Arabic','French','English']]].map(([h,l])=>`<div><h3>${h}</h3><ul class="tags">${l.map(s=>`<li>${s}</li>`).join('')}</ul></div>`).join('')}</div></div></section>`;
+
+V.contact=()=>`
+<section class="band ph" style="padding-bottom:28px"><div class="wrap"><span class="lbl">(Contact)</span><h1>${t('contact')}</h1><p class="lead">Have a project in mind, a job opportunity, or just want to say hi? Based in Agadir — available across Morocco and remotely. I usually reply within a day or two.</p></div></section>
+${roomHTML()}
+<section class="band"><div class="wrap proc"><div><span class="lbl">(Process)</span><h2 style="margin-top:16px">How we’ll work together</h2></div><ol class="steps" id="steps">${STEPS.map(s=>`<li><div class="box"><b>${s[0]}</b><p>${s[1]}</p></div></li>`).join('')}</ol></div></section>
+<section class="band" style="padding-top:0"><div class="wrap proc"><div><span class="lbl">(Questions)</span><h2 style="margin-top:16px">Questions</h2></div><div class="faq">${FAQ.map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('')}</div></div></section>`;
+
+V.post=p=>{const i=POSTS.indexOf(p),pr=POSTS[i+1],nx=POSTS[i-1];return `
+<section class="band ph" style="padding-bottom:0"><div class="wrap"><a class="lbl" href="#works" style="text-decoration:none">← (${t('works')})</a><h1 style="font-size:clamp(44px,7.4vw,118px);margin-top:18px;max-width:14ch">${esc(p.title)}</h1>
+  <div style="display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:22px" class="mute"><span>${p.date}</span>${p.labels.map(lab).join('')}</div></div></section>
+<section class="band" style="padding-top:clamp(24px,3vw,40px);padding-bottom:0"><div class="wrap"><div class="pcover">${img(p.cover,p.title,1280,720,1)}</div></div></section>
+<section class="band"><div class="wrap split">
+  <div class="sticky"><span class="lbl">(Tools)</span><ul class="tags" style="margin-top:12px">${p.tools.map(x=>`<li>${x}</li>`).join('')}</ul>${p.cta?`<a class="btn ink" href="#contact" style="margin-top:24px">${p.cta}</a>`:''}</div>
+  <div class="prose"><p style="font-size:clamp(22px,2.2vw,30px);font-weight:200;letter-spacing:-.02em;line-height:1.25">${esc(p.intro)}</p><h2>The brief</h2><p>${esc(p.brief)}</p><h2>What I did</h2><p>${esc(p.did)}</p></div>
+</div></section>
+<section class="band" style="padding-top:0"><div class="wrap"><div class="sec-h"><span class="lbl">(Video)</span><h2>${p.videos.length>1?'Video highlights':'The film'}</h2></div>
+  <div class="vids">${p.videos.map(v=>v.drive?`<button class="vid" data-drive="${v.drive}">${img(v.poster,v.label,1100,733)}<span><i>▶</i>${v.label}</span></button>`:`<a class="vid" href="${v.href}" target="_blank" rel="noopener">${img(v.poster,v.label,1280,720)}<span><i>▶</i>${v.label}</span></a>`).join('')}</div></div></section>
+<section class="band" style="padding-top:0"><div class="wrap"><div class="sec-h"><span class="lbl">(Gallery)</span><h2>Gallery</h2><p>${p.gallery.length} photos</p></div>
+  <div class="gal${p.gallery.length<6?' g':''}">${p.gallery.map((g,k)=>`<button data-k="${k}" aria-label="Open photo ${k+1}">${img(g,p.title+' photo '+(k+1),1100,733)}</button>`).join('')}</div>
+  <div class="pnav">${pr?`<a href="#work-${pr.slug}"><span class="lbl">← ${t('prev')}</span><br><b>${esc(pr.title)}</b></a>`:'<span></span>'}${nx?`<a class="nx" href="#work-${nx.slug}"><span class="lbl">${t('next')} →</span><br><b>${esc(nx.title)}</b></a>`:''}</div></div></section>`};
+
+/* ---------- behaviour ---------- */
+const app=document.getElementById('app'), root=document.documentElement;
+const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fine=matchMedia('(hover: hover) and (pointer: fine)').matches;
+const G=window.gsap, ST=window.ScrollTrigger, MOTION=!!(G&&ST)&&!still;
+if(MOTION) G.registerPlugin(ST);
+let offs=[], ctx=null;
+const on=(el,ev,f,o)=>{if(!el)return;el.addEventListener(ev,f,o);offs.push(()=>el.removeEventListener(ev,f,o))};
+
+function bindRing(){
+  const stage=document.getElementById('stage'); if(!stage) return;
+  const ringy=document.getElementById('ringy'), scene=document.getElementById('scene');
+  const setR=()=>{const R=Math.min(560,Math.max(170,stage.clientWidth*.46));scene.style.setProperty('--R',R+'px');const P=parseFloat(getComputedStyle(stage).perspective)||1500;scene.style.setProperty('--tz',(P/(P+R+60)*1).toFixed(3))};setR();on(window,'resize',setR);
+  if(fine&&!still) on(window,'pointermove',e=>{const dy=(e.clientY/innerHeight-.5),dx=(e.clientX/innerWidth-.5);scene.style.transform=`rotateX(${(-9-dy*10).toFixed(2)}deg) rotateZ(${(dx*-3).toFixed(2)}deg)`},{passive:true});
+}
+function bindWall(){
+  const wall=document.getElementById('wall'); if(!wall) return;
+  const frs=[...wall.querySelectorAll('.fr')];
+  const curve=()=>{const c=innerWidth/2;frs.forEach(f=>{if(f.hidden)return;const r=f.getBoundingClientRect();const d=(r.left+r.width/2-c)/innerWidth;const k=Math.max(-1,Math.min(1,d*1.6));f.style.transform=still?'':`rotateY(${(-k*28).toFixed(2)}deg) translateZ(${(-Math.abs(k)*120).toFixed(1)}px)`})};
+  let raf=0;const req=()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;curve()})};
+  on(wall,'scroll',req,{passive:true});on(window,'resize',req);
+  const apply=()=>{let n=0;frs.forEach(f=>{const s=pendingFilter==='All'||f.dataset.labels.split(' ').includes(pendingFilter);f.hidden=!s;if(s)n++});document.querySelectorAll('[data-f]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.f===pendingFilter));document.getElementById('wcount').textContent=n+' frames · '+(pendingFilter==='All'?'all projects':pendingFilter);document.querySelectorAll('.job[data-labels]').forEach(j=>j.hidden=!(pendingFilter==='All'||j.dataset.labels.split(' ').includes(pendingFilter)));wall.scrollLeft=0;req()};
+  document.querySelectorAll('[data-f]').forEach(b=>on(b,'click',()=>{pendingFilter=b.dataset.f;apply()}));apply();
+  const step=()=>Math.max(260,wall.clientWidth*.6);
+  on(document.getElementById('wprev'),'click',()=>wall.scrollBy({left:-step(),behavior:'smooth'}));
+  on(document.getElementById('wnext'),'click',()=>wall.scrollBy({left:step(),behavior:'smooth'}));
+  let down=false,sx=0,sl=0,moved=false;
+  on(wall,'pointerdown',e=>{if(e.pointerType!=='mouse')return;down=true;moved=false;sx=e.clientX;sl=wall.scrollLeft;wall.classList.add('down')});
+  on(window,'pointermove',e=>{if(!down)return;const d=e.clientX-sx;if(Math.abs(d)>4)moved=true;wall.scrollLeft=sl-d});
+  on(window,'pointerup',()=>{if(down){down=false;wall.classList.remove('down')}});
+  on(wall,'click',e=>{if(moved){e.preventDefault();moved=false}},true);
+  on(wall,'wheel',e=>{if(Math.abs(e.deltaY)>Math.abs(e.deltaX)&&e.shiftKey){wall.scrollLeft+=e.deltaY;e.preventDefault()}},{passive:false});
+}
+function bindRoom(){
+  const rw=document.getElementById('roomw'); if(!rw) return;
+  const room=document.getElementById('room');
+  const fit=()=>{const s=Math.min(1.25,Math.max(.55,rw.clientWidth/1100));room.style.transform=`scale(${s})`};fit();on(window,'resize',fit);
+  if(fine&&!still) on(rw,'pointermove',e=>{const r=rw.getBoundingClientRect();const dx=(e.clientX-r.left)/r.width-.5,dy=(e.clientY-r.top)/r.height-.5;rw.style.perspectiveOrigin=`${50+dx*14}% ${48+dy*10}%`});
+}
+function bindHome(){
+  const pf=document.getElementById('pf');
+  if(pf){const imgs=[...pf.querySelectorAll('img')];let cur=-1;const show=(c,r)=>{const i=r*LOOK.cols+c;if(i===cur)return;cur=i;const s=LOOK.frames[i];imgs.forEach(m=>m.classList.toggle('on',m.dataset.src===s))};show(1,1);
+    if(fine) on(window,'pointermove',e=>{const b=pf.getBoundingClientRect();const dx=Math.max(-1,Math.min(1,(e.clientX-(b.left+b.width/2))/(innerWidth*.45))),dy=Math.max(-1,Math.min(1,(e.clientY-(b.top+b.height*.35))/(innerHeight*.45)));show(Math.min(2,Math.floor((dx+1)*1.5)),Math.min(2,Math.floor((dy+1)*1.5)))},{passive:true})}
+  let q=0;const qt=document.getElementById('qt'),qw=document.getElementById('qw'),qc=document.getElementById('qc');
+  if(qt){const sq=()=>{const [n,r,s]=QUOTES[q];qt.textContent='“'+s+'”';qw.innerHTML=`<b>${esc(n)}</b> · ${esc(r)}`;qc.textContent=(q+1)+' / '+QUOTES.length};sq();
+    on(document.getElementById('qp'),'click',()=>{q=(q-1+QUOTES.length)%QUOTES.length;sq()});on(document.getElementById('qx'),'click',()=>{q=(q+1)%QUOTES.length;sq()})}
+}
+function bindPost(p){
+  document.querySelectorAll('.vid[data-drive]').forEach(b=>on(b,'click',()=>{const url='https://drive.google.com/file/d/'+b.dataset.drive;
+    if(CAN_EMBED)b.outerHTML=`<div class="vid"><iframe src="${url}/preview" allow="autoplay; fullscreen" allowfullscreen title="Video"></iframe></div>`;else{const a=document.createElement('a');a.href=url+'/view';a.target='_blank';a.rel='noopener';a.click()}}));
+  document.querySelectorAll('.gal button').forEach(b=>on(b,'click',()=>lightbox(p.gallery,+b.dataset.k,b)));
+}
+function lightbox(list,k,opener){
+  const d=document.createElement('div');d.className='lb';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.setAttribute('aria-label','Photo viewer');
+  const show=()=>{d.innerHTML=`<img src="${list[k]}" alt="Photo ${k+1} of ${list.length}"><button class="x" aria-label="Close">✕</button><button class="p" aria-label="Previous photo">‹</button><button class="n" aria-label="Next photo">›</button><div class="cnt">${k+1} / ${list.length}</div>`};
+  const go=s=>{k=(k+s+list.length)%list.length;show()};
+  const close=()=>{d.remove();document.removeEventListener('keydown',key);opener&&opener.focus()};
+  const key=e=>{if(e.key==='Escape')close();if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1)};
+  d.addEventListener('click',e=>{const c=e.target.className;if(c==='x'||e.target===d)close();else if(c==='n')go(1);else if(c==='p')go(-1)});
+  document.addEventListener('keydown',key);show();document.body.appendChild(d);d.querySelector('.x').focus();
+}
+function bindForm(){
+  const f=document.getElementById('cf'); if(!f) return;
+  on(f,'submit',e=>{e.preventDefault();const n=f.name.value.trim(),m=f.message.value.trim(),em=f.email.value.trim(),ph=f.phone.value.trim();
+    const a=document.createElement('a');a.href=`mailto:${EMAIL}?subject=${encodeURIComponent('Project enquiry from '+n)}&body=${encodeURIComponent(m+'\n\n— '+n+' ('+em+(ph?', '+ph:'')+')')}`;a.click();
+    const o=document.getElementById('cf-out');o.hidden=false;o.textContent=`Your email app should open with this message ready to send. If it didn’t, write to ${EMAIL}.`});
+}
+function splitWords(el){
+  if(el.dataset.sp) return [...el.querySelectorAll('.wi')]; el.dataset.sp=1;
+  const walk=n=>[...n.childNodes].forEach(c=>{
+    if(c.nodeType===3){const f=document.createDocumentFragment();c.textContent.split(/(\s+)/).forEach(p=>{if(!p)return;if(/^\s+$/.test(p)){f.appendChild(document.createTextNode(p));return}const w=document.createElement('span');w.className='w';const i=document.createElement('span');i.className='wi';i.textContent=p;w.appendChild(i);f.appendChild(w)});c.replaceWith(f)}
+    else if(c.nodeType===1&&c.tagName!=='BR'&&!c.classList.contains('w')) walk(c)});
+  walk(el); return [...el.querySelectorAll('.wi')];
+}
+function animate(view){
+  if(ctx){ctx.revert();ctx=null}
+  if(!MOTION) return;
+  ctx=G.context(()=>{
+    // hero: ring fades in from depth, orbit line draws itself
+    if(view==='home'){
+      const p=document.getElementById('orbitp');if(p){const L=p.getTotalLength();G.fromTo(p,{strokeDasharray:L,strokeDashoffset:L},{strokeDashoffset:0,duration:2.4,ease:'power2.inOut',delay:.3})}
+      G.from('.st',{opacity:0,y:60,duration:1.6,stagger:.06,ease:'power3.out'});
+      G.from('.title3d h1',{opacity:0,y:30,letterSpacing:'.02em',duration:1.6,ease:'power3.out'});
+      G.from('.title3d p,.title3d .ctas,.hmeta',{opacity:0,y:16,duration:1.2,stagger:.12,delay:.5,ease:'power3.out'});
+      // scrolling away tilts the ring and speeds the orbit
+      G.to('#scene',{rotateX:-28,scale:.85,opacity:.25,ease:'none',scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
+    }
+    app.querySelectorAll('h2,.ph h1').forEach(h=>{const ws=splitWords(h);G.from(ws,{yPercent:110,duration:1.2,ease:'power4.out',stagger:.05,scrollTrigger:{trigger:h,start:'top 88%',once:true}})});
+    const R='.lead,.sec-h p,.pills,.disc>div,.steps li,.facts>div,.big,.about .mute,.qs,.stats>div,.logo,.job,.skills>div,.prose>p,.prose>ul,.faq details,.vid,.gal button,.pcover,.socials,.wallnav';
+    const items=[...app.querySelectorAll(R)].filter(e=>!e.closest('#hero'));
+    if(items.length){G.set(items,{y:36,opacity:0});ST.batch(items,{start:'top 92%',once:true,onEnter:b=>G.to(b,{y:0,opacity:1,duration:1.1,ease:'power3.out',stagger:.06,overwrite:true})})}
+    // process steps light up one by one
+    app.querySelectorAll('#steps li').forEach(li=>ST.create({trigger:li,start:'top 70%',onEnter:()=>li.classList.add('on'),onLeaveBack:()=>li.classList.remove('on')}));
+    // the screening room: walk in as it scrolls into view
+    const rw=document.getElementById('roomw');if(rw){G.fromTo('#room .face',{opacity:.3},{opacity:1,duration:1,scrollTrigger:{trigger:rw,start:'top 80%',once:true}});G.from('.formcard',{opacity:0,y:40,scale:.96,duration:1.2,ease:'power3.out',scrollTrigger:{trigger:rw,start:'top 70%',once:true}})}
+    app.querySelectorAll('.stats b').forEach(b=>{const m=b.textContent.match(/^(\d+)(.*)$/);if(!m)return;const o={v:0},end=+m[1],suf=m[2];b.textContent='0'+suf;G.to(o,{v:end,duration:1.8,ease:'power2.out',scrollTrigger:{trigger:b,start:'top 90%',once:true},onUpdate:()=>b.textContent=Math.round(o.v)+suf})});
+  },app);
+  requestAnimationFrame(()=>ST.refresh());
+}
+function render(){
+  offs.forEach(f=>f());offs=[];
+  const h=(location.hash||'#home').slice(1);
+  const post=h.startsWith('work-')&&POSTS.find(p=>'work-'+p.slug===h);
+  const view=post?'post':(V[h]?h:'home');
+  app.innerHTML=post?V.post(post):V[view]();
+  document.querySelectorAll('nav.main a').forEach(a=>a.getAttribute('href')==='#'+(post?'works':view)?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'));
+  document.title=post?post.title+' · Oussama Amentag':view==='home'?'Oussama Amentag — Filmmaker & Creative Technologist':t(view)+' · Oussama Amentag';
+  bindRing();bindWall();bindRoom();bindForm();
+  if(view==='home')bindHome();
+  if(post)bindPost(post);
+  document.getElementById('nav').classList.remove('open');
+  window.scrollTo({top:0,left:0,behavior:'instant'});
+  animate(view);
+  if(MOTION) G.fromTo(app,{opacity:0},{opacity:1,duration:.6,ease:'power2.out'});
+}
+addEventListener('load',()=>MOTION&&ST.refresh());
+function setLang(l){lang=l;root.lang=l;root.dir=l==='ar'?'rtl':'ltr';document.querySelectorAll('[data-l]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l===l));document.querySelectorAll('[data-i]').forEach(el=>el.textContent=t(el.dataset.i));try{localStorage.setItem('oa-lang',l)}catch(e){}render()}
+document.querySelectorAll('[data-l]').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.l)));
+const menu=document.getElementById('menu');
+menu.addEventListener('click',()=>{const o=document.getElementById('nav').classList.toggle('open');menu.setAttribute('aria-expanded',o)});
+window.addEventListener('hashchange',render);
+setLang(lang);
+}
+</script>
