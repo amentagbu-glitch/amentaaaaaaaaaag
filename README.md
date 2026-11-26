@@ -5,3 +5,4 @@ Marketing website for **Sync Studio**, a digital studio in Agadir, Morocco: vide
 - The website lives in [`sync-studio/`](sync-studio/) (Next.js, French / English / Arabic, light and dark mode).
 - Hosting: Netlify, configured by [`netlify.toml`](netlify.toml). Every push to `main` redeploys the site.
 - How to run it, environment variables and the list of placeholders to replace: [`sync-studio/README.md`](sync-studio/README.md).
+- [`pc-control/`](pc-control/) is a separate tool: a local dashboard to control a PC (power, screen, camera) from your phone.

@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PC Control · {{ hostname }}</title>
+<style>
+  :root { --bg:#0e1116; --card:#171b22; --line:#2a303b; --text:#e8eaed; --muted:#8b93a1;
+          --accent:#4f8cff; --good:#3ecf8e; --warn:#f5a524; --bad:#ff5d5d; }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  body { margin:0; background:var(--bg); color:var(--text);
+         font:15px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+  header { display:flex; justify-content:space-between; align-items:center; padding:16px;
+           max-width:1100px; margin:0 auto; }
+  header h1 { margin:0; font-size:20px; }
+  header small { color:var(--muted); display:block; font-size:13px; }
+  header a { color:var(--muted); text-decoration:none; font-size:14px; }
+  main { max-width:1100px; margin:0 auto; padding:0 16px 40px; display:grid; gap:16px;
+         grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); }
+  .card { background:var(--card); border-radius:16px; padding:18px; min-width:0; }
+  .card.wide { grid-column:1 / -1; }
+  .card h2 { margin:0 0 14px; font-size:15px; color:var(--muted); font-weight:600;
+             text-transform:uppercase; letter-spacing:.04em; display:flex; justify-content:space-between; }
+  .stat { margin-bottom:14px; }
+  .stat .row { display:flex; justify-content:space-between; font-size:14px; margin-bottom:6px; }
+  .stat .row span:last-child { color:var(--muted); }
+  .bar { height:8px; background:#0e1116; border-radius:4px; overflow:hidden; }
+  .bar i { display:block; height:100%; width:0; background:var(--accent); transition:width .4s; }
+  .kv { display:flex; justify-content:space-between; color:var(--muted); font-size:14px; padding:4px 0; }
+  .kv b { color:var(--text); font-weight:500; }
+  .btns { display:grid; grid-template-columns:repeat(auto-fill, minmax(120px, 1fr)); gap:10px; }
+  button { padding:12px 10px; border:1px solid var(--line); border-radius:12px; background:#1e232c;
+           color:var(--text); font-size:14px; font-weight:600; cursor:pointer; }
+  button:hover { border-color:var(--accent); }
+  button.danger { border-color:#5a2a2a; color:#ffb3b3; }
+  button.small { padding:6px 10px; font-size:12px; border-radius:8px; }
+  .view { background:#000; border-radius:12px; aspect-ratio:16/9; display:grid; place-items:center;
+          overflow:hidden; color:var(--muted); font-size:14px; text-align:center; padding:12px; }
+  .view:has(img) { padding:0; }
+  .view img { width:100%; height:100%; object-fit:contain; display:block; }
+  .live { display:inline-flex; gap:6px; align-items:center; color:var(--bad); font-size:12px; text-transform:none; }
+  .live::before { content:""; width:8px; height:8px; border-radius:50%; background:var(--bad); }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  td, th { padding:7px 6px; border-bottom:1px solid var(--line); text-align:left; }
+  th { color:var(--muted); font-weight:500; }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
+  .table-wrap { max-height:380px; overflow:auto; }
+  input { padding:10px 12px; border-radius:10px; border:1px solid var(--line); background:#0e1116;
+          color:var(--text); font-size:14px; width:100%; }
+  .row-flex { display:flex; gap:8px; margin-top:10px; }
+  .muted { color:var(--muted); font-size:13px; }
+  #toast { position:fixed; left:50%; bottom:20px; transform:translateX(-50%); background:#2a303b;
+           padding:10px 16px; border-radius:10px; opacity:0; transition:opacity .3s; pointer-events:none;
+           max-width:calc(100% - 32px); }
+  #toast.show { opacity:1; }
+</style>
+</head>
+<body>
+<header>
+  <div><h1>🖥️ {{ hostname }}</h1><small>{{ system }} · <span id="uptime">…</span></small></div>
+  <a href="/logout">Sign out</a>
+</header>
+
+<main>
+  <section class="card">
+    <h2>System</h2>
+    <div class="stat"><div class="row"><span>CPU</span><span id="cpu-t">…</span></div><div class="bar"><i id="cpu"></i></div></div>
+    <div class="stat"><div class="row"><span>Memory</span><span id="ram-t">…</span></div><div class="bar"><i id="ram"></i></div></div>
+    <div class="stat"><div class="row"><span>Disk</span><span id="disk-t">…</span></div><div class="bar"><i id="disk"></i></div></div>
+    <div class="kv"><span>Network ↑ / ↓</span><b id="net">…</b></div>
+    <div class="kv" id="bat-row" hidden><span>Battery</span><b id="bat"></b></div>
+  </section>
+
+  <section class="card">
+    <h2>Power</h2>
+    <div class="btns">
+      <button data-power="lock">🔒 Lock</button>
+      <button data-power="sleep">🌙 Sleep</button>
+      <button data-power="logout">🚪 Sign out user</button>
+      <button data-power="restart" class="danger">🔄 Restart</button>
+      <button data-power="shutdown" class="danger">⏻ Shut down</button>
+      <button data-power="cancel">✋ Cancel shutdown</button>
+    </div>
+    <p class="muted">Shut down and restart wait 10 seconds on Windows, so you can still cancel.</p>
+
+    <h2 style="margin-top:20px">Wake-on-LAN</h2>
+    {% for t in wake_targets %}
+      <button class="small" data-wake="{{ t.mac }}" style="margin:0 6px 6px 0">⚡ Wake {{ t.name }}</button>
+    {% endfor %}
+    <div class="row-flex">
+      <input id="mac" placeholder="MAC of a PC to turn on, e.g. AA:BB:CC:DD:EE:FF">
+      <button class="small" id="wake-btn">Wake</button>
+    </div>
+    <p class="muted">Turns on a <em>different</em> PC on this network. To start this PC remotely, run the dashboard on an always-on device (see README).</p>
+  </section>
+
+  <section class="card">
+    <h2>Screen <span id="screen-live" class="live" hidden>live</span></h2>
+    <div class="view" id="screen-view">Off</div>
+    <div class="row-flex">
+      <button class="small" id="screen-btn">▶ Start live screen</button>
+      <button class="small" id="shot-btn">📸 One screenshot</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Camera <span id="cam-live" class="live" hidden>live</span></h2>
+    <div class="view" id="cam-view">Off</div>
+    <div class="row-flex">
+      <button class="small" id="cam-btn">▶ Turn on camera</button>
+    </div>
+    <p class="muted">The webcam is only used while this view is on. It turns off when you stop it or close the page.</p>
+  </section>
+
+  <section class="card wide">
+    <h2>Processes <button class="small" id="proc-refresh">↻ Refresh</button></h2>
+    <input id="proc-filter" placeholder="Filter by name…">
+    <div class="table-wrap" style="margin-top:10px">
+      <table>
+        <thead><tr><th>Name</th><th class="num">PID</th><th class="num">Memory</th><th></th></tr></thead>
+        <tbody id="procs"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<div id="toast"></div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const fmtBytes = (b) => { const u=["B","KB","MB","GB","TB"]; let i=0; while (b>=1024 && i<u.length-1) { b/=1024; i++; } return b.toFixed(i?1:0)+" "+u[i]; };
+const fmtTime = (s) => { const d=Math.floor(s/86400), h=Math.floor(s%86400/3600), m=Math.floor(s%3600/60); return "up " + (d?d+"d ":"") + h+"h "+m+"m"; };
+const color = (p) => p > 85 ? "var(--bad)" : p > 65 ? "var(--warn)" : "var(--good)";
+
+function toast(msg) { const t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("show"), 3000); }
+
+async function post(url, body) {
+  const r = await fetch(url, { method:"POST", headers:{ "Content-Type":"application/json", "X-Requested-With":"pc-control" }, body: JSON.stringify(body || {}) });
+  if (r.status === 401) location.href = "/login";
+  const data = await r.json().catch(() => ({}));
+  return { ok: r.ok && data.ok !== false, error: data.error || r.statusText };
+}
+
+// --- stats
+let lastNet = null;
+async function refreshStats() {
+  const r = await fetch("/api/stats"); if (r.status === 401) return location.href = "/login";
+  const s = await r.json();
+  const set = (id, p, text) => { $(id).style.width = p+"%"; $(id).style.background = color(p); $(id+"-t").textContent = text; };
+  set("cpu", s.cpu, s.cpu.toFixed(0)+"% · "+s.cpu_count+" cores");
+  set("ram", s.ram_percent, fmtBytes(s.ram_used)+" / "+fmtBytes(s.ram_total));
+  set("disk", s.disk_percent, fmtBytes(s.disk_used)+" / "+fmtBytes(s.disk_total));
+  if (lastNet) $("net").textContent = fmtBytes((s.net_sent-lastNet.s)/2)+"/s · "+fmtBytes((s.net_recv-lastNet.r)/2)+"/s";
+  lastNet = { s:s.net_sent, r:s.net_recv };
+  $("uptime").textContent = fmtTime(s.uptime);
+  if (s.battery) { $("bat-row").hidden = false; $("bat").textContent = s.battery.percent.toFixed(0)+"%"+(s.battery.plugged?" · charging":""); }
+}
+refreshStats(); setInterval(refreshStats, 2000);
+
+// --- power
+const confirmText = { shutdown:"Shut down this PC?", restart:"Restart this PC?", logout:"Sign out the current user? Unsaved work will be lost." };
+document.querySelectorAll("[data-power]").forEach(b => b.onclick = async () => {
+  const a = b.dataset.power;
+  if (confirmText[a] && !confirm(confirmText[a])) return;
+  const r = await post("/api/power/"+a);
+  toast(r.ok ? "Sent: "+b.textContent.trim() : "Error: "+r.error);
+});
+
+// --- wake on lan
+async function wake(mac) { const r = await post("/api/wake", { mac }); toast(r.ok ? "Magic packet sent to "+mac : "Error: "+r.error); }
+document.querySelectorAll("[data-wake]").forEach(b => b.onclick = () => wake(b.dataset.wake));
+$("wake-btn").onclick = () => wake($("mac").value.trim());
+
+// --- screen
+let screenTimer = null;
+function showImg(view, src) { let img = view.querySelector("img"); if (!img) { view.textContent=""; img=document.createElement("img"); view.appendChild(img); } img.src = src; return img; }
+const screenFail = () => { $("screen-view").innerHTML = "Can't capture the screen right now (screen locked or no display)."; };
+$("shot-btn").onclick = () => { showImg($("screen-view"), "/screen.jpg?t="+Date.now()).onerror = screenFail; };
+$("screen-btn").onclick = () => {
+  if (screenTimer) { clearTimeout(screenTimer); screenTimer=null; $("screen-live").hidden=true; $("screen-btn").textContent="▶ Start live screen"; return; }
+  $("screen-live").hidden=false; $("screen-btn").textContent="■ Stop live screen";
+  const loop = () => { const img = showImg($("screen-view"), "/screen.jpg?t="+Date.now()); img.onload = () => { if (screenTimer) screenTimer = setTimeout(loop, 700); };
+    img.onerror = () => { screenFail(); if (screenTimer) screenTimer = setTimeout(loop, 3000); }; };
+  screenTimer = setTimeout(loop, 0);
+};
+
+// --- camera
+let camOn = false;
+$("cam-btn").onclick = () => {
+  const v = $("cam-view");
+  if (camOn) { v.innerHTML = "Off"; camOn=false; $("cam-live").hidden=true; $("cam-btn").textContent="▶ Turn on camera"; return; }
+  camOn = true; $("cam-live").hidden=false; $("cam-btn").textContent="■ Turn off camera";
+  const img = showImg(v, "/camera.mjpg?t="+Date.now());
+  img.onerror = () => { v.innerHTML = "Camera not available (no webcam, or already open in another tab)."; camOn=false; $("cam-live").hidden=true; $("cam-btn").textContent="▶ Turn on camera"; };
+};
+
+// --- processes
+let procs = [];
+function renderProcs() {
+  const f = $("proc-filter").value.toLowerCase();
+  $("procs").innerHTML = "";
+  procs.filter(p => p.name.toLowerCase().includes(f)).forEach(p => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td></td><td class="num">${p.pid}</td><td class="num">${fmtBytes(p.mem)}</td><td class="num"><button class="small danger">End</button></td>`;
+    tr.firstChild.textContent = p.name;
+    tr.querySelector("button").onclick = async () => {
+      if (!confirm("End "+p.name+" ("+p.pid+")?")) return;
+      const r = await post("/api/processes/"+p.pid+"/kill");
+      toast(r.ok ? "Ended "+p.name : "Error: "+r.error); if (r.ok) loadProcs();
+    };
+    $("procs").appendChild(tr);
+  });
+}
+async function loadProcs() { const r = await fetch("/api/processes"); procs = await r.json(); renderProcs(); }
+$("proc-refresh").onclick = loadProcs; $("proc-filter").oninput = renderProcs; loadProcs();
+</script>
+</body>
+</html>
