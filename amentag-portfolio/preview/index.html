@@ -63,6 +63,10 @@ nav.main a:hover,nav.main a[aria-current=page]{color:var(--ink);background:var(-
 .avail{display:flex;align-items:center;gap:10px;margin-top:22px;font-size:14px;color:var(--mute)}
 .vf{grid-area:vf;position:relative;align-self:center;aspect-ratio:4/5;max-height:640px;width:100%;border-radius:6px;overflow:hidden;background:#0b0b0c;color:#f2efe8}
 .vf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:contrast(1.05)}
+.hero .wrap{perspective:1400px}
+.hero .vf{transform-style:preserve-3d;transition:transform .35s cubic-bezier(.2,.7,.2,1);will-change:transform}
+.look img{opacity:0}
+.look img.on{opacity:1}
 .vf svg{position:absolute;inset:0;width:100%;height:100%}
 .sweep{position:absolute;inset:-20% -60%;background:linear-gradient(100deg,transparent 42%,rgba(95,214,240,.28) 50%,transparent 58%);mix-blend-mode:screen;animation:sweep 6s ease-in-out infinite;pointer-events:none}
 @keyframes sweep{0%{transform:translateX(-40%)}60%,100%{transform:translateX(40%)}}
@@ -287,6 +291,11 @@ const T={
 let lang='en'; try{lang=localStorage.getItem('oa-lang')||'en'}catch(e){}
 const t=k=>(T[lang]&&T[lang][k])||T.en[k];
 
+// Eye-follow portrait: 3 x 3 photos, named look-ROWCOL.webp (row 0 = eyes up, col 0 = eyes toward the left of the photo).
+// Until the real photos exist every frame is the current portrait, so only the 3D tilt shows.
+const LOOK={cols:3,rows:3,frames:Array.from({length:9},()=>'img/portrait.webp')};
+// When the 9 photos are in img/, use this line instead:
+// LOOK.frames=Array.from({length:9},(_,i)=>`img/look-${Math.floor(i/3)}${i%3}.webp`);
 const ROLES=['Filmmaker','Video mapping artist','Visual designer','App developer'];
 const LABELS=['Film','Photography','Projects'];
 
@@ -358,8 +367,8 @@ const V={};
 V.home=()=>`
 <section class="band hero"><div class="wrap">
   <h1>Oussama<br>Amentag</h1>
-  <div class="vf" aria-label="Portrait of Oussama Amentag">
-    ${img('img/portrait.webp','Oussama Amentag',559,640,1)}
+  <div class="vf" id="vf" aria-label="Portrait of Oussama Amentag">
+    <div class="look">${[...new Set(LOOK.frames)].map((f,k)=>`<img src="${f}" alt="${k?'':'Oussama Amentag'}" width="1200" height="1500" ${k?'decoding="async"':'fetchpriority="high"'} data-src="${f}">`).join('')}</div>
     <svg viewBox="0 0 400 500" preserveAspectRatio="none" aria-hidden="true"><g fill="none" stroke="rgba(95,214,240,.35)" stroke-width="1" id="mesh"></g>
       <g stroke="#fff" stroke-width="2.5" fill="none" opacity=".9"><path d="M20 60V20h40M340 20h40v40M380 440v40h-40M60 480H20v-40"/><path d="M200 235v30M185 250h30" stroke-width="1.5"/></g></svg>
     <div class="sweep"></div>
@@ -484,7 +493,7 @@ function mesh(){
 }
 
 function render(){
-  clearInterval(roleTimer); cancelAnimationFrame(tcRaf);
+  clearInterval(roleTimer); cancelAnimationFrame(tcRaf); lookOff();
   const h=(location.hash||'#home').slice(1);
   const post=h.startsWith('work-')&&POSTS.find(p=>'work-'+p.slug===h);
   const view=post?'post':(V[h]?h:'home');
@@ -499,8 +508,35 @@ function render(){
   window.scrollTo(0,0);
 }
 
+let lookOff=()=>{};
+function startLook(){
+  lookOff();
+  const vf=document.getElementById('vf'); if(!vf) return;
+  const imgs=[...vf.querySelectorAll('.look img')];
+  const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine=matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const many=imgs.length>1;
+  let cur=-1, raf=0, px=0, py=0;
+  const show=(c,r)=>{const i=r*LOOK.cols+c; if(i===cur) return; cur=i; const src=LOOK.frames[i]; imgs.forEach(im=>im.classList.toggle('on',im.dataset.src===src))};
+  const apply=()=>{raf=0;
+    const b=vf.getBoundingClientRect(), cx=b.left+b.width/2, cy=b.top+b.height*.35;
+    const dx=Math.max(-1,Math.min(1,(px-cx)/(innerWidth*.45))), dy=Math.max(-1,Math.min(1,(py-cy)/(innerHeight*.45)));
+    show(Math.min(LOOK.cols-1,Math.floor((dx+1)/2*LOOK.cols)),Math.min(LOOK.rows-1,Math.floor((dy+1)/2*LOOK.rows)));
+    if(!still) vf.style.transform=`rotateY(${(dx*9).toFixed(2)}deg) rotateX(${(-dy*7).toFixed(2)}deg)`;
+  };
+  const move=e=>{px=e.clientX;py=e.clientY;if(!raf)raf=requestAnimationFrame(apply)};
+  const leave=()=>{show(Math.floor(LOOK.cols/2),Math.floor(LOOK.rows/2));vf.style.transform=''};
+  show(Math.floor(LOOK.cols/2),Math.floor(LOOK.rows/2));
+  let idle; const tmove=e=>move(e.touches[0]);
+  if(fine){addEventListener('pointermove',move,{passive:true});document.addEventListener('pointerleave',leave)}
+  else{
+    addEventListener('touchmove',tmove,{passive:true});
+    if(many&&!still){const path=[[1,1],[2,0],[2,1],[1,2],[0,1],[0,0],[1,1]];let k=0;idle=setInterval(()=>{k=(k+1)%path.length;show(...path[k])},1600)}
+  }
+  lookOff=()=>{removeEventListener('pointermove',move);removeEventListener('touchmove',tmove);document.removeEventListener('pointerleave',leave);clearInterval(idle);cancelAnimationFrame(raf)};
+}
 function startHero(){
-  mesh();
+  mesh(); startLook();
   const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
   let i=0; const el=document.getElementById('role');
   if(!still) roleTimer=setInterval(()=>{i=(i+1)%ROLES.length; if(el) el.textContent=ROLES[i]},2600);
